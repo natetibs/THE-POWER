@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="resourceSquare1">#e5ffe5</color>
+    <color name="resourceSquare2">#cbffcb</color>
+    <color name="resourceSquare3">#b2ffb2</color>
+    <color name="resourceSquare4">#98ff98</color>
+    <color name="resourceSquare5">#7fff7f</color>
+    <color name="coalColor">#7b3604</color>
+</resources>
