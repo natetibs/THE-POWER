@@ -41,4 +41,5 @@ public class Powerplant implements Serializable{
     public void setPtP(int p){priceToPower = p;}
     public void setHp(int h){housesPowered = h;}
     public void setKind(String k){kind = k;}
+
 }

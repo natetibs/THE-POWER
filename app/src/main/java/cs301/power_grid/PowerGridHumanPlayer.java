@@ -37,6 +37,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private int bidValue = -1;
     private ResourceStore localStore = new ResourceStore();
 
+    ArrayList<BuyCityAction> cityActionList = new ArrayList<BuyCityAction>();
+    ArrayList<BuyResourceAction> actionList = new ArrayList<BuyResourceAction>();
+
     //GUI features
     private Spinner resourcesSpinner;
     private Spinner powerPlantsSpinner;
@@ -547,7 +550,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class okayButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-           if(powerState.getTurn() != powerState.getPlayerId()) return;
+           if(powerState.getTurn() != playerNum) return;
 
 
             int phase = powerState.getGamePhase();
@@ -557,9 +560,11 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 game.sendAction(sppa);
 
             } else if (phase == 1) {
-
-                BidAction ba = new BidAction(PowerGridHumanPlayer.this, bidValue);
-                game.sendAction(ba);
+                //only send the action if they made an appropriate bid
+                if(bidValue > powerState.getCurrentBid()) {
+                    BidAction ba = new BidAction(PowerGridHumanPlayer.this, bidValue);
+                    game.sendAction(ba);
+                }
 
             } else if (phase == 2) {
 
@@ -567,58 +572,63 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 game.sendAction(sppa);
 
             }
-            //if phase ==3 and we haven't gone through the whole resource store, we gotta keep sending actions
-            //only one can be sent at a time, hence the returns.
-            //work on this.
+
             else if (phase == 3 || phase == 4) {
+
                 for (int i = 0; i < 15; i++) {
                     //if it's not available in the local store, it must have been bought!
                     if (!localStore.coal[i]) {
                         localStore.coal[i] = true;
-                        BuyCoalAction bca = new BuyCoalAction(PowerGridHumanPlayer.this, i);
-                        game.sendAction(bca);
-                        return;
+                        actionList.add(new BuyResourceAction(PowerGridHumanPlayer.this, i, "coal"));
+
                     }
 
                     if (!localStore.trash[i]) {
                         localStore.coal[i] = true;
-                        BuyTrashAction bta = new BuyTrashAction(PowerGridHumanPlayer.this, i);
-                        game.sendAction(bta);
-                        return;
+                        actionList.add(new BuyResourceAction(PowerGridHumanPlayer.this, i, "trash"));
+
                     }
 
                     if (i < 5 && !localStore.uranium[i]) {
                         localStore.uranium[i] = true;
-                        BuyUraniumAction bua = new BuyUraniumAction(PowerGridHumanPlayer.this, i);
-                        game.sendAction(bua);
-                        return;
+                        actionList.add(new BuyResourceAction(PowerGridHumanPlayer.this, i, "uranium"));
+
                     }
 
                     if (i < 10 && !localStore.oil[i]) {
                         localStore.oil[i] = true;
-                        BuyOilAction boa = new BuyOilAction(PowerGridHumanPlayer.this, i);
-                        game.sendAction(boa);
-                        return;
+                        actionList.add(new BuyResourceAction(PowerGridHumanPlayer.this, i, "oil"));
+
                     }
 
                 }
-                //if we get to this code then it has gone through the whole store, bought what was needed to be bought, and now needs to update the phase
-                //a pass action will do just fine
-                PassAction pA = new PassAction(PowerGridHumanPlayer.this);
-                game.sendAction(pA);
+
+                if(actionList.size() > 0) {
+                    game.sendAction(actionList.remove(0));
+                }
+                else {
+                    game.sendAction(new PassAction(PowerGridHumanPlayer.this));
+                }
+
+
+
+
 
 
             } else if (phase == 5 || phase == 6) {
+
                 for (int i = 0; i < 20; i++) {
                     if(localCities[i]){
                         localCities[i] = false;
-                        BuyCityAction bca = new BuyCityAction(PowerGridHumanPlayer.this, powerState.getAvailCities().get(i), i);
-                        game.sendAction(bca);
-                        return;
+                        cityActionList.add(new BuyCityAction(PowerGridHumanPlayer.this, powerState.getAvailCities().get(i), i));
                     }
                 }
-                PassAction pA = new PassAction(PowerGridHumanPlayer.this);
-                game.sendAction(pA);
+                if(cityActionList.size() > 0) {
+                    game.sendAction(cityActionList.remove(0));
+                }
+                else {
+                    game.sendAction(new PassAction(PowerGridHumanPlayer.this));
+                }
 
             }
 
@@ -684,7 +694,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         public void onClick(View v) {
             ArrayList<Integer> trueIndexes = new ArrayList<Integer>();
             if(powerState.getGamePhase() != 5 || powerState.getGamePhase() != 6) return; //we don't want to mess with cities unless it's the right phase
-            if(powerState.getTurn() != powerState.getPlayerId()) return; //it's not your turn!
+            if(powerState.getTurn() != playerNum) return; //it's not your turn!
             for (int i = 0; i < 20; i++) {
 
                 if (v.getId() != cityButtons[i].getId()) continue; //if they didn't click on it, don't worry about it
@@ -693,7 +703,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 //if they don't own any cities, they can select anything
                 //if they own cities, they can only buy neighboring cities
                 //checks to see if the one they clicked is a legitimate neighbor
-                if(powerState.getGameInventories().get(powerState.getPlayerId()).getMyCities().size() == 0 || powerState.getAvailCities().get(i).containsNeighbor(powerState.getGameInventories().get(powerState.getPlayerId()).getMyCities())) {
+                if(powerState.getGameInventories().get(playerNum).getMyCities().size() == 0 || powerState.getAvailCities().get(i).containsNeighbor(powerState.getGameInventories().get(playerNum).getMyCities())) {
                     //if they haven't previously selected anything, all options are open
                     if(isArrayFalse(localCities)) {
                         if (localCities[i]) {

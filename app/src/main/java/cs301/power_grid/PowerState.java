@@ -20,7 +20,6 @@ public class PowerState extends GameState implements Serializable {
     private int phase;
     private int turn;
     private int currentBid;
-    private int playerId;
     private int selectedPlant = -1;
     private ArrayList<City> cities = new ArrayList<City>();
     private boolean[] boughtCities = new boolean[20];
@@ -31,7 +30,7 @@ public class PowerState extends GameState implements Serializable {
     //Constructor
     public PowerState() {
         phase = 0;
-        playerId = 0;
+        turn = 0;
         initiateCityScape();
         initiatePowerPlants();
         scramblePlants(); //at any given moment, Powerplants 0, 1, 2, 3 are for sale
@@ -44,25 +43,51 @@ public class PowerState extends GameState implements Serializable {
 
         int i, j, k, m, n;
 
+        phase = original.getGamePhase();
+        turn = original.getTurn();
+        currentBid = original.getCurrentBid();
+        selectedPlant = original.getSelectedPlant();
+
+        for(i = 0; i < 20; i++){
+            boughtCities[i] = original.getBoughtCities()[i];
+        }
+
+        for(i = 0; i < 20; i++){
+            availableResources.coal[i] = original.getAvailableResources().coal[i];
+            availableResources.trash[i] = original.getAvailableResources().trash[i];
+            if(i < 5){
+                availableResources.uranium[i] = original.getAvailableResources().uranium[i];
+            }
+            if(i < 10){
+                availableResources.oil[i] = original.getAvailableResources().oil[i];
+            }
+        }
+
+
         //get the cities up and running
         for(i = 0; i < original.cities.size(); i++) {
             //copies the city over and goes to the trouble of saving each city name
             cities.add(original.cities.get(i));
             cities.get(i).setName(original.cities.get(i).getName());
 
-            //one by one copies all of the neighbors over to the new copy city
-//            for(j = 0; j < original.cities.get(i).getNeighborhood().size(); j++) {
-//                cities.get(i).addNeighbor(original.cities.get(i).getNeighborhood().get(j));
-//            }
-//            for(j = 0; j < original.cities.get(i).getCosts().size(); j++) {
-//                cities.get(i).addCost(original.cities.get(i).getCosts().get(j));
-//            }
+            for(j = 0; j < original.cities.get(i).getCosts().size(); j++) {
+                cities.get(i).addCost(new Integer(original.cities.get(i).getCosts().get(j)));
+            }
+        }
 
+        //Create neighborhoods
+        for(i = 0; i < original.cities.size(); i++) {
+            //one by one copies all of the neighbors over to the new copy city
+            for(j = 0; j < original.cities.get(i).getNeighborhood().size(); j++) {
+                City matchingCity = findCityByName(original.cities.get(i).getName());
+                cities.get(i).addNeighbor(matchingCity);
+            }
         }
 
         //get the powerplants up and running
         for(k = 0; k< original.salePlants.size(); k++) {
-            salePlants.add(original.salePlants.get(k));
+            Powerplant origPlant = original.salePlants.get(k);
+            salePlants.add(origPlant);
             salePlants.get(k).setCost(original.salePlants.get(k).getCost());
             salePlants.get(k).setPtP(original.salePlants.get(k).getPtP());
             salePlants.get(k).setHp(original.salePlants.get(k).getHp());
@@ -78,9 +103,14 @@ public class PowerState extends GameState implements Serializable {
             gameInventories.get(m).setOil(original.gameInventories.get(m).getOil());
             gameInventories.get(m).setTrash(original.gameInventories.get(m).getTrash());
 
-            for(n = 0; n < original.gameInventories.get(m).getMyPlants().size(); n++) {
-                gameInventories.get(m).addMyPlants(original.gameInventories.get(m).getMyPlants().get(n));
-                gameInventories.get(m).addMyCity(original.gameInventories.get(m).getMyCities().get(n));
+
+        }
+        //Setup inventory->plants
+        for(m = 0; m < original.gameInventories.size(); m++) {
+            for (n = 0; n < original.gameInventories.get(m).getMyPlants().size(); n++) {
+                Powerplant origPlant = original.gameInventories.get(m).getMyPlants().get(n);
+                Powerplant matchingPlant = findPlantByCost(origPlant.getCost());
+                gameInventories.get(m).addMyPlants(matchingPlant);
             }
         }
     }//copyConstructor
@@ -89,13 +119,13 @@ public class PowerState extends GameState implements Serializable {
     public int getTurn() {return turn;}
     public int getSelectedPlant() {return selectedPlant;}
     public boolean[] getBoughtCities() {return boughtCities;}
-    public int getPlayerId() {return playerId;}
     public int getGamePhase() {return phase;}
     public ArrayList<City> getAvailCities() {return cities;}
     public ArrayList<Powerplant> getAvailPowerplant() {return salePlants;}
     public ArrayList<Inventory> getGameInventories() {return gameInventories;}
     public ResourceStore getAvailableResources() {return availableResources;}
     public void removePlant(int index){ salePlants.remove(index);}
+    public int getCurrentBid() {return currentBid;}
 
 
 
@@ -104,7 +134,6 @@ public class PowerState extends GameState implements Serializable {
     public void setBoughtCities(boolean[] purchased) {boughtCities = purchased;}
     public void setSelectedPlant(int index){selectedPlant = index;}
     public void setBoughtCity(int index){boughtCities[index] = true;}
-    public void setPlayerId(int newPlayerId) {playerId = newPlayerId;}
     public void setGamePhase(int refresh) {phase = refresh;}
     public void setAvailCities(ArrayList<City> newCit) {cities = newCit;}
     public void setSalePlants(ArrayList<Powerplant> newPlant) {salePlants = newPlant;}
@@ -442,4 +471,20 @@ public class PowerState extends GameState implements Serializable {
             salePlants.set(i,shuffledPlants[i]);
         }
     }//scramble plants
+
+    public City findCityByName(String cityName){
+        for(int i = 0; i < cities.size(); i++){
+            if(cities.get(i).getName().equals(cityName)) return cities.get(i);
+        }
+        City blankCity = new City();
+        return blankCity;
+    }
+
+    public Powerplant findPlantByCost(int plantCost){
+        for(int i = 0; i< salePlants.size(); i++){
+            if(salePlants.get(i).getCost() == plantCost) return salePlants.get(i);
+        }
+        Powerplant blankPlant = new Powerplant();
+        return blankPlant;
+    }
 }
