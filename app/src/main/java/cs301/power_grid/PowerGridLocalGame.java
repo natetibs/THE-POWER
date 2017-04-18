@@ -16,7 +16,7 @@ public class PowerGridLocalGame extends LocalGame{
     //instance variables
     private PowerState powerState = new PowerState();
     private int price;
-    private int phase = powerState.getGamePhase();
+    private int phase;
     private boolean has10Cities;
 
     @Override
@@ -30,7 +30,7 @@ public class PowerGridLocalGame extends LocalGame{
     @Override
     //determines if a player can move
     protected boolean canMove(int playerIdx) {
-        if (playerIdx == powerState.getPlayerId()){
+        if (playerIdx == powerState.getTurn()){
             return true;
         }
         else {
@@ -71,30 +71,30 @@ public class PowerGridLocalGame extends LocalGame{
     @Override
     protected boolean makeMove(GameAction action) {
         //playerId, 0 = human player, 1 = computer/network player
-        int playerID = powerState.getPlayerId();
-
+        int turn = powerState.getTurn();
+        phase = powerState.getTurn();
         //BidAction
-        if (action instanceof BidAction && playerID == 0){
+        if (action instanceof BidAction && turn == 0){
             powerState.setCurrentBid(((BidAction) action).getBid());
             //change player
-            powerState.setPlayerId(1);
+            powerState.changeTurn();
             return true;
         }
-        else if (action instanceof BidAction && playerID == 1){
+        else if (action instanceof BidAction && turn == 1){
             powerState.setCurrentBid(((BidAction) action).getBid());
             //change player
-            powerState.setPlayerId(0);
+            powerState.changeTurn();
             return true;
         }
 
         //BuyCityAction
-        else if (action instanceof BuyCityAction && playerID == 0) {
+        else if (action instanceof BuyCityAction && turn == 0) {
             boolean didithappen = powerState.getGameInventories().get(0).addMyCity(((BuyCityAction) action).getCity());
             if(!didithappen){} //vibrate screen
             powerState.setBoughtCity(((BuyCityAction) action).getCityIndex());
             return true;
         }
-        else if (action instanceof BuyCityAction && playerID == 1) {
+        else if (action instanceof BuyCityAction && turn == 1) {
             boolean didithappen = powerState.getGameInventories().get(1).addMyCity(((BuyCityAction) action).getCity());
             if(!didithappen){} //vibrate screen
             powerState.setBoughtCity(((BuyCityAction) action).getCityIndex());
@@ -102,7 +102,7 @@ public class PowerGridLocalGame extends LocalGame{
         }
 
         //BuyCoalAction
-        else if(action instanceof BuyCoalAction && playerID == 0) {
+        else if(action instanceof BuyCoalAction && turn == 0) {
             //determine price of coal
             price = (((BuyCoalAction) action).getCoal()/3+1);
             if (powerState.getAvailableResources().coal[((BuyCoalAction) action).getCoal()] && powerState.getGameInventories().get(0).getMoney() >= price) {
@@ -115,7 +115,7 @@ public class PowerGridLocalGame extends LocalGame{
             }
                 return true;
         }
-        else if(action instanceof BuyCoalAction && playerID == 1) {
+        else if(action instanceof BuyCoalAction && turn == 1) {
             price = (((BuyCoalAction) action).getCoal()/3+1);
             if (powerState.getAvailableResources().coal[((BuyCoalAction) action).getCoal()] && powerState.getGameInventories().get(1).getMoney() >= price) {
                 //make that resource unavailable for further purchase
@@ -129,7 +129,7 @@ public class PowerGridLocalGame extends LocalGame{
         }
 
         //BuyOilAction
-        else if(action instanceof BuyOilAction && playerID == 0) {
+        else if(action instanceof BuyOilAction && turn == 0) {
             price = (((BuyOilAction) action).getOil()/3+1);
             if (powerState.getAvailableResources().oil[((BuyOilAction) action).getOil()] && powerState.getGameInventories().get(0).getMoney() >= price) {
                 //make that resource unavailable for further purchase
@@ -141,7 +141,7 @@ public class PowerGridLocalGame extends LocalGame{
             }
             return true;
         }
-        else if(action instanceof BuyOilAction && playerID == 1) {
+        else if(action instanceof BuyOilAction && turn == 1) {
             price = (((BuyOilAction) action).getOil()/3+1);
             if (powerState.getAvailableResources().oil[((BuyOilAction) action).getOil()] && powerState.getGameInventories().get(1).getMoney() >= price) {
                 //make that resource unavailable for further purchase
@@ -155,7 +155,7 @@ public class PowerGridLocalGame extends LocalGame{
         }
 
         //BuyTrashAction
-        else if(action instanceof BuyTrashAction && playerID == 0) {
+        else if(action instanceof BuyTrashAction && turn == 0) {
             price = (((BuyTrashAction) action).getTrash()/3+1);
             if (powerState.getAvailableResources().trash[((BuyTrashAction) action).getTrash()] && powerState.getGameInventories().get(0).getMoney() >= price) {
                 //make that resource unavailable for further purchase
@@ -167,7 +167,7 @@ public class PowerGridLocalGame extends LocalGame{
             }
             return true;
         }
-        else if(action instanceof BuyTrashAction && playerID == 1) {
+        else if(action instanceof BuyTrashAction && turn == 1) {
             price = (((BuyTrashAction) action).getTrash()/3+1);
             if (powerState.getAvailableResources().trash[((BuyTrashAction) action).getTrash()] && powerState.getGameInventories().get(1).getMoney() >= price) {
                 //make that resource unavailable for further purchase
@@ -181,7 +181,7 @@ public class PowerGridLocalGame extends LocalGame{
         }
 
         //BuyUraniumAction
-        else if(action instanceof BuyUraniumAction && playerID == 0) {
+        else if(action instanceof BuyUraniumAction && turn == 0) {
             price = (((BuyUraniumAction) action).getUranium()/3+1);
             if (powerState.getAvailableResources().uranium[((BuyUraniumAction) action).getUranium()] && powerState.getGameInventories().get(0).getMoney() >= price) {
                 //make that resource unavailable for further purchase
@@ -193,7 +193,7 @@ public class PowerGridLocalGame extends LocalGame{
             }
             return true;
         }
-        else if(action instanceof BuyUraniumAction && playerID == 1) {
+        else if(action instanceof BuyUraniumAction && turn == 1) {
             price = (((BuyUraniumAction) action).getUranium()/3+1);
             if (powerState.getAvailableResources().uranium[((BuyUraniumAction) action).getUranium()] && powerState.getGameInventories().get(1).getMoney() >= price) {
                 //make that resource unavailable for further purchase
@@ -207,7 +207,7 @@ public class PowerGridLocalGame extends LocalGame{
         }
 
        /* //DiscardPowerPlantAction
-        else if(action instanceof DiscardPowerPlantAction && playerID == 0) {
+        else if(action instanceof DiscardPowerPlantAction && turn == 0) {
             //find index of powerplant to be discarded
             Powerplant discard = ((DiscardPowerPlantAction) action).getPowerplant();
             int ppIndex = powerState.getGameInventories().get(0).getMyPlants().indexOf(discard);
@@ -215,7 +215,7 @@ public class PowerGridLocalGame extends LocalGame{
             powerState.getGameInventories().get(0).getMyPlants().remove(ppIndex);
             return true;
         }
-        else if(action instanceof DiscardPowerPlantAction && playerID == 1) {
+        else if(action instanceof DiscardPowerPlantAction && turn == 1) {
             //find index of powerplant to be discarded
             Powerplant discard = ((DiscardPowerPlantAction) action).getPowerplant();
             int ppIndex = powerState.getGameInventories().get(1).getMyPlants().indexOf(discard);
@@ -224,40 +224,88 @@ public class PowerGridLocalGame extends LocalGame{
             return true;
         }*/
 
-        //PassAction
-        else if(action instanceof PassAction && playerID == 0) {
-            //if user0 passes on a bid, user1 gets the selected power plant
+        /**PassAction
+         * A user may pass when they decide not to buy a powerplant, resources, cities
+         * tacked onto arraylist of actions when game phases end, Pass action changes phase of game
+         **/
+        else if(action instanceof PassAction && turn == 0) {
+            
+            if (phase == 0) {
+                //First player has chosen to pass on buying a powerplant, change turn
+                //"OK" or "Pass" updates phase.
+                powerState.setGamePhase(2);
+                powerState.changeTurn();
+            }
+            else if (phase == 1 ) {
+                //Bidding on power plant(s). if a user passes on a bid, change phase, dont change turn
+                //first player still has a chance to buy a power plant, dont change turn go back to phase 1
+                //give second player their power plant
+                powerState.getGameInventories().get(1).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
+                powerState.setGamePhase(2);
+            }
+            else if (phase == 2 ) {
+                //Second player has chosen to pass on buying a power plant, change turn
+                powerState.getGameInventories().get(0).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
+                powerState.setGamePhase(3);
+                powerState.changeTurn();
+               
+            }
+            else if (phase == 3 || phase == 4) {
+                //player is done buying resources
+                //change phase and turn
+                powerState.setGamePhase(phase++);
+                powerState.changeTurn();
+            }
+            else if (phase == 5){
+                //first player is done buying cities
+                //change phase and turn
+                powerState.setGamePhase(6);
+                powerState.changeTurn();
+            }
+            else if(phase == 6) {
+                //Second player is done buying cities
+                //pay users based on how many plants they can power
+                //change turn return to first phase
+                powerState.changeTurn();
+                powerState.setGamePhase(0);
 
-            powerState.getGameInventories().get(1).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
-            powerState.removePlant(powerState.getSelectedPlant());
-            //change player
-            powerState.setPlayerId(1);
+            }
+
             return true;
         }
 
-        else if(action instanceof PassAction && playerID == 1) {
+        else if(action instanceof PassAction && turn == 1) {
             //if user1 passes on a bid, user0 gets the selected power plant
             powerState.getGameInventories().get(1).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
             powerState.removePlant(powerState.getSelectedPlant());
             //change player
-            powerState.setPlayerId(0);
+            powerState.changeTurn();
             return true;
         }
 
         //SelectPowerPlantAction
-        else if(action instanceof SelectPowerPlantAction && playerID == 0) {
+        else if(action instanceof SelectPowerPlantAction && turn == 0) {
             //user0 selects a powerplant and presses confirm which will start the bidding process with user1
             //highlight on GUI for humanplayer
-            //change player
-            powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
-            powerState.setPlayerId(1);
+            //change player and phase
+
+            if (((SelectPowerPlantAction) action).getNum() == -1) {
+                powerState.setGamePhase(3);
+                powerState.changeTurn();
+            }
+            else{
+                powerState.setGamePhase(1);
+                powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
+                powerState.changeTurn();
+            }
             return true;
         }
-        else if(action instanceof SelectPowerPlantAction && playerID == 1) {
+        else if(action instanceof SelectPowerPlantAction && turn == 1) {
             //user1 selects a powerplant and presses confirm which will start the bidding process with user0
-            //change player
+            //change player and phase
+            powerState.setGamePhase(1);
             powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
-            powerState.setPlayerId(0);
+            powerState.changeTurn();
             return true;
         }
         else {

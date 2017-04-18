@@ -8,8 +8,7 @@ import game.actionMsg.GameAction;
 
 
 public class PassAction extends GameAction{
-
-    private boolean pass;
+    private boolean bid;
     private Powerplant powerplant;
     /**
      * constructor for GameAction
@@ -18,10 +17,5 @@ public class PassAction extends GameAction{
      */
     public PassAction(GamePlayer player) {
         super(player);
-        pass = true;
-
-
     }
-
-
 }

@@ -81,6 +81,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private TextView numberTextView4;
     private TextView housesTextView4;
     private EditText bidVal;
+    private TextView previousBid;
 
     private int basicGray = Color.rgb(214, 215, 215);
     private int prettyBlue = Color.rgb(0, 221, 255);
@@ -161,17 +162,17 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
     @Override
     public void receiveInfo(GameInfo info) {
-        //if (powerState == null){return;}
-
-        //update GUI - //update user resources and power plants 
-        // setResources(((PowerState) info).getGameInventories().get(0)); 
-        // setPowerPlants(((PowerState) info).getGameInventories().get(0)); 
-        // setPowerPlants(((PowerState) info).getGameInventories().get(1));
+        if (powerState == null){return;}
+        if (moneyTextView == null){return;}
+        //color of computer cities
+        //resource disappears when comp buys
 
         //check if info is a gameState
-        if (info instanceof PowerState) {
-
+        if (info instanceof PowerState){
             PowerState powerState = (PowerState) info;
+            //update GUI - //update user resources and power plants 
+            setResources((powerState.getGameInventories().get(0)));
+            setPowerPlants((powerState.getGameInventories().get(0)));
 
             //update GUI -
             //look at what phase game is in then update accordingly
@@ -179,25 +180,33 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             if (phase == 0) {
                 /*First player chooses a power plant.
                 * "OK" or "Pass" updates phase.*/
-            } else if (phase == 1) {
+                //GUI updates handled by button listener
+            }
+            else if (phase == 1 ) {
                 /*Bidding on power plant(s).
                 * Bidding or "pass" updates phase.*/
-            } else if (phase == 2) {
+                int bid = powerState.getCurrentBid();
+                previousBid.setText("" + bid);
+
+            }
+            else if (phase == 2 ) {
                 /*Previous passer chooses a power plant.
                 * "OK" or "Pass" updates phase.*/
-            } else if (phase == 3) {
+                //GUI updates handled by button listener
+            }
+            else if (phase == 3 || phase == 4) {
                 /*Second player chooses resources.
                 * "OK" or "Pass" updates phase.*/
-            } else if (phase == 4) {
-                /*First player chooses resources.
-                * "OK" or "Pass" updates phase.*/
-            } else if (phase == 5) {
+                //GUI updates handled by button listener, look if computer has bought any resources
+
+            }
+            else if (phase == 5 || phase == 6) {
                 /*Second player chooses cities.
                 * "OK" or "Pass" updates phase.*/
-            } else if (phase == 6) {
-                /*First player chooses cities.
-                * "OK" or "Pass" updates phase.*/
-            } else {
+                //GUI updates handled by button listener, look if computer has bought any cities
+            }
+
+            else {
                 /*Other cases go here*/
             }
         }
@@ -246,7 +255,8 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         selectButton2 = (Button) findViewById(R.id.select2);
         selectButton3 = (Button) findViewById(R.id.select3);
 
-        //bid edit text
+        //bid views
+        previousBid = (TextView) findViewById(R.id.previousBidTV);
         bidVal = (EditText) findViewById(R.id.bidEditText);
         bidValue = Integer.parseInt(bidVal.getText().toString());
 
