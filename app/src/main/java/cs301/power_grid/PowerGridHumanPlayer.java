@@ -85,6 +85,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
     private int basicGray = Color.rgb(214, 215, 215);
     private int prettyBlue = Color.rgb(0, 221, 255);
+    private int opponentRed = Color.rgb(255,68,68);
 
     private Button okayButton;
     private Button passButton;
@@ -160,59 +161,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         return (RelativeLayout) findViewById(R.id.activity_main);
     }
 
-    @Override
-    public void receiveInfo(GameInfo info) {
-        if (powerState == null){return;}
-        if (moneyTextView == null){return;}
-        //color of computer cities
-        //resource disappears when comp buys
 
-        //check if info is a gameState
-        if (info instanceof PowerState){
-            PowerState powerState = (PowerState) info;
-            //update GUI - //update user resources and power plants 
-            setResources((powerState.getGameInventories().get(0)));
-            setPowerPlants((powerState.getGameInventories().get(0)));
-
-            //update GUI -
-            //look at what phase game is in then update accordingly
-            int phase = powerState.getGamePhase();
-            if (phase == 0) {
-                /*First player chooses a power plant.
-                * "OK" or "Pass" updates phase.*/
-                //GUI updates handled by button listener
-                //color cities other player has bought
-
-            }
-            else if (phase == 1 ) {
-                /*Bidding on power plant(s).
-                * Bidding or "pass" updates phase.*/
-                int bid = powerState.getCurrentBid();
-                previousBid.setText("" + bid);
-
-            }
-            else if (phase == 2 ) {
-                /*Previous passer chooses a power plant.
-                * "OK" or "Pass" updates phase.*/
-                //GUI updates handled by button listener
-            }
-            else if (phase == 3 || phase == 4) {
-                /*Second player chooses resources.
-                * "OK" or "Pass" updates phase.*/
-                //GUI updates handled by button listener, look if computer has bought any resources
-
-            }
-            else if (phase == 5 || phase == 6) {
-                /*Second player chooses cities.
-                * "OK" or "Pass" updates phase.*/
-                //GUI updates handled by button listener, look if computer has bought any cities
-            }
-
-            else {
-                /*Other cases go here*/
-            }
-        }
-    }
 
     @Override
     public void setAsGui(GameMainActivity activity) {
@@ -437,6 +386,114 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         }
 
     }
+
+    /* *receiveInfo
+     *
+     * recieves a gamestate
+     * @param info
+     */
+    @Override
+    public void receiveInfo(GameInfo info) {
+        powerState = (PowerState) info;
+        if (powerState == null){return;}
+
+        //if (moneyTextView == null){return;}
+        //color of computer cities
+        //resource disappears when comp buys
+
+        //check if info is a gameState
+        if (info instanceof PowerState){
+            //update GUI - //update user resources and power plants  every phase
+            //look at which user the human player has displayed on their spinners
+            int resourcePos = resourcesSpinner.getSelectedItemPosition();
+            int powerPlantPos = powerPlantsSpinner.getSelectedItemPosition();
+            setResources((powerState.getGameInventories().get(resourcePos)));
+            setPowerPlants((powerState.getGameInventories().get(powerPlantPos)));
+
+            //display the power plants up for auction
+            showPlants();
+
+            //update GUI -
+            //look at what phase game is in then update accordingly depending on changes made in phase before
+            int phase = powerState.getGamePhase();
+            if (phase == 0) {
+                /*First player chooses a power plant.
+                * "OK" or "Pass" updates phase.*/
+                //GUI updates handled by button listener
+                //color cities other player has bought
+                int ownedCities = powerState.getGameInventories().get(1).getMyCities().size();
+                for (int i = 0; i <= ownedCities; i++){
+                   //how do i check which city a user owns and then color it that color
+                    //use opponentRed Color
+                }
+
+            }
+            else if (phase == 1 ) {
+                /*Bidding on power plant(s).
+                * Bidding or "pass" updates phase.*/
+                int bid = powerState.getCurrentBid();
+                previousBid.setText("" + bid);
+
+            }
+            else if (phase == 2 ) {
+                /*Previous passer chooses a power plant.
+                * "OK" or "Pass" updates phase.*/
+                //GUI updates handled by button listener
+            }
+            else if (phase == 3 || phase == 4) {
+                /*Second player chooses resources.
+                * "OK" or "Pass" updates phase.*/
+                //check if all of the users resources have been purchased, if not send that action
+                if(actionList.size() > 0) {
+                    game.sendAction(actionList.remove(0));
+                }
+                //look and see which resources user bought, make them disappear
+            }
+            else if (phase == 5 || phase == 6) {
+                /*Second player chooses cities.
+                * "OK" or "Pass" updates phase.*/
+                //check if all of users cities have been purchased, if not send that action
+                if(cityActionList.size() > 0) {
+                    game.sendAction(cityActionList.remove(0));
+                }
+                //look and see which resources or cities user bought, change views accordingly
+            }
+
+            else {
+                /*Other cases go here ?*/
+            }
+        }
+    }
+    /** showPlants
+     *
+     * displays plants on the powerPlants bar that is at the top of the screen
+     *
+     */
+    private void showPlants(){
+
+            powerPlant1Cost.setText("" + powerState.getAvailPowerplant().get(0).getCost());
+            powerPlant1Type.setText(powerState.getAvailPowerplant().get(0).getKind());
+            powerPlant1Number.setText("" + powerState.getAvailPowerplant().get(0).getPtP());
+            powerPlant1House.setText("" + powerState.getAvailPowerplant().get(0).getHp());
+
+            powerPlant2Cost.setText("" + powerState.getAvailPowerplant().get(1).getCost());
+            powerPlant2Type.setText(powerState.getAvailPowerplant().get(1).getKind());
+            powerPlant2Number.setText("" + powerState.getAvailPowerplant().get(1).getPtP());
+            powerPlant2House.setText("" + powerState.getAvailPowerplant().get(1).getHp());
+
+            powerPlant3Cost.setText("" + powerState.getAvailPowerplant().get(2).getCost());
+            powerPlant3Type.setText(powerState.getAvailPowerplant().get(2).getKind());
+            powerPlant3Number.setText("" + powerState.getAvailPowerplant().get(2).getPtP());
+            powerPlant3House.setText("" + powerState.getAvailPowerplant().get(2).getHp());
+
+            powerPlant4Cost.setText("" + powerState.getAvailPowerplant().get(4).getCost());
+            powerPlant4Type.setText(powerState.getAvailPowerplant().get(4).getKind());
+            powerPlant4Number.setText("" + powerState.getAvailPowerplant().get(4).getPtP());
+            powerPlant4House.setText("" + powerState.getAvailPowerplant().get(4).getHp());
+
+    }
+
+
 
     /**
      * setResources
