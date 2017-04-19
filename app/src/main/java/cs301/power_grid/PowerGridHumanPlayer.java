@@ -181,6 +181,8 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 /*First player chooses a power plant.
                 * "OK" or "Pass" updates phase.*/
                 //GUI updates handled by button listener
+                //color cities other player has bought
+
             }
             else if (phase == 1 ) {
                 /*Bidding on power plant(s).

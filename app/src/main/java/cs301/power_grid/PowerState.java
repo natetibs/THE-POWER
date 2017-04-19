@@ -25,7 +25,7 @@ public class PowerState extends GameState implements Serializable {
     private boolean[] boughtCities = new boolean[20];
     private ArrayList<Powerplant> salePlants = new ArrayList<Powerplant>();
     private ArrayList<Inventory> gameInventories = new ArrayList<Inventory>(); //making an array list because we want to leave the option open for more than 2 players for later code
-    private ResourceStore availableResources;
+    private ResourceStore availableResources = new ResourceStore();
 
     //Constructor
     public PowerState() {
@@ -52,7 +52,7 @@ public class PowerState extends GameState implements Serializable {
             boughtCities[i] = original.getBoughtCities()[i];
         }
 
-        for(i = 0; i < 20; i++){
+        for(i = 0; i < 15; i++){
             availableResources.coal[i] = original.getAvailableResources().coal[i];
             availableResources.trash[i] = original.getAvailableResources().trash[i];
             if(i < 5){
@@ -70,18 +70,20 @@ public class PowerState extends GameState implements Serializable {
             cities.add(original.cities.get(i));
             cities.get(i).setName(original.cities.get(i).getName());
 
-            for(j = 0; j < original.cities.get(i).getCosts().size(); j++) {
-                cities.get(i).addCost(new Integer(original.cities.get(i).getCosts().get(j)));
-            }
+
         }
 
         //Create neighborhoods
         for(i = 0; i < original.cities.size(); i++) {
             //one by one copies all of the neighbors over to the new copy city
-            for(j = 0; j < original.cities.get(i).getNeighborhood().size(); j++) {
-                City matchingCity = findCityByName(original.cities.get(i).getName());
-                cities.get(i).addNeighbor(matchingCity);
-            }
+//
+//            for(j = 0; j < original.cities.get(i).getNeighborhood().size(); j++) {
+//                City matchingCity = findCityByName(original.cities.get(i).getName());
+//                cities.get(i).addNeighbor(matchingCity);
+//            }
+//            for(j = 0; j < original.cities.get(i).getCosts().size(); j++) {
+//                cities.get(i).addCost(new Integer(original.cities.get(i).getCosts().get(j)));
+//            }
         }
 
         //get the powerplants up and running
