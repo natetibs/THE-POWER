@@ -13,8 +13,9 @@ public class City implements Serializable{
     private static final long serialVersionUID = 986136194786931L;
     private int index;
     private String name;
-    private ArrayList<City> neighborhood = new ArrayList<City>(); //contains a list of all the neighbors of cities this city has
+    private ArrayList<Integer> neighborhood = new ArrayList<Integer>(); //contains a list of all the neighbors of cities this city has
     private ArrayList<Integer> costs = new ArrayList<Integer>();
+
 
     public City(String myName){
         name = myName;
@@ -25,7 +26,7 @@ public class City implements Serializable{
         index = myIndex;
     }
 
-    public City(String myName, ArrayList<City> community, ArrayList<Integer> prices){
+    public City(String myName, ArrayList<Integer> community, ArrayList<Integer> prices){
 
         name = myName;
 
@@ -41,22 +42,23 @@ public class City implements Serializable{
         name = "Nathan";
     }
 
-    public ArrayList<City> getNeighborhood(){return neighborhood;}
+    public ArrayList<Integer> getNeighborhood(){return neighborhood;}
     public String getName(){return name;}
     public ArrayList<Integer> getCosts(){return costs;}
 
-    public void addNeighbor(City n){neighborhood.add(n);} //add neighbors to the list
+    public void addNeighbor(int n){neighborhood.add(n);} //add neighbors to the list
     public void setName(String n){name = n;} //cities are identified by name
+    public void setIndex(int n){index = n;}
     public void addCost(int n){costs.add(n);}
 
-    public boolean isNeighbor(City possibleNeighbor){
+    public boolean isNeighbor(int possibleNeighbor){
         for(int i = 0; i < neighborhood.size(); i++){
-            if(neighborhood.get(i).equals(possibleNeighbor)) return true;
+            if(neighborhood.get(i) == possibleNeighbor) return true;
         }
         return false;
     }
 
-    public boolean containsNeighbor(ArrayList<City> possibleNeighbors) {
+    public boolean containsNeighbor(ArrayList<Integer> possibleNeighbors) {
         for (int i = 0; i < possibleNeighbors.size(); i++) {
             if (isNeighbor(possibleNeighbors.get(i))) return true;
         }
@@ -66,5 +68,6 @@ public class City implements Serializable{
     public int getIndex() {
         return index;
     }
+
 }
 

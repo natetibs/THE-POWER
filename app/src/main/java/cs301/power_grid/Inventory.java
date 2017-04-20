@@ -19,6 +19,7 @@ public class Inventory implements Serializable{
     private ArrayList<Powerplant> myPlants = new ArrayList<Powerplant>();
     private ArrayList<City> myCities = new ArrayList<City>();
 
+
     public Inventory() {
         //initial game setup
         money = 50;
@@ -65,16 +66,14 @@ public class Inventory implements Serializable{
             }
 
         }
-        //has to check all the neighboring cities to make sure it is a success
-        //goes through every neighbor in every city that you have
-        for(j = 0; j < myCities.size(); j++) {
-            for (i = 0; i < myCities.get(j).getNeighborhood().size(); i++) {
-                if (myCities.get(j).getNeighborhood().get(i).getName().equals(mcCity.getName())) {
-                    myCities.add(mcCity);
-                    return true;
-                }
-            }
+        myCities.add(mcCity);
+        return true; //mission fails because the city you wish to add is not in the neighborhood
+    }
+    public ArrayList<Integer> getIndexArray(ArrayList<City> cityArrayList){
+        ArrayList<Integer> cityIndexes = new ArrayList<Integer>();
+        for(int i = 0; i< cityArrayList.size(); i++){
+            cityIndexes.add(cityArrayList.get(i).getIndex());
         }
-        return false; //mission fails because the city you wish to add is not in the neighborhood
+        return cityIndexes;
     }
 }

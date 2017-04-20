@@ -102,7 +102,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     //denver, seattle, sf, la, missoula, boise, phx, omaha, okc, dallas, hou, stlou, chi, mem, new orl, det, atl, miami, bos, nyc
 
     private Button[] cityButtons = new Button[20];
-    
+
     //resource buttons
     private ImageButton[] coalButtons = new ImageButton[15];
     private ImageButton[] oilButtons = new ImageButton[10];
@@ -701,7 +701,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 //if they don't own any cities, they can select anything
                 //if they own cities, they can only buy neighboring cities
                 //checks to see if the one they clicked is a legitimate neighbor
-                if(powerState.getGameInventories().get(playerNum).getMyCities().size() == 0 || powerState.getAvailCities().get(i).containsNeighbor(powerState.getGameInventories().get(playerNum).getMyCities())) {
+                if(powerState.getGameInventories().get(playerNum).getMyCities().size() == 0 || powerState.getAvailCities().get(i).containsNeighbor(powerState.getGameInventories().get(playerNum).getIndexArray(powerState.getGameInventories().get(playerNum).getMyCities()))) {
                     //if they haven't previously selected anything, all options are open
                     if(isArrayFalse(localCities)) {
                         if (localCities[i]) {
@@ -718,7 +718,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     else{
                         trueIndexes = trueIndexes(localCities);
                         for(int j = 0; j < trueIndexes.size(); j++){
-                            if(powerState.getAvailCities().get(i).isNeighbor(powerState.getAvailCities().get(trueIndexes.get(j)))){
+                            if(powerState.getAvailCities().get(i).isNeighbor((trueIndexes.get(j)))){
                                 if (localCities[i]) {
                                     cityButtons[i].setBackgroundColor(basicGray);
                                     localCities[i] = false;

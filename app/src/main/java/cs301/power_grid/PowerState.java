@@ -67,24 +67,21 @@ public class PowerState extends GameState implements Serializable {
         //get the cities up and running
         for(i = 0; i < original.cities.size(); i++) {
             //copies the city over and goes to the trouble of saving each city name
-            cities.add(original.cities.get(i));
+            City tempCity = new City();
+            cities.add(tempCity);
             cities.get(i).setName(original.cities.get(i).getName());
+            cities.get(i).setIndex(original.cities.get(i).getIndex());
+            for(j = 0; j < original.cities.get(i).getNeighborhood().size(); j++) {
+                cities.get(i).addNeighbor(original.cities.get(i).getNeighborhood().get(j));
+            }
+            for(j = 0; j < original.cities.get(i).getCosts().size(); j++) {
+                cities.get(i).addCost(original.cities.get(i).getCosts().get(j));
+            }
 
 
         }
 
-        //Create neighborhoods
-        for(i = 0; i < original.cities.size(); i++) {
-            //one by one copies all of the neighbors over to the new copy city
-//
-//            for(j = 0; j < original.cities.get(i).getNeighborhood().size(); j++) {
-//                City matchingCity = findCityByName(original.cities.get(i).getName());
-//                cities.get(i).addNeighbor(matchingCity);
-//            }
-//            for(j = 0; j < original.cities.get(i).getCosts().size(); j++) {
-//                cities.get(i).addCost(new Integer(original.cities.get(i).getCosts().get(j)));
-//            }
-        }
+
 
         //get the powerplants up and running
         for(k = 0; k< original.salePlants.size(); k++) {
@@ -180,207 +177,207 @@ public class PowerState extends GameState implements Serializable {
         //add the appropriate neighbors for each city and the appropriate costs
 
         //Seattle's neighbors
-        cities.get(0).addNeighbor(cities.get(1));
+        cities.get(0).addNeighbor(1);
         cities.get(0).addCost(22);
-        cities.get(0).addNeighbor(cities.get(3));
+        cities.get(0).addNeighbor(3);
         cities.get(0).addCost(8);
-        cities.get(0).addNeighbor(cities.get(4));
+        cities.get(0).addNeighbor(4);
         cities.get(0).addCost(12);
 
         //San Francisco's neighbors
-        cities.get(1).addNeighbor(cities.get(0));
+        cities.get(1).addNeighbor(0);
         cities.get(1).addCost(22);
-        cities.get(1).addNeighbor(cities.get(2));
+        cities.get(1).addNeighbor(2);
         cities.get(1).addCost(11);
-        cities.get(1).addNeighbor(cities.get(3));
+        cities.get(1).addNeighbor(3);
         cities.get(1).addCost(15);
-        cities.get(1).addNeighbor(cities.get(5));
+        cities.get(1).addNeighbor(5);
         cities.get(1).addCost(17);
 
         //Los Angeles's neighbors
-        cities.get(2).addNeighbor(cities.get(1));
+        cities.get(2).addNeighbor(1);
         cities.get(2).addCost(11);
-        cities.get(2).addNeighbor(cities.get(3));
+        cities.get(2).addNeighbor(3);
         cities.get(2).addCost(19);
-        cities.get(2).addNeighbor(cities.get(5));
+        cities.get(2).addNeighbor(5);
         cities.get(2).addCost(10);
 
         //Boise's neighbors
-        cities.get(3).addNeighbor(cities.get(0));
+        cities.get(3).addNeighbor(0);
         cities.get(3).addCost(8);
-        cities.get(3).addNeighbor(cities.get(1));
+        cities.get(3).addNeighbor(1);
         cities.get(3).addCost(15);
-        cities.get(3).addNeighbor(cities.get(2));
+        cities.get(3).addNeighbor(2);
         cities.get(3).addCost(19);
-        cities.get(3).addNeighbor(cities.get(4));
+        cities.get(3).addNeighbor(4);
         cities.get(3).addCost(6);
-        cities.get(3).addNeighbor(cities.get(5));
+        cities.get(3).addNeighbor(5);
         cities.get(3).addCost(20);
-        cities.get(3).addNeighbor(cities.get(6));
+        cities.get(3).addNeighbor(6);
         cities.get(3).addCost(16);
 
         //Missoula's neighbors
-        cities.get(4).addNeighbor(cities.get(0));
+        cities.get(4).addNeighbor(0);
         cities.get(4).addCost(12);
-        cities.get(4).addNeighbor(cities.get(3));
+        cities.get(4).addNeighbor(3);
         cities.get(4).addCost(6);
-        cities.get(4).addNeighbor(cities.get(7));
+        cities.get(4).addNeighbor(7);
         cities.get(4).addCost(17);
 
         //Phoenix's neighbors
-        cities.get(5).addNeighbor(cities.get(1));
+        cities.get(5).addNeighbor(1);
         cities.get(5).addCost(17);
-        cities.get(5).addNeighbor(cities.get(2));
+        cities.get(5).addNeighbor(2);
         cities.get(5).addCost(10);
-        cities.get(5).addNeighbor(cities.get(3));
+        cities.get(5).addNeighbor(3);
         cities.get(5).addCost(20);
-        cities.get(5).addNeighbor(cities.get(6));
+        cities.get(5).addNeighbor(6);
         cities.get(5).addCost(14);
-        cities.get(5).addNeighbor(cities.get(9));
+        cities.get(5).addNeighbor(9);
         cities.get(5).addCost(28);
 
         //Denver's neighbors
-        cities.get(6).addNeighbor(cities.get(3));
+        cities.get(6).addNeighbor(3);
         cities.get(6).addCost(16);
-        cities.get(6).addNeighbor(cities.get(5));
+        cities.get(6).addNeighbor(5);
         cities.get(6).addCost(14);
-        cities.get(6).addNeighbor(cities.get(7));
+        cities.get(6).addNeighbor(7);
         cities.get(6).addCost(2);
-        cities.get(6).addNeighbor(cities.get(8));
+        cities.get(6).addNeighbor(8);
         cities.get(6).addCost(11);
 
         //Omaha's neighbors
-        cities.get(7).addNeighbor(cities.get(4));
+        cities.get(7).addNeighbor(4);
         cities.get(7).addCost(17);
-        cities.get(7).addNeighbor(cities.get(6));
+        cities.get(7).addNeighbor(6);
         cities.get(7).addCost(2);
-        cities.get(7).addNeighbor(cities.get(8));
+        cities.get(7).addNeighbor(8);
         cities.get(7).addCost(13);
-        cities.get(7).addNeighbor(cities.get(13));
+        cities.get(7).addNeighbor(13);
         cities.get(7).addCost(7);
-        cities.get(7).addNeighbor(cities.get(14));
+        cities.get(7).addNeighbor(14);
         cities.get(7).addCost(8);
 
         //Oklahoma City's neighbors
-        cities.get(8).addNeighbor(cities.get(6));
+        cities.get(8).addNeighbor(6);
         cities.get(8).addCost(11);
-        cities.get(8).addNeighbor(cities.get(7));
+        cities.get(8).addNeighbor(7);
         cities.get(8).addCost(13);
-        cities.get(8).addNeighbor(cities.get(9));
+        cities.get(8).addNeighbor(9);
         cities.get(8).addCost(8);
-        cities.get(8).addNeighbor(cities.get(12));
+        cities.get(8).addNeighbor(12);
         cities.get(8).addCost(5);
-        cities.get(8).addNeighbor(cities.get(13));
+        cities.get(8).addNeighbor(13);
         cities.get(8).addCost(5);
 
         //Dallas's neighbors
-        cities.get(9).addNeighbor(cities.get(5));
+        cities.get(9).addNeighbor(5);
         cities.get(9).addCost(28);
-        cities.get(9).addNeighbor(cities.get(8));
+        cities.get(9).addNeighbor(8);
         cities.get(9).addCost(8);
-        cities.get(9).addNeighbor(cities.get(10));
+        cities.get(9).addNeighbor(10);
         cities.get(9).addCost(7);
-        cities.get(9).addNeighbor(cities.get(11));
+        cities.get(9).addNeighbor(11);
         cities.get(9).addCost(3);
-        cities.get(9).addNeighbor(cities.get(12));
+        cities.get(9).addNeighbor(12);
         cities.get(9).addCost(7);
-        cities.get(9).addNeighbor(cities.get(16));
+        cities.get(9).addNeighbor(16);
         cities.get(9).addCost(15);
 
         //Houston's neighbors
-        cities.get(10).addNeighbor(cities.get(9));
+        cities.get(10).addNeighbor(9);
         cities.get(10).addCost(7);
-        cities.get(10).addNeighbor(cities.get(11));
+        cities.get(10).addNeighbor(11);
         cities.get(10).addCost(4);
 
         //New Orleans' neighbors
-        cities.get(11).addNeighbor(cities.get(9));
+        cities.get(11).addNeighbor(9);
         cities.get(11).addCost(3);
-        cities.get(11).addNeighbor(cities.get(10));
+        cities.get(11).addNeighbor(10);
         cities.get(11).addCost(4);
-        cities.get(11).addNeighbor(cities.get(16));
+        cities.get(11).addNeighbor(16);
         cities.get(11).addCost(10);
-        cities.get(11).addNeighbor(cities.get(17));
+        cities.get(11).addNeighbor(17);
         cities.get(11).addCost(13);
 
         //Memphis' neighbors
-        cities.get(12).addNeighbor(cities.get(8));
+        cities.get(12).addNeighbor(8);
         cities.get(12).addCost(5);
-        cities.get(12).addNeighbor(cities.get(9));
+        cities.get(12).addNeighbor(9);
         cities.get(12).addCost(7);
-        cities.get(12).addNeighbor(cities.get(13));
+        cities.get(12).addNeighbor(13);
         cities.get(12).addCost(3);
-        cities.get(12).addNeighbor(cities.get(16));
+        cities.get(12).addNeighbor(16);
         cities.get(12).addCost(10);
 
         //St. Louis' neighbors
-        cities.get(13).addNeighbor(cities.get(7));
+        cities.get(13).addNeighbor(7);
         cities.get(13).addCost(7);
-        cities.get(13).addNeighbor(cities.get(8));
+        cities.get(13).addNeighbor(8);
         cities.get(13).addCost(5);
-        cities.get(13).addNeighbor(cities.get(12));
+        cities.get(13).addNeighbor(12);
         cities.get(13).addCost(3);
-        cities.get(13).addNeighbor(cities.get(14));
+        cities.get(13).addNeighbor(14);
         cities.get(13).addCost(12);
-        cities.get(13).addNeighbor(cities.get(16));
+        cities.get(13).addNeighbor(16);
         cities.get(13).addCost(12);
-        cities.get(13).addNeighbor(cities.get(18));
+        cities.get(13).addNeighbor(18);
         cities.get(13).addCost(14);
 
         //Chicago's neighbors
-        cities.get(14).addNeighbor(cities.get(7));
+        cities.get(14).addNeighbor(7);
         cities.get(14).addCost(8);
-        cities.get(14).addNeighbor(cities.get(13));
+        cities.get(14).addNeighbor(13);
         cities.get(14).addCost(12);
-        cities.get(14).addNeighbor(cities.get(15));
+        cities.get(14).addNeighbor(15);
         cities.get(14).addCost(5);
 
         //Detroit's neighbors
-        cities.get(15).addNeighbor(cities.get(14));
+        cities.get(15).addNeighbor(14);
         cities.get(15).addCost(5);
-        cities.get(15).addNeighbor(cities.get(18));
+        cities.get(15).addNeighbor(18);
         cities.get(15).addCost(5);
-        cities.get(15).addNeighbor(cities.get(19));
+        cities.get(15).addNeighbor(19);
         cities.get(15).addCost(6);
 
         //Atlanta's neighbors
-        cities.get(16).addNeighbor(cities.get(9));
+        cities.get(16).addNeighbor(9);
         cities.get(16).addCost(15);
-        cities.get(16).addNeighbor(cities.get(11));
+        cities.get(16).addNeighbor(11);
         cities.get(16).addCost(10);
-        cities.get(16).addNeighbor(cities.get(12));
+        cities.get(16).addNeighbor(12);
         cities.get(16).addCost(10);
-        cities.get(16).addNeighbor(cities.get(13));
+        cities.get(16).addNeighbor(13);
         cities.get(16).addCost(12);
-        cities.get(16).addNeighbor(cities.get(17));
+        cities.get(16).addNeighbor(17);
         cities.get(16).addCost(9);
-        cities.get(16).addNeighbor(cities.get(18));
+        cities.get(16).addNeighbor(18);
         cities.get(16).addCost(20);
 
         //Miami's neighbors
-        cities.get(17).addNeighbor(cities.get(11));
+        cities.get(17).addNeighbor(11);
         cities.get(17).addCost(13);
-        cities.get(17).addNeighbor(cities.get(16));
+        cities.get(17).addNeighbor(16);
         cities.get(17).addCost(9);
-        cities.get(17).addNeighbor(cities.get(18));
+        cities.get(17).addNeighbor(18);
         cities.get(17).addCost(23);
 
         //New York City's neighbors
-        cities.get(18).addNeighbor(cities.get(13));
+        cities.get(18).addNeighbor(13);
         cities.get(18).addCost(14);
-        cities.get(18).addNeighbor(cities.get(15));
+        cities.get(18).addNeighbor(15);
         cities.get(18).addCost(5);
-        cities.get(18).addNeighbor(cities.get(16));
+        cities.get(18).addNeighbor(16);
         cities.get(18).addCost(20);
-        cities.get(18).addNeighbor(cities.get(17));
+        cities.get(18).addNeighbor(17);
         cities.get(18).addCost(23);
-        cities.get(18).addNeighbor(cities.get(19));
+        cities.get(18).addNeighbor(19);
         cities.get(18).addCost(3);
 
         //Boston's neighbors
-        cities.get(19).addNeighbor(cities.get(15));
+        cities.get(19).addNeighbor(15);
         cities.get(19).addCost(6);
-        cities.get(19).addNeighbor(cities.get(18));
+        cities.get(19).addNeighbor(18);
         cities.get(19).addCost(3);
     }//initiateCityScape
 
