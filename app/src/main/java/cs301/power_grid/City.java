@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class City implements Serializable{
     // to satisfy Serializable interface
     private static final long serialVersionUID = 986136194786931L;
-
+    private int index;
     private String name;
     private ArrayList<City> neighborhood = new ArrayList<City>(); //contains a list of all the neighbors of cities this city has
     private ArrayList<Integer> costs = new ArrayList<Integer>();
@@ -19,6 +19,12 @@ public class City implements Serializable{
     public City(String myName){
         name = myName;
     }
+
+    public City(String myName, int myIndex) {
+        name = myName;
+        index = myIndex;
+    }
+
     public City(String myName, ArrayList<City> community, ArrayList<Integer> prices){
 
         name = myName;
@@ -55,6 +61,10 @@ public class City implements Serializable{
             if (isNeighbor(possibleNeighbors.get(i))) return true;
         }
         return false;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
 

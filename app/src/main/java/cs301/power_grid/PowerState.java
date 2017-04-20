@@ -156,26 +156,26 @@ public class PowerState extends GameState implements Serializable {
 
         //initialize all the cities with their name
         //note that their neighbors are not involved
-        cities.add(new City("Seattle")); //0
-        cities.add(new City("San Francisco")); //1
-        cities.add(new City("Los Angeles")); //2
-        cities.add(new City("Boise")); //3
-        cities.add(new City("Missoula")); //4
-        cities.add(new City("Phoenix")); //5
-        cities.add(new City("Denver")); //6
-        cities.add(new City("Omaha")); //7
-        cities.add(new City("Oklahoma City")); //8
-        cities.add(new City("Dallas")); //9
-        cities.add(new City("Houston")); //10
-        cities.add(new City("New Orleans")); //11
-        cities.add(new City("Memphis")); //12
-        cities.add(new City("Saint Louis")); //13
-        cities.add(new City("Chicago")); //14
-        cities.add(new City("Detroit")); //15
-        cities.add(new City("Atlanta")); //16
-        cities.add(new City("Miami")); //17
-        cities.add(new City("New York City")); //18
-        cities.add(new City("Boston")); //19
+        cities.add(new City("Seattle", 0)); //0
+        cities.add(new City("San Francisco", 1)); //1
+        cities.add(new City("Los Angeles", 2)); //2
+        cities.add(new City("Boise", 3)); //3
+        cities.add(new City("Missoula", 4)); //4
+        cities.add(new City("Phoenix", 5)); //5
+        cities.add(new City("Denver", 6)); //6
+        cities.add(new City("Omaha", 7)); //7
+        cities.add(new City("Oklahoma City", 8)); //8
+        cities.add(new City("Dallas", 9)); //9
+        cities.add(new City("Houston", 10)); //10
+        cities.add(new City("New Orleans", 11)); //11
+        cities.add(new City("Memphis", 12)); //12
+        cities.add(new City("Saint Louis", 13)); //13
+        cities.add(new City("Chicago", 14)); //14
+        cities.add(new City("Detroit", 15)); //15
+        cities.add(new City("Atlanta", 16)); //16
+        cities.add(new City("Miami", 17)); //17
+        cities.add(new City("New York City", 18)); //18
+        cities.add(new City("Boston", 19)); //19
 
         //add the appropriate neighbors for each city and the appropriate costs
 

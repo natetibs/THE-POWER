@@ -310,9 +310,8 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
      */
     @Override
     public void receiveInfo(GameInfo info) {
-        //set instance variable to null, initialize it in setAsGui
+        //check if guiIsReady - if setAsGui has been called
         if (guiIsReady){
-
             //check if info is a gameState
             if (info instanceof PowerState){
                 powerState = (PowerState) info;
@@ -333,9 +332,13 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     * "OK" or "Pass" updates phase.*/
                     //GUI updates handled by button listener
                     //color cities other player has bought
-                    int ownedCities = powerState.getGameInventories().get(1).getMyCities().size();
-                    for (int i = 0; i <= ownedCities; i++){
-                        //how do i check which city a user owns and then color it that color
+                    int opponentNumCities = powerState.getGameInventories().get(1).getMyCities().size();
+
+                    for (int i = 0; i <= opponentNumCities; i++){
+                        //find the city index that the opponent bought
+                        int cityIndex = powerState.getGameInventories().get(1).getMyCities().get(i).getIndex();
+                        //color the buttons that the opponent owns
+                        cityButtons[cityIndex].setBackgroundColor(opponentRed);
                         //use opponentRed Color
                     }
                 }
@@ -349,18 +352,20 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 else if (phase == 2 ) {
                     /*Previous passer chooses a power plant.
                     * "OK" or "Pass" updates phase.*/
-                    //GUI updates handled by button listener
+                    //GUI updates handled by button listeners
                 }
                 else if (phase == 3 || phase == 4) {
                     /*Second player chooses resources.
                     * "OK" or "Pass" updates phase.*/
                     //check if all of the users resources have been purchased, if not send that action
                     if(actionList.size() > 0) {
-
-                        //resource disappears when comp buys
+                        //send action according to what resource user bought, remove it from the list
                         game.sendAction(actionList.remove(0));
                     }
-                    //look and see which resources user bought, make them disappear
+                    else if (actionList.size() == 0){
+                        //if the list is empty, change the phase with a pass action
+                        game.sendAction(new PassAction(this));
+                    }
                 }
                 else if (phase == 5 || phase == 6) {
                     /*Second player chooses cities.
@@ -727,7 +732,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                         }//end for loop
                     }
                 }
-
             }//end for loop
         }
     }//citybuttonlistener
