@@ -92,7 +92,7 @@ public class PowerGridDumbComputerPlayer extends GameComputerPlayer {
                 /*You could just put this in an else statement after evaluating randOKPass below.*/
                 PassAction pa = new PassAction(PowerGridDumbComputerPlayer.this);
                 game.sendAction(pa);
-                if(randOKPass == 1) {
+                if(randOKPass == 0) {
                     SelectPowerPlantAction sppa = new SelectPowerPlantAction(PowerGridDumbComputerPlayer.this, selectNum);
                     game.sendAction(sppa);
                 }
