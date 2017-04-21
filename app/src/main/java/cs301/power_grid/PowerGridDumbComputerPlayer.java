@@ -17,11 +17,6 @@ public class PowerGridDumbComputerPlayer extends GameComputerPlayer {
     private GameMainActivity activity;
     PowerState powerState = new PowerState();
     private int selectNum = -1;
-    private int bidValue = -1;
-    private ResourceStore localStore = new ResourceStore();
-    private Powerplant tempPlant;
-    private Powerplant selectedPowerPlant;
-    private boolean isClicked = false;
     /**
      * constructor
      *
