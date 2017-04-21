@@ -87,7 +87,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private TextView numberTextView4;
     private TextView housesTextView4;
 
-    private EditText bidVal;
+    private EditText bidEditText;
     private TextView previousBid;
 
     private int basicGray = Color.rgb(214, 215, 215);
@@ -152,9 +152,14 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         selectButton2 = (Button) myActivity.findViewById(R.id.select2);
         selectButton3 = (Button) myActivity.findViewById(R.id.select3);
 
+        selectButton0.setOnClickListener(new select0ButListener());
+        selectButton1.setOnClickListener(new select1ButListener());
+        selectButton2.setOnClickListener(new select2ButListener());
+        selectButton3.setOnClickListener(new select3ButListener());
+
         //bid views
         previousBid = (TextView) myActivity.findViewById(R.id.previousBidTV);
-        bidVal = (EditText) myActivity.findViewById(R.id.bidEditText);
+        bidEditText = (EditText) myActivity.findViewById(R.id.bidEditText);
 
         //bidValue = Integer.parseInt(bidVal.getText().toString());
 
@@ -184,7 +189,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         coalNumView = (TextView) myActivity.findViewById(R.id.coalNumView);
         oilNumView = (TextView) myActivity.findViewById(R.id.oilNumView);
         trashNumView = (TextView) myActivity.findViewById(R.id.trashNumView);
-        nuclearNumView = (TextView) myActivity.findViewById(R.id.nuclearTextView);
+        nuclearNumView = (TextView) myActivity.findViewById(R.id.nuclearNumView);
 
         //owned power plant grid
         costTextView1 = (TextView) myActivity.findViewById(R.id.upp1cValue);
@@ -328,6 +333,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
                 //update GUI by phase
                 int phase = powerState.getGamePhase();
+                bidEditText.setFocusable(false);
                 if (phase == 0) {
                     /*First player chooses a power plant.
                     * "OK" or "Pass" updates phase.*/
@@ -343,11 +349,26 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                         //use opponentRed Color
                     }
                 }
+                /**
+                 External Citation
+                 Date:    21 April 2017
+                 Problem:  making editText editable under a certain condition
+                 Resource:
+                 http://stackoverflow.com/questions/6555455/how-to-set-editable
+                 -true-false-edittext-in-android-programmatically
+                 Solution: used the example code from this post.
+                 */
                 else if (phase == 1 ) {
                     /*Bidding on power plant(s).
                     *"Pass" updates phase.*/
                     int bid = powerState.getCurrentBid();
-                    previousBid.setText("" + bid);
+                    if (bid == 0){
+                        previousBid.setText("-");
+                    }
+                    else {
+                        previousBid.setText("" + bid);
+                    }
+                    bidEditText.setFocusableInTouchMode(true);
 
                 }
                 else if (phase == 2 ) {
@@ -367,6 +388,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                         //if the list is empty, change the phase with a pass action
                         game.sendAction(new PassAction(this));
                     }
+                    resetSelectButtons();
                 }
                 else if (phase == 5 || phase == 6) {
                     /*Second player chooses cities.
@@ -383,6 +405,13 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 }
             }
         }
+    }
+
+    private void resetSelectButtons() {
+        selectButton0.setBackgroundColor(0xFF00DDFF);
+        selectButton1.setBackgroundColor(0xFF33B5E5);
+        selectButton2.setBackgroundColor(0xFF0099CC);
+        selectButton3.setBackgroundColor(0xFF00DDFF);
     }
 
     /**
@@ -425,7 +454,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             moneyTextView.setText("-");
         }
         else{
-            moneyTextView.setText("" + rsc.getMoney());
+            moneyTextView.setText("$" + rsc.getMoney());
         }
         if (rsc.getCoal() == 0) {
             coalNumView.setText("-");
@@ -646,44 +675,52 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class select0ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            selectNum = 0;
-            selectButton0.setBackgroundColor(Color.YELLOW);
-            selectButton1.setBackgroundColor(prettyBlue);
-            selectButton2.setBackgroundColor(prettyBlue);
-            selectButton3.setBackgroundColor(prettyBlue);
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
+                selectNum = 0;
+                selectButton0.setBackgroundColor(Color.YELLOW);
+                selectButton1.setBackgroundColor(prettyBlue);
+                selectButton2.setBackgroundColor(prettyBlue);
+                selectButton3.setBackgroundColor(prettyBlue);
+            }
         }
     }
 
     private class select1ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            selectNum = 1;
-            selectButton1.setBackgroundColor(Color.YELLOW);
-            selectButton0.setBackgroundColor(prettyBlue);
-            selectButton2.setBackgroundColor(prettyBlue);
-            selectButton3.setBackgroundColor(prettyBlue);
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
+                selectNum = 1;
+                selectButton1.setBackgroundColor(Color.YELLOW);
+                selectButton0.setBackgroundColor(prettyBlue);
+                selectButton2.setBackgroundColor(prettyBlue);
+                selectButton3.setBackgroundColor(prettyBlue);
+            }
         }
     }
 
     private class select2ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            selectNum = 2;
-            selectButton2.setBackgroundColor(Color.YELLOW);
-            selectButton0.setBackgroundColor(prettyBlue);
-            selectButton1.setBackgroundColor(prettyBlue);
-            selectButton3.setBackgroundColor(prettyBlue);
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
+                selectNum = 2;
+                selectButton2.setBackgroundColor(Color.YELLOW);
+                selectButton0.setBackgroundColor(prettyBlue);
+                selectButton1.setBackgroundColor(prettyBlue);
+                selectButton3.setBackgroundColor(prettyBlue);
+            }
         }
     }
 
     private class select3ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            selectNum = 3;
-            selectButton3.setBackgroundColor(Color.YELLOW);
-            selectButton2.setBackgroundColor(prettyBlue);
-            selectButton1.setBackgroundColor(prettyBlue);
-            selectButton0.setBackgroundColor(prettyBlue);
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
+                selectNum = 3;
+                selectButton3.setBackgroundColor(Color.YELLOW);
+                selectButton2.setBackgroundColor(prettyBlue);
+                selectButton1.setBackgroundColor(prettyBlue);
+                selectButton0.setBackgroundColor(prettyBlue);
+            }
         }
     }
 
@@ -741,37 +778,37 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
         @Override
         public void onClick(View view) {
+            if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {
+                int viewId = view.getId();
+                int[] idNum = new int[15];
+                idNum[0] = R.id.cb1;
+                idNum[1] = R.id.cb2;
+                idNum[2] = R.id.cb3;
+                idNum[3] = R.id.cb4;
+                idNum[4] = R.id.cb5;
+                idNum[5] = R.id.cb6;
+                idNum[6] = R.id.cb7;
+                idNum[7] = R.id.cb8;
+                idNum[8] = R.id.cb9;
+                idNum[9] = R.id.cb10;
+                idNum[10] = R.id.cb11;
+                idNum[11] = R.id.cb12;
+                idNum[12] = R.id.cb13;
+                idNum[13] = R.id.cb14;
+                idNum[14] = R.id.cb15;
 
-            int viewId = view.getId();
-            int[] idNum = new int[15];
-            idNum[0] = R.id.cb1;
-            idNum[1] = R.id.cb2;
-            idNum[2] = R.id.cb3;
-            idNum[3] = R.id.cb4;
-            idNum[4] = R.id.cb5;
-            idNum[5] = R.id.cb6;
-            idNum[6] = R.id.cb7;
-            idNum[7] = R.id.cb8;
-            idNum[8] = R.id.cb9;
-            idNum[9] = R.id.cb10;
-            idNum[10] = R.id.cb11;
-            idNum[11] = R.id.cb12;
-            idNum[12] = R.id.cb13;
-            idNum[13] = R.id.cb14;
-            idNum[14] = R.id.cb15;
 
+                for (int i = 0; i < 15; i++) {
+                    if (viewId == idNum[i]) {
+                        if (powerState.getAvailableResources().coal[i]) {
+                            if (localStore.coal[i]) {
+                                coalButtons[i].setBackgroundColor(Color.TRANSPARENT);
+                                localStore.coal[i] = false;
+                            } else {
 
-            for (int i = 0; i < 15; i++) {
-                if (viewId == idNum[i]) {
-                    if (powerState.getAvailableResources().coal[i]) {
-                        if (localStore.coal[i]) {
-                            coalButtons[i].setBackgroundColor(Color.TRANSPARENT);
-                            localStore.coal[i] = false;
-                        }
-                        else {
-
-                            coalButtons[i].setBackgroundColor(Color.BLACK);
-                            localStore.coal[i] = true;
+                                coalButtons[i].setBackgroundColor(Color.BLACK);
+                                localStore.coal[i] = true;
+                            }
                         }
                     }
                 }
@@ -784,30 +821,31 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
         @Override
         public void onClick(View view) {
-            int viewId = view.getId();
-            int[] idNum = new int[15];
-            idNum[0] = R.id.ob1;
-            idNum[1] = R.id.ob2;
-            idNum[2] = R.id.ob3;
-            idNum[3] = R.id.ob4;
-            idNum[4] = R.id.ob5;
-            idNum[5] = R.id.ob6;
-            idNum[6] = R.id.ob7;
-            idNum[7] = R.id.ob8;
-            idNum[8] = R.id.ob9;
-            idNum[9] = R.id.ob10;
+            if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {
+                int viewId = view.getId();
+                int[] idNum = new int[15];
+                idNum[0] = R.id.ob1;
+                idNum[1] = R.id.ob2;
+                idNum[2] = R.id.ob3;
+                idNum[3] = R.id.ob4;
+                idNum[4] = R.id.ob5;
+                idNum[5] = R.id.ob6;
+                idNum[6] = R.id.ob7;
+                idNum[7] = R.id.ob8;
+                idNum[8] = R.id.ob9;
+                idNum[9] = R.id.ob10;
 
-            for (int i = 0; i < 10; i++) {
-                if (viewId == idNum[i]) {
-                    if (powerState.getAvailableResources().oil[i]) {
-                        if (localStore.oil[i]) {
-                            oilButtons[i].setBackgroundColor(Color.TRANSPARENT);
-                            localStore.oil[i] = false;
-                        }
-                        else {
+                for (int i = 0; i < 10; i++) {
+                    if (viewId == idNum[i]) {
+                        if (powerState.getAvailableResources().oil[i]) {
+                            if (localStore.oil[i]) {
+                                oilButtons[i].setBackgroundColor(Color.TRANSPARENT);
+                                localStore.oil[i] = false;
+                            } else {
 
-                            oilButtons[i].setBackgroundColor(Color.BLACK);
-                            localStore.oil[i] = true;
+                                oilButtons[i].setBackgroundColor(Color.BLACK);
+                                localStore.oil[i] = true;
+                            }
                         }
                     }
                 }
@@ -820,41 +858,42 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
         @Override
         public void onClick(View view) {
-            int viewId = view.getId();
-            int[] idNum = new int[15];
-            idNum[0] = R.id.tb1;
-            idNum[1] = R.id.tb2;
-            idNum[2] = R.id.tb3;
-            idNum[3] = R.id.tb4;
-            idNum[4] = R.id.tb5;
-            idNum[5] = R.id.tb6;
-            idNum[6] = R.id.tb7;
-            idNum[7] = R.id.tb8;
-            idNum[8] = R.id.tb9;
-            idNum[9] = R.id.tb10;
-            idNum[10] = R.id.tb11;
-            idNum[11] = R.id.tb12;
-            idNum[12] = R.id.tb13;
-            idNum[13] = R.id.tb14;
-            idNum[14] = R.id.tb15;
+            if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {
+                int viewId = view.getId();
+                int[] idNum = new int[15];
+                idNum[0] = R.id.tb1;
+                idNum[1] = R.id.tb2;
+                idNum[2] = R.id.tb3;
+                idNum[3] = R.id.tb4;
+                idNum[4] = R.id.tb5;
+                idNum[5] = R.id.tb6;
+                idNum[6] = R.id.tb7;
+                idNum[7] = R.id.tb8;
+                idNum[8] = R.id.tb9;
+                idNum[9] = R.id.tb10;
+                idNum[10] = R.id.tb11;
+                idNum[11] = R.id.tb12;
+                idNum[12] = R.id.tb13;
+                idNum[13] = R.id.tb14;
+                idNum[14] = R.id.tb15;
 
 
-            for (int i = 0; i < 15; i++) {
-                if (viewId == idNum[i]) {
-                    if (powerState.getAvailableResources().trash[i]) {
-                        if (localStore.trash[i]) {
-                            trashButtons[i].setBackgroundColor(Color.TRANSPARENT);
-                            localStore.trash[i] = false;
-                        }
-                        else {
+                for (int i = 0; i < 15; i++) {
+                    if (viewId == idNum[i]) {
+                        if (powerState.getAvailableResources().trash[i]) {
+                            if (localStore.trash[i]) {
+                                trashButtons[i].setBackgroundColor(Color.TRANSPARENT);
+                                localStore.trash[i] = false;
+                            } else {
 
-                            trashButtons[i].setBackgroundColor(Color.BLACK);
-                            localStore.trash[i] = true;
+                                trashButtons[i].setBackgroundColor(Color.BLACK);
+                                localStore.trash[i] = true;
+                            }
                         }
                     }
                 }
-            }
 
+            }
         }
     }
 
@@ -863,26 +902,27 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
         @Override
         public void onClick(View view) {
-            int viewId = view.getId();
-            int[] idNum = new int[15];
+            if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {
+                int viewId = view.getId();
+                int[] idNum = new int[15];
 
-            idNum[0] = R.id.ub1;
-            idNum[1] = R.id.ub2;
-            idNum[2] = R.id.ub3;
-            idNum[3] = R.id.ub4;
-            idNum[4] = R.id.ub5;
+                idNum[0] = R.id.ub1;
+                idNum[1] = R.id.ub2;
+                idNum[2] = R.id.ub3;
+                idNum[3] = R.id.ub4;
+                idNum[4] = R.id.ub5;
 
-            for (int i = 0; i < 5; i++) {
-                if (viewId == idNum[i]) {
-                    if (powerState.getAvailableResources().uranium[i]) {
-                        if (localStore.uranium[i]) {
-                            uraniumButtons[i].setBackgroundColor(Color.TRANSPARENT);
-                            localStore.uranium[i] = false;
-                        }
-                        else {
+                for (int i = 0; i < 5; i++) {
+                    if (viewId == idNum[i]) {
+                        if (powerState.getAvailableResources().uranium[i]) {
+                            if (localStore.uranium[i]) {
+                                uraniumButtons[i].setBackgroundColor(Color.TRANSPARENT);
+                                localStore.uranium[i] = false;
+                            } else {
 
-                            uraniumButtons[i].setBackgroundColor(Color.BLACK);
-                            localStore.uranium[i] = true;
+                                uraniumButtons[i].setBackgroundColor(Color.BLACK);
+                                localStore.uranium[i] = true;
+                            }
                         }
                     }
                 }
