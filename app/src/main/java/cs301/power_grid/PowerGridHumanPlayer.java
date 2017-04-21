@@ -27,7 +27,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     //android activity we are running
     private GameMainActivity myActivity;
     //game state
-    private PowerState powerState;
+    private PowerState powerState = new PowerState();
 
     private int selectNum = -1;
     private int bidValue = -1;
@@ -121,7 +121,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
     @Override
     public View getTopView() {
-        return (RelativeLayout) findViewById(R.id.activity_main);
+        return (RelativeLayout) myActivity.findViewById(R.id.activity_main);
     }
 
     @Override
@@ -132,167 +132,168 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         activity.setContentView(R.layout.activity_main);
 
         //spinners
-        resourcesSpinner = (Spinner) findViewById(R.id.UserResourcesSpinner);
+        resourcesSpinner = (Spinner) myActivity.findViewById(R.id.UserResourcesSpinner);
         resourcesSpinner.setOnItemSelectedListener(new resourcesSpinListener());
         //resourcesSpinner.setSelection(0);
 
-        powerPlantsSpinner = (Spinner) findViewById(R.id.userPowerPlantsSpinner);
+        powerPlantsSpinner = (Spinner) myActivity.findViewById(R.id.userPowerPlantsSpinner);
         powerPlantsSpinner.setOnItemSelectedListener(new powerPlantsSpinListener());
         //powerPlantsSpinner.setSelection(0);
 
         //okay and pass buttons
-        okayButton = (Button) findViewById(R.id.okButton);
+        okayButton = (Button) myActivity.findViewById(R.id.okButton);
         okayButton.setOnClickListener(new okayButListener());
-        passButton = (Button) findViewById(R.id.passButton);
+        passButton = (Button) myActivity.findViewById(R.id.passButton);
         passButton.setOnClickListener(new passButListener());
 
         //select buttons
-        selectButton0 = (Button) findViewById(R.id.select0);
-        selectButton1 = (Button) findViewById(R.id.select1);
-        selectButton2 = (Button) findViewById(R.id.select2);
-        selectButton3 = (Button) findViewById(R.id.select3);
+        selectButton0 = (Button) myActivity.findViewById(R.id.select0);
+        selectButton1 = (Button) myActivity.findViewById(R.id.select1);
+        selectButton2 = (Button) myActivity.findViewById(R.id.select2);
+        selectButton3 = (Button) myActivity.findViewById(R.id.select3);
 
         //bid views
-        previousBid = (TextView) findViewById(R.id.previousBidTV);
-        bidVal = (EditText) findViewById(R.id.bidEditText);
-        bidValue = Integer.parseInt(bidVal.getText().toString());
+        previousBid = (TextView) myActivity.findViewById(R.id.previousBidTV);
+        bidVal = (EditText) myActivity.findViewById(R.id.bidEditText);
+
+        //bidValue = Integer.parseInt(bidVal.getText().toString());
 
         //sale power plants
-        powerPlant1Cost = (TextView) findViewById(R.id.pp1cValue);
-        powerPlant1Type = (TextView) findViewById(R.id.pp1tValue);
-        powerPlant1Number = (TextView) findViewById(R.id.pp1nValue);
-        powerPlant1House = (TextView) findViewById(R.id.pp1hValue);
+        powerPlant1Cost = (TextView) myActivity.findViewById(R.id.pp1cValue);
+        powerPlant1Type = (TextView) myActivity.findViewById(R.id.pp1tValue);
+        powerPlant1Number = (TextView) myActivity.findViewById(R.id.pp1nValue);
+        powerPlant1House = (TextView) myActivity.findViewById(R.id.pp1hValue);
 
-        powerPlant2Cost = (TextView) findViewById(R.id.pp2cValue);
-        powerPlant2Type = (TextView) findViewById(R.id.pp2tValue);
-        powerPlant2Number = (TextView) findViewById(R.id.pp2nValue);
-        powerPlant2House = (TextView) findViewById(R.id.pp2hValue);
+        powerPlant2Cost = (TextView) myActivity.findViewById(R.id.pp2cValue);
+        powerPlant2Type = (TextView) myActivity.findViewById(R.id.pp2tValue);
+        powerPlant2Number = (TextView) myActivity.findViewById(R.id.pp2nValue);
+        powerPlant2House = (TextView) myActivity.findViewById(R.id.pp2hValue);
 
-        powerPlant3Cost = (TextView) findViewById(R.id.pp3cValue);
-        powerPlant3Type = (TextView) findViewById(R.id.pp3tValue);
-        powerPlant3Number = (TextView) findViewById(R.id.pp3nValue);
-        powerPlant3House = (TextView) findViewById(R.id.pp3hValue);
+        powerPlant3Cost = (TextView) myActivity.findViewById(R.id.pp3cValue);
+        powerPlant3Type = (TextView) myActivity.findViewById(R.id.pp3tValue);
+        powerPlant3Number = (TextView) myActivity.findViewById(R.id.pp3nValue);
+        powerPlant3House = (TextView) myActivity.findViewById(R.id.pp3hValue);
 
-        powerPlant4Cost = (TextView) findViewById(R.id.pp4cValue);
-        powerPlant4Type = (TextView) findViewById(R.id.pp4tValue);
-        powerPlant4Number = (TextView) findViewById(R.id.pp4nValue);
-        powerPlant4House = (TextView) findViewById(R.id.pp4hValue);
+        powerPlant4Cost = (TextView) myActivity.findViewById(R.id.pp4cValue);
+        powerPlant4Type = (TextView) myActivity.findViewById(R.id.pp4tValue);
+        powerPlant4Number = (TextView) myActivity.findViewById(R.id.pp4nValue);
+        powerPlant4House = (TextView) myActivity.findViewById(R.id.pp4hValue);
 
         //owned resources and cash
-        moneyTextView = (TextView) findViewById(R.id.moneyTextView);
-        coalNumView = (TextView) findViewById(R.id.coalNumView);
-        oilNumView = (TextView) findViewById(R.id.oilNumView);
-        trashNumView = (TextView) findViewById(R.id.trashNumView);
-        nuclearNumView = (TextView) findViewById(R.id.nuclearTextView);
+        moneyTextView = (TextView) myActivity.findViewById(R.id.moneyTextView);
+        coalNumView = (TextView) myActivity.findViewById(R.id.coalNumView);
+        oilNumView = (TextView) myActivity.findViewById(R.id.oilNumView);
+        trashNumView = (TextView) myActivity.findViewById(R.id.trashNumView);
+        nuclearNumView = (TextView) myActivity.findViewById(R.id.nuclearTextView);
 
         //owned power plant grid
-        costTextView1 = (TextView) findViewById(R.id.upp1cValue);
-        typeTextView1 = (TextView) findViewById(R.id.upp1tValue);
-        numberTextView1 = (TextView) findViewById(R.id.upp1nValue);
-        housesTextView1 = (TextView) findViewById(R.id.upp1hValue);
+        costTextView1 = (TextView) myActivity.findViewById(R.id.upp1cValue);
+        typeTextView1 = (TextView) myActivity.findViewById(R.id.upp1tValue);
+        numberTextView1 = (TextView) myActivity.findViewById(R.id.upp1nValue);
+        housesTextView1 = (TextView) myActivity.findViewById(R.id.upp1hValue);
 
-        costTextView2 = (TextView) findViewById(R.id.upp2cValue);
-        typeTextView2 = (TextView) findViewById(R.id.upp2tValue);
-        numberTextView2 = (TextView) findViewById(R.id.upp2nValue);
-        housesTextView2 = (TextView) findViewById(R.id.upp2hValue);
+        costTextView2 = (TextView) myActivity.findViewById(R.id.upp2cValue);
+        typeTextView2 = (TextView) myActivity.findViewById(R.id.upp2tValue);
+        numberTextView2 = (TextView) myActivity.findViewById(R.id.upp2nValue);
+        housesTextView2 = (TextView) myActivity.findViewById(R.id.upp2hValue);
 
-        costTextView3 = (TextView) findViewById(R.id.upp3cValue);
-        typeTextView3 = (TextView) findViewById(R.id.upp3tValue);
-        numberTextView3 = (TextView) findViewById(R.id.upp3nValue);
-        housesTextView3 = (TextView) findViewById(R.id.upp3hValue);
+        costTextView3 = (TextView) myActivity.findViewById(R.id.upp3cValue);
+        typeTextView3 = (TextView) myActivity.findViewById(R.id.upp3tValue);
+        numberTextView3 = (TextView) myActivity.findViewById(R.id.upp3nValue);
+        housesTextView3 = (TextView) myActivity.findViewById(R.id.upp3hValue);
 
-        costTextView4 = (TextView) findViewById(R.id.upp4cValue);
-        typeTextView4 = (TextView) findViewById(R.id.upp4tValue);
-        numberTextView4 = (TextView) findViewById(R.id.upp4nValue);
-        housesTextView4 = (TextView) findViewById(R.id.upp4hValue);
+        costTextView4 = (TextView) myActivity.findViewById(R.id.upp4cValue);
+        typeTextView4 = (TextView) myActivity.findViewById(R.id.upp4tValue);
+        numberTextView4 = (TextView) myActivity.findViewById(R.id.upp4nValue);
+        housesTextView4 = (TextView) myActivity.findViewById(R.id.upp4hValue);
 
         //initialize resource buttons and listers
-        coalButtons[0] = (ImageButton) findViewById(R.id.cb1);
-        coalButtons[1] = (ImageButton) findViewById(R.id.cb2);
-        coalButtons[2] = (ImageButton) findViewById(R.id.cb3);
-        coalButtons[3] = (ImageButton) findViewById(R.id.cb4);
-        coalButtons[4] = (ImageButton) findViewById(R.id.cb5);
-        coalButtons[5] = (ImageButton) findViewById(R.id.cb6);
-        coalButtons[6] = (ImageButton) findViewById(R.id.cb7);
-        coalButtons[7] = (ImageButton) findViewById(R.id.cb8);
-        coalButtons[8] = (ImageButton) findViewById(R.id.cb9);
-        coalButtons[9] = (ImageButton) findViewById(R.id.cb10);
-        coalButtons[10] = (ImageButton) findViewById(R.id.cb11);
-        coalButtons[11] = (ImageButton) findViewById(R.id.cb12);
-        coalButtons[12] = (ImageButton) findViewById(R.id.cb13);
-        coalButtons[13] = (ImageButton) findViewById(R.id.cb14);
-        coalButtons[14] = (ImageButton) findViewById(R.id.cb15);
+        coalButtons[0] = (ImageButton) myActivity.findViewById(R.id.cb1);
+        coalButtons[1] = (ImageButton) myActivity.findViewById(R.id.cb2);
+        coalButtons[2] = (ImageButton) myActivity.findViewById(R.id.cb3);
+        coalButtons[3] = (ImageButton) myActivity.findViewById(R.id.cb4);
+        coalButtons[4] = (ImageButton) myActivity.findViewById(R.id.cb5);
+        coalButtons[5] = (ImageButton) myActivity.findViewById(R.id.cb6);
+        coalButtons[6] = (ImageButton) myActivity.findViewById(R.id.cb7);
+        coalButtons[7] = (ImageButton) myActivity.findViewById(R.id.cb8);
+        coalButtons[8] = (ImageButton) myActivity.findViewById(R.id.cb9);
+        coalButtons[9] = (ImageButton) myActivity.findViewById(R.id.cb10);
+        coalButtons[10] = (ImageButton) myActivity.findViewById(R.id.cb11);
+        coalButtons[11] = (ImageButton) myActivity.findViewById(R.id.cb12);
+        coalButtons[12] = (ImageButton) myActivity.findViewById(R.id.cb13);
+        coalButtons[13] = (ImageButton) myActivity.findViewById(R.id.cb14);
+        coalButtons[14] = (ImageButton) myActivity.findViewById(R.id.cb15);
 
         for (int i = 0; i < 15; i++) {
             coalButtons[i].setOnClickListener(new CoalButtonListener());
         }
 
-        oilButtons[0] = (ImageButton) findViewById(R.id.ob1);
-        oilButtons[1] = (ImageButton) findViewById(R.id.ob2);
-        oilButtons[2] = (ImageButton) findViewById(R.id.ob3);
-        oilButtons[3] = (ImageButton) findViewById(R.id.ob4);
-        oilButtons[4] = (ImageButton) findViewById(R.id.ob5);
-        oilButtons[5] = (ImageButton) findViewById(R.id.ob6);
-        oilButtons[6] = (ImageButton) findViewById(R.id.ob7);
-        oilButtons[7] = (ImageButton) findViewById(R.id.ob8);
-        oilButtons[8] = (ImageButton) findViewById(R.id.ob9);
-        oilButtons[9] = (ImageButton) findViewById(R.id.ob10);
+        oilButtons[0] = (ImageButton) myActivity.findViewById(R.id.ob1);
+        oilButtons[1] = (ImageButton) myActivity.findViewById(R.id.ob2);
+        oilButtons[2] = (ImageButton) myActivity.findViewById(R.id.ob3);
+        oilButtons[3] = (ImageButton) myActivity.findViewById(R.id.ob4);
+        oilButtons[4] = (ImageButton) myActivity.findViewById(R.id.ob5);
+        oilButtons[5] = (ImageButton) myActivity.findViewById(R.id.ob6);
+        oilButtons[6] = (ImageButton) myActivity.findViewById(R.id.ob7);
+        oilButtons[7] = (ImageButton) myActivity.findViewById(R.id.ob8);
+        oilButtons[8] = (ImageButton) myActivity.findViewById(R.id.ob9);
+        oilButtons[9] = (ImageButton) myActivity.findViewById(R.id.ob10);
 
         for (int i = 0; i < 10; i++) {
             oilButtons[i].setOnClickListener(new OilButtonListener());
         }
 
-        uraniumButtons[0] = (ImageButton) findViewById(R.id.ub1);
-        uraniumButtons[1] = (ImageButton) findViewById(R.id.ub2);
-        uraniumButtons[2] = (ImageButton) findViewById(R.id.ub3);
-        uraniumButtons[3] = (ImageButton) findViewById(R.id.ub4);
-        uraniumButtons[4] = (ImageButton) findViewById(R.id.ub5);
+        uraniumButtons[0] = (ImageButton) myActivity.findViewById(R.id.ub1);
+        uraniumButtons[1] = (ImageButton) myActivity.findViewById(R.id.ub2);
+        uraniumButtons[2] = (ImageButton) myActivity.findViewById(R.id.ub3);
+        uraniumButtons[3] = (ImageButton) myActivity.findViewById(R.id.ub4);
+        uraniumButtons[4] = (ImageButton) myActivity.findViewById(R.id.ub5);
 
         for (int i = 0; i < 5; i++) {
             uraniumButtons[i].setOnClickListener(new NuclearButtonListener());
         }
 
-        trashButtons[0] = (ImageButton) findViewById(R.id.tb1);
-        trashButtons[1] = (ImageButton) findViewById(R.id.tb2);
-        trashButtons[2] = (ImageButton) findViewById(R.id.tb3);
-        trashButtons[3] = (ImageButton) findViewById(R.id.tb4);
-        trashButtons[4] = (ImageButton) findViewById(R.id.tb5);
-        trashButtons[5] = (ImageButton) findViewById(R.id.tb6);
-        trashButtons[6] = (ImageButton) findViewById(R.id.tb7);
-        trashButtons[7] = (ImageButton) findViewById(R.id.tb8);
-        trashButtons[8] = (ImageButton) findViewById(R.id.tb9);
-        trashButtons[9] = (ImageButton) findViewById(R.id.tb10);
-        trashButtons[10] = (ImageButton) findViewById(R.id.tb11);
-        trashButtons[11] = (ImageButton) findViewById(R.id.tb12);
-        trashButtons[12] = (ImageButton) findViewById(R.id.tb13);
-        trashButtons[13] = (ImageButton) findViewById(R.id.tb14);
-        trashButtons[14] = (ImageButton) findViewById(R.id.tb15);
+        trashButtons[0] = (ImageButton) myActivity.findViewById(R.id.tb1);
+        trashButtons[1] = (ImageButton) myActivity.findViewById(R.id.tb2);
+        trashButtons[2] = (ImageButton) myActivity.findViewById(R.id.tb3);
+        trashButtons[3] = (ImageButton) myActivity.findViewById(R.id.tb4);
+        trashButtons[4] = (ImageButton) myActivity.findViewById(R.id.tb5);
+        trashButtons[5] = (ImageButton) myActivity.findViewById(R.id.tb6);
+        trashButtons[6] = (ImageButton) myActivity.findViewById(R.id.tb7);
+        trashButtons[7] = (ImageButton) myActivity.findViewById(R.id.tb8);
+        trashButtons[8] = (ImageButton) myActivity.findViewById(R.id.tb9);
+        trashButtons[9] = (ImageButton) myActivity.findViewById(R.id.tb10);
+        trashButtons[10] = (ImageButton) myActivity.findViewById(R.id.tb11);
+        trashButtons[11] = (ImageButton) myActivity.findViewById(R.id.tb12);
+        trashButtons[12] = (ImageButton) myActivity.findViewById(R.id.tb13);
+        trashButtons[13] = (ImageButton) myActivity.findViewById(R.id.tb14);
+        trashButtons[14] = (ImageButton) myActivity.findViewById(R.id.tb15);
 
         for (int i = 0; i < 15; i++) {
             trashButtons[i].setOnClickListener(new TrashButtonListener());
         }
 
         //city buttons
-        cityButtons[0] = (Button) findViewById(R.id.button4);
-        cityButtons[1] = (Button) findViewById(R.id.button);
-        cityButtons[2] = (Button) findViewById(R.id.button2);
-        cityButtons[3] = (Button) findViewById(R.id.button3);
-        cityButtons[4] = (Button) findViewById(R.id.button21);
-        cityButtons[5] = (Button) findViewById(R.id.button20);
-        cityButtons[6] = (Button) findViewById(R.id.button7);
-        cityButtons[7] = (Button) findViewById(R.id.button5);
-        cityButtons[8] = (Button) findViewById(R.id.button19);
-        cityButtons[9] = (Button) findViewById(R.id.button9);
-        cityButtons[10] = (Button) findViewById(R.id.button8);
-        cityButtons[11] = (Button) findViewById(R.id.button10);
-        cityButtons[12] = (Button) findViewById(R.id.button6);
-        cityButtons[13] = (Button) findViewById(R.id.button12);
-        cityButtons[14] = (Button) findViewById(R.id.button11);
-        cityButtons[15] = (Button) findViewById(R.id.button17);
-        cityButtons[16] = (Button) findViewById(R.id.button14);
-        cityButtons[17] = (Button) findViewById(R.id.button15);
-        cityButtons[18] = (Button) findViewById(R.id.button16);
-        cityButtons[19] = (Button) findViewById(R.id.button18);
+        cityButtons[0] = (Button) myActivity.findViewById(R.id.button4);
+        cityButtons[1] = (Button) myActivity.findViewById(R.id.button);
+        cityButtons[2] = (Button) myActivity.findViewById(R.id.button2);
+        cityButtons[3] = (Button) myActivity.findViewById(R.id.button3);
+        cityButtons[4] = (Button) myActivity.findViewById(R.id.button21);
+        cityButtons[5] = (Button) myActivity.findViewById(R.id.button20);
+        cityButtons[6] = (Button) myActivity.findViewById(R.id.button7);
+        cityButtons[7] = (Button) myActivity.findViewById(R.id.button5);
+        cityButtons[8] = (Button) myActivity.findViewById(R.id.button19);
+        cityButtons[9] = (Button) myActivity.findViewById(R.id.button9);
+        cityButtons[10] = (Button) myActivity.findViewById(R.id.button8);
+        cityButtons[11] = (Button) myActivity.findViewById(R.id.button10);
+        cityButtons[12] = (Button) myActivity.findViewById(R.id.button6);
+        cityButtons[13] = (Button) myActivity.findViewById(R.id.button12);
+        cityButtons[14] = (Button) myActivity.findViewById(R.id.button11);
+        cityButtons[15] = (Button) myActivity.findViewById(R.id.button17);
+        cityButtons[16] = (Button) myActivity.findViewById(R.id.button14);
+        cityButtons[17] = (Button) myActivity.findViewById(R.id.button15);
+        cityButtons[18] = (Button) myActivity.findViewById(R.id.button16);
+        cityButtons[19] = (Button) myActivity.findViewById(R.id.button18);
 
         for (int i = 0; i < 20; i++) {
             cityButtons[i].setOnClickListener(new CityButtonListener());
