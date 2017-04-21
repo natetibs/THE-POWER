@@ -45,7 +45,9 @@ public class Inventory implements Serializable{
 
     public boolean addMyPlants(Powerplant plantation) {
         if(myPlants.size() >= 4) {
-            return false; //failure, player may only have 4 plants
+            myPlants.remove(0);
+            myPlants.add(plantation);
+            return false; //false, a power plant was sacrificed
         }
 
         myPlants.add(plantation);

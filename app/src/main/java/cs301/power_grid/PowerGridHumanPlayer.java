@@ -630,7 +630,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 else {
                     game.sendAction(new PassAction(PowerGridHumanPlayer.this));
                 }
-
             }
         }
     }

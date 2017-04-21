@@ -180,7 +180,6 @@ public class PowerGridLocalGame extends LocalGame{
                     powerState.getGameInventories().get(i).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
                     powerState.setGamePhase(3);
                     powerState.changeTurn();
-
                 }
                 else if (phase == 3 || phase == 4) {
                     //player is done buying resources
@@ -197,12 +196,13 @@ public class PowerGridLocalGame extends LocalGame{
                 else if(phase == 6) {
                     //Second player is done buying cities
                     //pay users based on how many plants they can power
-                    //for now, give both players 10 dollars
+                    //for now, give both players 10 dollars make other resources unavailable
                     powerState.getGameInventories().get(i).setMoney(powerState.getGameInventories().get(i).getMoney()+10);
                     //change turn return to first phase
                     powerState.changeTurn();
                     powerState.setGamePhase(0);
                 }
+
                 return true;
             }
 
