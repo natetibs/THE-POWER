@@ -34,6 +34,8 @@ public class PowerGridDumbComputerPlayer extends GameComputerPlayer {
             powerState = (PowerState)info;
             /*Determine the phase of the game before making a move.*/
             int phase = powerState.getGamePhase();
+            //get computer inventory
+            inv = powerState.getGameInventories().get(1);
             /*Make sure the dumb AI has enough money to buy anything.*/
             if (phase == 0) {
                 /*First player chooses a power plant.

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 public class PowerGridHumanPlayer extends GameHumanPlayer {
     //instance variables:
+    private TextView phaseTextView;
 
     //android activity we are running
     private GameMainActivity myActivity;
@@ -131,6 +132,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         // Load the layout resource for our GUI
         activity.setContentView(R.layout.activity_main);
 
+        phaseTextView = (TextView) myActivity.findViewById(R.id.phaseView);
         //spinners
         resourcesSpinner = (Spinner) myActivity.findViewById(R.id.UserResourcesSpinner);
         resourcesSpinner.setOnItemSelectedListener(new resourcesSpinListener());
@@ -330,6 +332,8 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
                 //display the power plants up for auction each update
                 showPlants();
+
+                phaseTextView.setText(powerState.getGamePhase());
 
                 //update GUI by phase
                 int phase = powerState.getGamePhase();
@@ -597,7 +601,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             int phase = powerState.getGamePhase();
             if (phase == 0) {
 
-               SelectPowerPlantAction sppa = new SelectPowerPlantAction(PowerGridHumanPlayer.this, selectNum);
+                SelectPowerPlantAction sppa = new SelectPowerPlantAction(PowerGridHumanPlayer.this, selectNum);
                 game.sendAction(sppa);
 
             }
