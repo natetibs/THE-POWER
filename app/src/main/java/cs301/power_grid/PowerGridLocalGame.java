@@ -17,8 +17,10 @@ public class PowerGridLocalGame extends LocalGame{
     private PowerState powerState = new PowerState();
     private int price, phase, turn;
     private boolean has10Cities;
+    private boolean[] moveMade = {false,false,false};
     private int i = 0;
     private int j = -1;
+
 
 
     @Override
@@ -53,9 +55,9 @@ public class PowerGridLocalGame extends LocalGame{
             has10Cities = true;
         }
         if(has10Cities && (powerState.getGamePhase() == 6)) {
-
+            return "the game is over?";
         }
-        return "";
+        else{return null;}
     }
 
     /**
@@ -81,26 +83,25 @@ public class PowerGridLocalGame extends LocalGame{
             //access other player
             if (i == 0){j = 1;}
             else if (i == 1){j = 0;}
-            powerState.getGameInventories().get(0).setMoney(3000);
 
             //BidAction
-            if (action instanceof BidAction && turn == i){
+            if (action instanceof BidAction && turn == i && !moveMade[j]){
                 powerState.setCurrentBid(((BidAction) action).getBid());
                 //change player
                 powerState.changeTurn();
-                return true;
+                moveMade[i] = true;
             }
 
             //BuyCityAction
-            else if (action instanceof BuyCityAction && turn == i) {
+            else if (action instanceof BuyCityAction && turn == i && !moveMade[j]) {
                 boolean didithappen = powerState.getGameInventories().get(i).addMyCity(((BuyCityAction) action).getCity());
                 if(!didithappen){} //vibrate or flash screen
                 powerState.setBoughtCity(((BuyCityAction) action).getCityIndex());
-                return true;
+                moveMade[i] = true;
             }
 
             //BuyResourceAction
-            else if(action instanceof BuyResourceAction && turn == i) {
+            else if(action instanceof BuyResourceAction && turn == i && !moveMade[j]) {
                 String type = ((BuyResourceAction) action).getType();
                 if (type.equals("coal")) {
                     //determine price of coal
@@ -147,22 +148,22 @@ public class PowerGridLocalGame extends LocalGame{
                         powerState.getGameInventories().get(i).setUranium(powerState.getGameInventories().get(i).getUranium() + 1);
                     }
                 }
-                return true;
+                moveMade[i] = true;
             }
 
               //DiscardPowerPlantAction
-            else if(action instanceof DiscardPowerPlantAction && turn == i) {
+            else if(action instanceof DiscardPowerPlantAction && turn == i && !moveMade[j]) {
                 //discard their last powerplant and cycle old ones through
                 //make sure in send action (okbuttonlistener) we are sending a discard action if they have 4 power plants already
                 powerState.getGameInventories().get(i).getMyPlants().remove(3);
-                return true;
+                moveMade[i] = true;
              }
 
             /**PassAction
              * A user may pass when they decide not to buy a powerplant, resources, cities
              * tacked onto arraylist of actions when game phases end, Pass action changes phase of game
              **/
-            else if(action instanceof PassAction) {
+            else if(action instanceof PassAction && turn == i && !moveMade[j]) {
 
                 if (phase == 0) {
                     //First player has chosen to pass on buying a powerplant, change turn
@@ -175,13 +176,14 @@ public class PowerGridLocalGame extends LocalGame{
                     //first player still has a chance to buy a power plant, dont change turn go back to phase 1
                     //give second player their power plant
                     powerState.getGameInventories().get(j).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
+                    powerState.removePlant(powerState.getSelectedPlant());
                     powerState.setGamePhase(2);
                 }
                 else if (phase == 2 ) {
                     //Second player has chosen to pass on buying a power plant, change turn
-                    powerState.getGameInventories().get(i).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
                     powerState.setGamePhase(3);
                     powerState.changeTurn();
+
                 }
                 else if (phase == 3 || phase == 4) {
                     //player is done buying resources
@@ -205,11 +207,11 @@ public class PowerGridLocalGame extends LocalGame{
                     powerState.setGamePhase(0);
                 }
 
-                return true;
+                moveMade[i] = true;
             }
 
             //SelectPowerPlantAction
-            else if(action instanceof SelectPowerPlantAction) {
+            else if(action instanceof SelectPowerPlantAction && turn == i && !moveMade[j]) {
                 //user selects a powerplant and presses confirm which will start the bidding process with other player
                 //highlight on GUI for humanplayer
                 //change player and phase
@@ -224,12 +226,14 @@ public class PowerGridLocalGame extends LocalGame{
                     powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
                     powerState.changeTurn();
                 }
-                return true;
+                moveMade[i] =  true;
             }
+
+            else{moveMade[i] = false;}
         }//end for loop
 
-        //if none of the actions have returned yet, return false
-        return false;
+        if(moveMade[0] || moveMade[1]){return true;}
+        else{return false;}
 
     }//makeMove
 }

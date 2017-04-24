@@ -308,7 +308,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         }
 
         //let receiveInfo method know that the GUI has been initialized
-        guiIsReady = false;
+        guiIsReady = true;
     }
 
     /* *receiveInfo
@@ -335,26 +335,25 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
                 //display the power plants up for auction each update
 
-
-
-
                 //update GUI by phase
                 int phase = powerState.getGamePhase();
 
                 bidEditText.setFocusable(false);
+
                 if (phase == 0) {
                     /*First player chooses a power plant.
                     * "OK" or "Pass" updates phase.*/
                     //GUI updates handled by button listener
                     //color cities other player has bought
                     int opponentNumCities = powerState.getGameInventories().get(1).getMyCities().size();
-
-                    for (int i = 0; i <= opponentNumCities; i++){
-                        //find the city index that the opponent bought
-                        int cityIndex = powerState.getGameInventories().get(1).getMyCities().get(i).getIndex();
-                        //color the buttons that the opponent owns
-                        cityButtons[cityIndex].setBackgroundColor(opponentRed);
-                        //use opponentRed Color
+                    if (opponentNumCities > 0) {
+                        for (int i = 0; i <= opponentNumCities; i++) {
+                            //find the city index that the opponent bought
+                            int cityIndex = powerState.getGameInventories().get(1).getMyCities().get(i).getIndex();
+                            //color the buttons that the opponent owns
+                            cityButtons[cityIndex].setBackgroundColor(opponentRed);
+                            //use opponentRed Color
+                        }
                     }
                 }
                 /**

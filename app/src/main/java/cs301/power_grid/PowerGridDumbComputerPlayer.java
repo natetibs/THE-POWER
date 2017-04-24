@@ -14,7 +14,7 @@ import game.infoMsg.GameInfo;
 
 
 public class PowerGridDumbComputerPlayer extends GameComputerPlayer {
-    private GameMainActivity activity;
+
     PowerState powerState = new PowerState();
     private int selectNum = -1;
     Inventory inv;
@@ -44,14 +44,10 @@ public class PowerGridDumbComputerPlayer extends GameComputerPlayer {
                     PassAction pa = new PassAction(PowerGridDumbComputerPlayer.this);
                     game.sendAction(pa);
 
-
-
             } else if(phase == 1) {
 
                     PassAction pa = new PassAction(PowerGridDumbComputerPlayer.this);
                     game.sendAction(pa);
-
-
 
             } else if(phase == 2) {
 
