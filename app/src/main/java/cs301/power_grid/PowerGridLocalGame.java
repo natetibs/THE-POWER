@@ -73,6 +73,7 @@ public class PowerGridLocalGame extends LocalGame{
     @Override
     protected boolean makeMove(GameAction action) {
         //playerId, 0 = human player, 1 = computer/network player
+
         turn = powerState.getTurn();
         phase = powerState.getGamePhase();
 
@@ -80,6 +81,7 @@ public class PowerGridLocalGame extends LocalGame{
             //access other player
             if (i == 0){j = 1;}
             else if (i == 1){j = 0;}
+            powerState.getGameInventories().get(0).setMoney(3000);
 
             //BidAction
             if (action instanceof BidAction && turn == i){
@@ -160,7 +162,7 @@ public class PowerGridLocalGame extends LocalGame{
              * A user may pass when they decide not to buy a powerplant, resources, cities
              * tacked onto arraylist of actions when game phases end, Pass action changes phase of game
              **/
-            else if(action instanceof PassAction && turn == i) {
+            else if(action instanceof PassAction) {
 
                 if (phase == 0) {
                     //First player has chosen to pass on buying a powerplant, change turn
@@ -207,7 +209,7 @@ public class PowerGridLocalGame extends LocalGame{
             }
 
             //SelectPowerPlantAction
-            else if(action instanceof SelectPowerPlantAction && turn == i) {
+            else if(action instanceof SelectPowerPlantAction) {
                 //user selects a powerplant and presses confirm which will start the bidding process with other player
                 //highlight on GUI for humanplayer
                 //change player and phase
@@ -218,6 +220,7 @@ public class PowerGridLocalGame extends LocalGame{
                 }
                 else{
                     powerState.setGamePhase(1);
+                    powerState.getGameInventories().get(0).setMoney(3000);
                     powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
                     powerState.changeTurn();
                 }

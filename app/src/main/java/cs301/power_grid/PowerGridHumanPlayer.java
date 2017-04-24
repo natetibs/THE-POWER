@@ -1,6 +1,7 @@
 package cs301.power_grid;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 
 import game.GameHumanPlayer;
@@ -327,16 +328,19 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 //look at which user the human player has displayed on their spinners
                 int resourcePos = resourcesSpinner.getSelectedItemPosition();
                 int powerPlantPos = powerPlantsSpinner.getSelectedItemPosition();
+
                 setResources((powerState.getGameInventories().get(resourcePos)));
+
                 setPowerPlants((powerState.getGameInventories().get(powerPlantPos)));
 
                 //display the power plants up for auction each update
-                showPlants();
 
-                phaseTextView.setText(powerState.getGamePhase());
+
+
 
                 //update GUI by phase
                 int phase = powerState.getGamePhase();
+
                 bidEditText.setFocusable(false);
                 if (phase == 0) {
                     /*First player chooses a power plant.
@@ -423,7 +427,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
      *
      * displays plants on the powerPlants bar that is at the top of the screen
      */
-    private void showPlants(){
+    public void showPlants(){
 
             powerPlant1Cost.setText("" + powerState.getAvailPowerplant().get(0).getCost());
             powerPlant1Type.setText(powerState.getAvailPowerplant().get(0).getKind());
@@ -440,10 +444,10 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             powerPlant3Number.setText("" + powerState.getAvailPowerplant().get(2).getPtP());
             powerPlant3House.setText("" + powerState.getAvailPowerplant().get(2).getHp());
 
-            powerPlant4Cost.setText("" + powerState.getAvailPowerplant().get(4).getCost());
-            powerPlant4Type.setText(powerState.getAvailPowerplant().get(4).getKind());
-            powerPlant4Number.setText("" + powerState.getAvailPowerplant().get(4).getPtP());
-            powerPlant4House.setText("" + powerState.getAvailPowerplant().get(4).getHp());
+            powerPlant4Cost.setText("" + powerState.getAvailPowerplant().get(3).getCost());
+            powerPlant4Type.setText(powerState.getAvailPowerplant().get(3).getKind());
+            powerPlant4Number.setText("" + powerState.getAvailPowerplant().get(3).getPtP());
+            powerPlant4House.setText("" + powerState.getAvailPowerplant().get(3).getHp());
     }
 
     /**
@@ -453,7 +457,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
      *
      * @param rsc //resource
      */
-    private void setResources(Inventory rsc) {
+    public void setResources(Inventory rsc) {
         if (rsc.getMoney() == 0) {
             moneyTextView.setText("-");
         }
@@ -484,6 +488,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         else{
             nuclearNumView.setText("" + rsc.getUranium());
         }
+        showPlants();
+        phaseTextView.setText("" + powerState.getGamePhase());
+
 
     }
 
@@ -494,7 +501,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
      *
      * @param upp //userPowerPlant
      */
-    private void setPowerPlants(Inventory upp) {
+    public void setPowerPlants(Inventory upp) {
         costTextView1.setText("-");
         typeTextView1.setText("-");
         numberTextView1.setText("-");
@@ -671,6 +678,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class passButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            if(playerNum != powerState.getTurn()) return;
             PassAction pA = new PassAction(PowerGridHumanPlayer.this);
             game.sendAction(pA);
         }
@@ -679,11 +687,12 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class select0ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            if(powerState.getTurn() != playerNum) return;
             if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
                 selectNum = 0;
                 selectButton0.setBackgroundColor(Color.YELLOW);
-                selectButton1.setBackgroundColor(prettyBlue);
-                selectButton2.setBackgroundColor(prettyBlue);
+                selectButton1.setBackgroundColor(0xFF33B5E5);
+                selectButton2.setBackgroundColor(0xFF0099CC);
                 selectButton3.setBackgroundColor(prettyBlue);
             }
         }
@@ -692,11 +701,12 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class select1ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            if(powerState.getTurn() != playerNum) return;
             if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
                 selectNum = 1;
                 selectButton1.setBackgroundColor(Color.YELLOW);
                 selectButton0.setBackgroundColor(prettyBlue);
-                selectButton2.setBackgroundColor(prettyBlue);
+                selectButton2.setBackgroundColor(0xFF0099CC);
                 selectButton3.setBackgroundColor(prettyBlue);
             }
         }
@@ -705,11 +715,12 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class select2ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            if(powerState.getTurn() != playerNum) return;
             if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
                 selectNum = 2;
                 selectButton2.setBackgroundColor(Color.YELLOW);
                 selectButton0.setBackgroundColor(prettyBlue);
-                selectButton1.setBackgroundColor(prettyBlue);
+                selectButton1.setBackgroundColor(0xFF33B5E5);
                 selectButton3.setBackgroundColor(prettyBlue);
             }
         }
@@ -718,11 +729,12 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class select3ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            if(powerState.getTurn() != playerNum) return;
             if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
                 selectNum = 3;
                 selectButton3.setBackgroundColor(Color.YELLOW);
-                selectButton2.setBackgroundColor(prettyBlue);
-                selectButton1.setBackgroundColor(prettyBlue);
+                selectButton2.setBackgroundColor(0xFF0099CC);
+                selectButton1.setBackgroundColor(0xFF33B5E5);
                 selectButton0.setBackgroundColor(prettyBlue);
             }
         }
