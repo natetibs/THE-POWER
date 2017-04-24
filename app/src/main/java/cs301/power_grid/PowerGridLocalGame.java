@@ -175,7 +175,7 @@ public class PowerGridLocalGame extends LocalGame{
                     //Bidding on power plant(s). if a user passes on a bid, change phase, dont change turn
                     //first player still has a chance to buy a power plant, dont change turn go back to phase 1
                     //give second player their power plant
-                    powerState.getGameInventories().get(j).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
+                    powerState.getGameInventories().get(0).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
                     powerState.removePlant(powerState.getSelectedPlant());
                     powerState.setGamePhase(2);
                 }
@@ -183,12 +183,17 @@ public class PowerGridLocalGame extends LocalGame{
                     //Second player has chosen to pass on buying a power plant, change turn
                     powerState.setGamePhase(3);
                     powerState.changeTurn();
+                    powerState.setSelectedPlant(-1);
 
                 }
-                else if (phase == 3 || phase == 4) {
+                else if (phase == 3) {
                     //player is done buying resources
                     //change phase and turn
-                    powerState.setGamePhase(phase++);
+                    powerState.setGamePhase(4);
+                    powerState.changeTurn();
+                }
+                else if(phase == 4){
+                    powerState.setGamePhase(5);
                     powerState.changeTurn();
                 }
                 else if (phase == 5){
@@ -201,10 +206,11 @@ public class PowerGridLocalGame extends LocalGame{
                     //Second player is done buying cities
                     //pay users based on how many plants they can power
                     //for now, give both players 10 dollars make other resources unavailable
-                    powerState.getGameInventories().get(i).setMoney(powerState.getGameInventories().get(i).getMoney()+10);
+                    powerState.getGameInventories().get(0).addMoney(10);
                     //change turn return to first phase
                     powerState.changeTurn();
                     powerState.setGamePhase(0);
+                    powerState.setSelectedPlant(-1);
                 }
 
                 moveMade[i] = true;
@@ -222,7 +228,6 @@ public class PowerGridLocalGame extends LocalGame{
                 }
                 else{
                     powerState.setGamePhase(1);
-                    powerState.getGameInventories().get(0).setMoney(3000);
                     powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
                     powerState.changeTurn();
                 }

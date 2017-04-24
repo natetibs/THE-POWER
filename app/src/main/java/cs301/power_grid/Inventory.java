@@ -38,6 +38,7 @@ public class Inventory implements Serializable{
     public ArrayList<City> getMyCities() {return myCities;}
 
     public void setMoney(int restock) {money = restock;}
+    public void addMoney(int bonus) {money += bonus;}
     public void setCoal(int restock) {coal = restock;}
     public void setOil(int restock) {oil = restock;}
     public void setUranium(int restock) {uranium = restock;}

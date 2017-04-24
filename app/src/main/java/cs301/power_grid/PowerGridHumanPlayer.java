@@ -527,19 +527,19 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             numberTextView1.setText("" + upp.getMyPlants().get(0).getPtP());
             housesTextView1.setText("" + upp.getMyPlants().get(0).getHp());
         }
-        if (upp.getMyPlants().size() > 1) {
+        if (upp.getMyPlants().size() > 1 && upp.getMyPlants().get(1).getCost() != upp.getMyPlants().get(0).getCost()) {
             costTextView2.setText("" + upp.getMyPlants().get(1).getCost());
             typeTextView2.setText("" + upp.getMyPlants().get(1).getKind());
             numberTextView2.setText("" + upp.getMyPlants().get(1).getPtP());
             housesTextView2.setText("" + upp.getMyPlants().get(1).getHp());
         }
-        if (upp.getMyPlants().size() > 2) {
+        if (upp.getMyPlants().size() > 2 && upp.getMyPlants().get(2).getCost() != upp.getMyPlants().get(0).getCost() && upp.getMyPlants().get(2).getCost() != upp.getMyPlants().get(1).getCost()) {
             costTextView3.setText("" + upp.getMyPlants().get(2).getCost());
             typeTextView3.setText("" + upp.getMyPlants().get(2).getKind());
             numberTextView3.setText("" + upp.getMyPlants().get(2).getPtP());
             housesTextView3.setText("" + upp.getMyPlants().get(2).getHp());
         }
-        if (upp.getMyPlants().size() > 3) {
+        if (upp.getMyPlants().size() > 3 && upp.getMyPlants().get(3).getCost() != upp.getMyPlants().get(0).getCost() && upp.getMyPlants().get(3).getCost() != upp.getMyPlants().get(1).getCost() && upp.getMyPlants().get(3).getCost() != upp.getMyPlants().get(2).getCost()) {
             costTextView4.setText("" + upp.getMyPlants().get(3).getCost());
             typeTextView4.setText("" + upp.getMyPlants().get(3).getKind());
             numberTextView4.setText("" + upp.getMyPlants().get(3).getPtP());
@@ -670,7 +670,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 else {
                     game.sendAction(new PassAction(PowerGridHumanPlayer.this));
                 }
+                selectNum = -1;
             }
+
         }
     }
 
@@ -743,17 +745,17 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         @Override
         public void onClick(View v) {
             ArrayList<Integer> trueIndexes = new ArrayList<Integer>();
-            if(powerState.getGamePhase() != 5 || powerState.getGamePhase() != 6) return; //we don't want to mess with cities unless it's the right phase
+            if(powerState.getGamePhase() != 5 && powerState.getGamePhase() != 6) return; //we don't want to mess with cities unless it's the right phase
             if(powerState.getTurn() != playerNum) return; //it's not your turn!
             for (int i = 0; i < 20; i++) {
 
-                if (v.getId() != cityButtons[i].getId()) {continue;} //if they didn't click on it, don't worry about it
+               if (v.getId() != cityButtons[i].getId()) {continue;} //if they didn't click on it, don't worry about it
                 if(powerState.getBoughtCities()[i]) {continue;} //if they did click on it, but it's already been purchased, don't worry about it
 
                 //if they don't own any cities, they can select anything
                 //if they own cities, they can only buy neighboring cities
                 //checks to see if the one they clicked is a legitimate neighbor
-                if(powerState.getGameInventories().get(playerNum).getMyCities().size() == 0 || powerState.getAvailCities().get(i).containsNeighbor(powerState.getGameInventories().get(playerNum).getIndexArray(powerState.getGameInventories().get(playerNum).getMyCities()))) {
+                if(powerState.getGameInventories().get(0).getMyCities().size() == 0 || powerState.getAvailCities().get(i).containsNeighbor(powerState.getGameInventories().get(playerNum).getIndexArray(powerState.getGameInventories().get(playerNum).getMyCities()))) {
                     //if they haven't previously selected anything, all options are open
                     if(isArrayFalse(localCities)) {
                         if (localCities[i]) {
@@ -767,7 +769,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                         }
                     }
                     //if they have previously selected something, we must check to see if they are neighbors
-                    else{
+                   else{
                         trueIndexes = trueIndexes(localCities);
                         for(int j = 0; j < trueIndexes.size(); j++){
                             if(powerState.getAvailCities().get(i).isNeighbor((trueIndexes.get(j)))){
@@ -785,7 +787,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     }
                 }
             }//end for loop
-        }
+       }
     }//citybuttonlistener
 
     //implements the coal buttons

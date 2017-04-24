@@ -107,9 +107,14 @@ public class PowerState extends GameState implements Serializable {
         //Setup inventory->plants
         for(m = 0; m < original.gameInventories.size(); m++) {
             for (n = 0; n < original.gameInventories.get(m).getMyPlants().size(); n++) {
-                Powerplant origPlant = original.gameInventories.get(m).getMyPlants().get(n);
-                Powerplant matchingPlant = findPlantByCost(origPlant.getCost());
-                gameInventories.get(m).addMyPlants(matchingPlant);
+                Powerplant origPlant = new Powerplant();
+                origPlant.setCost(original.gameInventories.get(m).getMyPlants().get(0).getCost());
+                origPlant.setPtP(original.gameInventories.get(m).getMyPlants().get(0).getPtP());
+                origPlant.setHp(original.gameInventories.get(m).getMyPlants().get(0).getHp());
+                origPlant.setKind(original.gameInventories.get(m).getMyPlants().get(0).getKind());
+                if(n == 0) {
+                    gameInventories.get(m).addMyPlants(origPlant);
+                }
             }
         }
     }//copyConstructor
