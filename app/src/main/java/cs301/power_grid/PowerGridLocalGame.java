@@ -21,8 +21,6 @@ public class PowerGridLocalGame extends LocalGame{
     private int i = 0;
     private int j = -1;
 
-
-
     @Override
     //Sends copy of updated state to given player
     protected void sendUpdatedStateTo(GamePlayer p) {
@@ -175,7 +173,7 @@ public class PowerGridLocalGame extends LocalGame{
                     //Bidding on power plant(s). if a user passes on a bid, change phase, dont change turn
                     //first player still has a chance to buy a power plant, dont change turn go back to phase 1
                     //give second player their power plant
-                    powerState.getGameInventories().get(0).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
+                    powerState.getGameInventories().get(j).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
                     powerState.removePlant(powerState.getSelectedPlant());
                     powerState.setGamePhase(2);
                 }

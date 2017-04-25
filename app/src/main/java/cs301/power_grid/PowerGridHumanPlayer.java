@@ -606,10 +606,13 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
             int phase = powerState.getGamePhase();
             if (phase == 0) {
-
-                SelectPowerPlantAction sppa = new SelectPowerPlantAction(PowerGridHumanPlayer.this, selectNum);
-                game.sendAction(sppa);
-
+                if (selectNum == -1){
+                    game.sendAction(new PassAction(PowerGridHumanPlayer.this));
+                }
+                else {
+                    SelectPowerPlantAction sppa = new SelectPowerPlantAction(PowerGridHumanPlayer.this, selectNum);
+                    game.sendAction(sppa);
+                }
             }
             else if (phase == 1) {
                 //only send the action if they made an appropriate bid
@@ -749,42 +752,47 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             if(powerState.getTurn() != playerNum) return; //it's not your turn!
             for (int i = 0; i < 20; i++) {
 
-               if (v.getId() != cityButtons[i].getId()) {continue;} //if they didn't click on it, don't worry about it
-                if(powerState.getBoughtCities()[i]) {continue;} //if they did click on it, but it's already been purchased, don't worry about it
+                String cityName = (String) cityButtons[i].getText();
+
+                if (v.getId() != cityButtons[i].getId()) {continue;} //if they didn't click on it, don't worry about it
+                if(powerState.getBoughtCities()[i]) {return;} //if they did click on it, but it's already been purchased, don't worry about it
 
                 //if they don't own any cities, they can select anything
                 //if they own cities, they can only buy neighboring cities
                 //checks to see if the one they clicked is a legitimate neighbor
-                if(powerState.getGameInventories().get(0).getMyCities().size() == 0 || powerState.getAvailCities().get(i).containsNeighbor(powerState.getGameInventories().get(playerNum).getIndexArray(powerState.getGameInventories().get(playerNum).getMyCities()))) {
+                if(powerState.getGameInventories().get(0).getMyCities().size() == 0) {
                     //if they haven't previously selected anything, all options are open
-                    if(isArrayFalse(localCities)) {
-                        if (localCities[i]) {
-                            cityButtons[i].setBackgroundColor(basicGray);
-                            localCities[i] = false;
-                        }
-                        else {
-                            cityButtons[i].setBackgroundColor(prettyBlue);
-                            localCities[i] = true;
-
-                        }
+                    if (isArrayFalse(localCities)) {
+                        cityButtons[i].setBackgroundColor(prettyBlue);
+                        localCities[i] = true;
                     }
-                    //if they have previously selected something, we must check to see if they are neighbors
-                   else{
-                        trueIndexes = trueIndexes(localCities);
-                        for(int j = 0; j < trueIndexes.size(); j++){
-                            if(powerState.getAvailCities().get(i).isNeighbor((trueIndexes.get(j)))){
-                                if (localCities[i]) {
-                                    cityButtons[i].setBackgroundColor(basicGray);
-                                    localCities[i] = false;
-                                }
-                                else {
-                                    cityButtons[i].setBackgroundColor(prettyBlue);
-                                    localCities[i] = true;
+                    //if they have previously selected something, we must check to see if they are neighbors with cities theyve bought
+                    else {
+                        for (int k = 0; k<trueIndexes(localCities).size(); k++) {
 
-                                }
+                            if (powerState.getAvailCities().get(i).isNeighbor(trueIndexes(localCities).get(k))) {
+                                cityButtons[i].setBackgroundColor(prettyBlue);
+                                localCities[i] = true;
                             }
-                        }//end for loop
+                        }
                     }
+                }
+                else{
+                    trueIndexes = trueIndexes(localCities);
+                    for(int j = 0; j < trueIndexes.size(); j++){
+                        if(powerState.getAvailCities().get(i).isNeighbor((trueIndexes.get(j)))){
+                            if (localCities[i]) {
+                                cityButtons[i].setBackgroundColor(basicGray);
+                                localCities[i] = false;
+                            }
+                            else {
+                                cityButtons[i].setBackgroundColor(prettyBlue);
+                                localCities[i] = true;
+
+                            }
+                        }
+                    }//end for loop
+
                 }
             }//end for loop
        }
@@ -950,7 +958,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     //helper method to check to see if the entire array contains false elements
     public boolean isArrayFalse(boolean[] array){
         for(int i = 0; i < array.length; i++ ){
-            if(array[i] = true) return false;
+            if(array[i] == true) return false;
         }
         return true;
     }
