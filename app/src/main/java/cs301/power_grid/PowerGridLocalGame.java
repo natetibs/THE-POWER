@@ -219,10 +219,15 @@ public class PowerGridLocalGame extends LocalGame{
                 //user selects a powerplant and presses confirm which will start the bidding process with other player
                 //highlight on GUI for humanplayer
                 //change player and phase
-
-                if (((SelectPowerPlantAction) action).getNum() == -1) {
-                    powerState.setGamePhase(3);
+                if (((SelectPowerPlantAction) action).getNum() == -1 && powerState.getGamePhase() == 0) {
+                    powerState.setGamePhase(2);
                     powerState.changeTurn();
+
+                }
+                else if (powerState.getGamePhase() == 0){
+                    powerState.setGamePhase(1);
+                    powerState.changeTurn();
+                    powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
                 }
                 else{
                     powerState.setGamePhase(3);
