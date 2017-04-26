@@ -204,7 +204,8 @@ public class PowerGridLocalGame extends LocalGame{
                     //Second player is done buying cities
                     //pay users based on how many plants they can power
                     //for now, give both players 10 dollars make other resources unavailable
-                    powerState.getGameInventories().get(0).addMoney(10);
+                    getPaid(0);
+                    getPaid(1);
                     //change turn return to first phase
                     powerState.changeTurn();
                     powerState.setGamePhase(0);
@@ -253,4 +254,79 @@ public class PowerGridLocalGame extends LocalGame{
         }
 
     }//makeMove
+
+    public void getPaid(int i){
+        if(powerState.getGameInventories().get(i).getMyPlants().size() == 0){
+            powerState.getGameInventories().get(i).addMoney(12); //if they have no plants, they still make 12 bucks
+            return;
+        }
+
+        int key;
+        int powered = 0;
+        int tempCoal = powerState.getGameInventories().get(i).getCoal();
+        int tempTrash = powerState.getGameInventories().get(i).getTrash();
+        int tempOil = powerState.getGameInventories().get(i).getOil();
+        int tempUranium = powerState.getGameInventories().get(i).getUranium();
+
+
+        String kind[] = new String[4];
+
+
+        for(int j = 0; j < powerState.getGameInventories().get(i).getMyPlants().size(); j++) {
+            kind[j] = powerState.getGameInventories().get(i).getMyPlants().get(j).getKind();
+        }
+
+
+        //if(kind[])
+
+        for(int j = 0; j < powerState.getGameInventories().get(i).getMyPlants().size(); j++){
+            if(j==1 && powerState.getGameInventories().get(i).getMyPlants().get(1) == powerState.getGameInventories().get(i).getMyPlants().get(0) ){
+                break;
+            }
+            if(j == 2 && (powerState.getGameInventories().get(i).getMyPlants().get(2) == powerState.getGameInventories().get(i).getMyPlants().get(0) || powerState.getGameInventories().get(i).getMyPlants().get(2) == powerState.getGameInventories().get(i).getMyPlants().get(1))){
+                break;
+            }
+            if(j==3 && (powerState.getGameInventories().get(i).getMyPlants().get(3) == powerState.getGameInventories().get(i).getMyPlants().get(0) || powerState.getGameInventories().get(i).getMyPlants().get(3) == powerState.getGameInventories().get(i).getMyPlants().get(1) || powerState.getGameInventories().get(i).getMyPlants().get(3) == powerState.getGameInventories().get(i).getMyPlants().get(2))){
+                break;
+            }
+            if(powerState.getGameInventories().get(i).getMyPlants().get(j).getKind().equals("Coal")){
+                if((tempCoal - powerState.getGameInventories().get(i).getMyPlants().get(j).getPtP()) >= 0){
+                    powered += powerState.getGameInventories().get(i).getMyPlants().get(j).getHp();
+                    tempCoal -= powerState.getGameInventories().get(i).getMyPlants().get(j).getPtP();
+                }
+            }
+            if(powerState.getGameInventories().get(i).getMyPlants().get(j).getKind().equals("Uranium")){
+                if((tempUranium - powerState.getGameInventories().get(i).getMyPlants().get(j).getPtP()) >= 0){
+                    powered += powerState.getGameInventories().get(i).getMyPlants().get(j).getHp();
+                    tempUranium -= powerState.getGameInventories().get(i).getMyPlants().get(j).getPtP();
+                }
+            }
+            if(powerState.getGameInventories().get(i).getMyPlants().get(j).getKind().equals("Trash")){
+                if((tempTrash - powerState.getGameInventories().get(i).getMyPlants().get(j).getPtP()) >= 0){
+                    powered += powerState.getGameInventories().get(i).getMyPlants().get(j).getHp();
+                    tempTrash -= powerState.getGameInventories().get(i).getMyPlants().get(j).getPtP();
+                }
+            }
+            if(powerState.getGameInventories().get(i).getMyPlants().get(j).getKind().equals("Oil")){
+                if((tempOil - powerState.getGameInventories().get(i).getMyPlants().get(j).getPtP()) >= 0){
+                    powered += powerState.getGameInventories().get(i).getMyPlants().get(j).getHp();
+                    tempOil -= powerState.getGameInventories().get(i).getMyPlants().get(j).getPtP();
+                }
+            }
+        }
+
+        if(powered <= powerState.getGameInventories().get(i).getMyCities().size()){
+            key = powered;
+            powerState.getGameInventories().get(i).setCoal(tempCoal);
+            powerState.getGameInventories().get(i).setOil(tempOil);
+            powerState.getGameInventories().get(i).setUranium(tempUranium);
+            powerState.getGameInventories().get(i).setTrash(tempTrash);
+        }
+        else{
+            key = powerState.getGameInventories().get(i).getMyCities().size();
+        }
+
+        powerState.getGameInventories().get(i).addMoney(12 + 12*key);
+
+    }
 }

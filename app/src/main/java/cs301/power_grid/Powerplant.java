@@ -36,6 +36,7 @@ public class Powerplant implements Serializable{
     public int getPtP(){return priceToPower;}
     public int getHp(){return housesPowered;}
     public String getKind(){return kind;}
+    public double getRatio() {return (double)housesPowered/(double)priceToPower;}
 
     public void setCost(int c){cost = c;}
     public void setPtP(int p){priceToPower = p;}

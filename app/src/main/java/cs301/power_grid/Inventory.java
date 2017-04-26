@@ -46,6 +46,7 @@ public class Inventory implements Serializable{
 
     public boolean addMyPlants(Powerplant plantation) {
         if(myPlants.size() >= 4) {
+          // myPlants.remove(lowestRatio());
             myPlants.remove(0);
             myPlants.add(plantation);
             return false; //false, a power plant was sacrificed
@@ -78,5 +79,18 @@ public class Inventory implements Serializable{
             cityIndexes.add(cityArrayList.get(i).getIndex());
         }
         return cityIndexes;
+    }
+
+    public int lowestRatio() {
+        double minRatio = 100000;
+        int index = 0;
+
+        for (int i = 0; i < myPlants.size(); i++) {
+            if (myPlants.get(i).getRatio() < minRatio) {
+                minRatio = myPlants.get(i).getRatio();
+                index = i;
+            }
+        }
+        return index;
     }
 }
