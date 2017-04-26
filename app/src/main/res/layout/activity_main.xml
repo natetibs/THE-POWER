@@ -528,11 +528,22 @@
                 android:paddingBottom="10dp">
 
                 <TextView
-                    android:text="0"
-                    android:layout_width="42dp"
+                    android:text="Phase:"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/phaseTextView"
+                    android:textSize="30sp"
+                    android:textColor="@android:color/background_dark"
+                    android:textAlignment="textStart" />
+
+                <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/phaseView"
-                    android:textSize="24sp" />
+                    android:textSize="30sp"
+                    android:layout_weight="0.30"
+                    android:textAlignment="center" />
 
                 <TextView
                     android:text="Previous Bid:"
@@ -541,7 +552,8 @@
                     android:id="@+id/previousBidTextTV"
                     android:textSize="30sp"
                     android:textColor="@android:color/background_dark"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:paddingLeft="50dp" />
 
                 <TextView
                     android:text="-"
@@ -561,12 +573,13 @@
                     android:textColor="@android:color/background_dark" />
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_width="157dp"
+                    android:layout_height="match_parent"
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/bidEditText"
-                    android:focusable="false" />
+                    android:focusable="false"
+                    android:gravity="bottom" />
 
             </LinearLayout>
 
@@ -575,7 +588,8 @@
                 android:layout_height="491dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:id="@+id/map">
+                android:id="@+id/map"
+                android:layout_weight="1.01">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -585,16 +599,6 @@
                     android:id="@+id/mapImageView"
                     android:layout_weight="1"
                     android:layout_alignParentStart="true" />
-
-                <Button
-                    android:text="Denver"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/button4"
-                    android:layout_marginStart="150dp"
-                    android:layout_alignTop="@+id/button2"
-                    android:layout_toEndOf="@+id/button3"
-                    android:layout_marginTop="39dp" />
 
                 <Button
                     android:text="Omaha"
@@ -623,15 +627,6 @@
                     android:layout_width="60dp" />
 
                 <Button
-                    android:text="CHI"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/button6"
-                    android:layout_marginBottom="13dp"
-                    android:layout_alignBottom="@+id/button5"
-                    android:layout_toStartOf="@+id/button17" />
-
-                <Button
                     android:text="DET"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
@@ -649,15 +644,6 @@
                     android:layout_above="@+id/button16"
                     android:layout_alignStart="@+id/button16"
                     android:layout_marginStart="11dp" />
-
-                <Button
-                    android:text="OKC"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/button19"
-                    android:layout_below="@+id/button10"
-                    android:layout_alignEnd="@+id/button9"
-                    android:layout_marginEnd="20dp" />
 
                 <Button
                     android:text="SF"
@@ -769,9 +755,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="72dp"
                     android:id="@+id/userPowerPlants"
-                    android:layout_below="@+id/button12"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentBottom="true">
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/button7">
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -787,7 +773,7 @@
 
                             <Spinner
                                 android:text="Your Power Plants"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/userPowerPlantsSpinner"
                                 android:background="#009980"
@@ -948,23 +934,23 @@
 
                     <LinearLayout
                         android:orientation="vertical"
-                        android:layout_width="144dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@android:color/white">
 
                         <LinearLayout
                             android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"></LinearLayout>
+                            android:layout_height="20dp"
+                            android:layout_width="150dp"></LinearLayout>
 
                         <LinearLayout
                             android:orientation="vertical"
-                            android:layout_width="match_parent"
+                            android:layout_width="95dp"
                             android:layout_height="79dp">
 
                             <LinearLayout
                                 android:orientation="horizontal"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
 
                                 <LinearLayout
@@ -1000,32 +986,44 @@
 
                                 <LinearLayout
                                     android:orientation="vertical"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
 
                                     <TextView
                                         android:text="-"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/upp2cValue" />
 
                                     <TextView
                                         android:text="-"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/upp2tValue" />
 
                                     <TextView
                                         android:text="-"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/upp2nValue" />
 
                                     <TextView
                                         android:text="-"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/upp2hValue" />
+
+                                    <TextView
+                                        android:text="-"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/textView4" />
+
+                                    <TextView
+                                        android:text="-"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/textView3" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -1033,12 +1031,12 @@
 
                         <LinearLayout
                             android:orientation="vertical"
-                            android:layout_width="match_parent"
+                            android:layout_width="98dp"
                             android:layout_height="match_parent">
 
                             <LinearLayout
                                 android:orientation="horizontal"
-                                android:layout_width="match_parent"
+                                android:layout_width="97dp"
                                 android:layout_height="wrap_content">
 
                                 <LinearLayout
@@ -1074,30 +1072,30 @@
 
                                 <LinearLayout
                                     android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="wrap_content">
 
                                     <TextView
                                         android:text="-"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/upp4cValue" />
 
                                     <TextView
                                         android:text="-"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/upp4tValue" />
 
                                     <TextView
                                         android:text="-"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/upp4nValue" />
 
                                     <TextView
                                         android:text="-"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/upp4hValue" />
                                 </LinearLayout>
@@ -1108,13 +1106,39 @@
                 </LinearLayout>
 
                 <Button
+                    android:text="Denver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button4"
+                    android:layout_below="@+id/button5"
+                    android:layout_toEndOf="@+id/button7"
+                    android:layout_marginStart="32dp" />
+
+                <Button
+                    android:text="OKC"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button19"
+                    android:layout_marginEnd="23dp"
+                    android:layout_below="@+id/button10"
+                    android:layout_toStartOf="@+id/button12" />
+
+                <Button
+                    android:text="CHI"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button6"
+                    android:layout_alignTop="@+id/button2"
+                    android:layout_alignEnd="@+id/button12" />
+
+                <Button
                     android:text="Dallas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/button9"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="16dp"
                     android:layout_below="@+id/button19"
-                    android:layout_toEndOf="@+id/button4" />
+                    android:layout_alignStart="@+id/button5" />
 
             </RelativeLayout>
 
@@ -1126,7 +1150,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="44dp"
                 android:id="@+id/rawResources"
-                android:layout_height="200dp">
+                android:layout_height="198dp">
 
                 <LinearLayout
                     android:orientation="horizontal"

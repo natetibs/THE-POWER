@@ -225,8 +225,10 @@ public class PowerGridLocalGame extends LocalGame{
                     powerState.changeTurn();
                 }
                 else{
-                    powerState.setGamePhase(1);
+                    powerState.setGamePhase(3);
                     powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
+                    powerState.getGameInventories().get(i).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
+                    //take money from player i
                     powerState.changeTurn();
                 }
                 moveMade[i] =  true;

@@ -766,37 +766,37 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                         cityButtons[i].setBackgroundColor(prettyBlue);
                         localCities[i] = true;
                     }
-                    //if they have previously selected something, we must check to see if they are neighbors with cities theyve bought
+                    //if they have previously selected something, we must check to see if they are neighbors with cities they've tried to buy this round
                     else {
                         for (int k = 0; k<trueIndexes(localCities).size(); k++) {
-
                             if (powerState.getAvailCities().get(i).isNeighbor(trueIndexes(localCities).get(k))) {
                                 cityButtons[i].setBackgroundColor(prettyBlue);
                                 localCities[i] = true;
                             }
-                        }
+                        }//end for loop k
                     }
                 }
                 else{
-                    trueIndexes = trueIndexes(localCities);
-                    for(int j = 0; j < trueIndexes.size(); j++){
-                        if(powerState.getAvailCities().get(i).isNeighbor((trueIndexes.get(j)))){
-                            if (localCities[i]) {
-                                cityButtons[i].setBackgroundColor(basicGray);
-                                localCities[i] = false;
-                            }
-                            else {
-                                cityButtons[i].setBackgroundColor(prettyBlue);
-                                localCities[i] = true;
-
-                            }
+                    //if they haven't previously selected anything during this round, they can only buy cities that are neighboring their previously bought cities
+                    for(int j = 0; j<powerState.getGameInventories().get(0).getMyCities().size(); j++) {
+                        if (isArrayFalse(localCities) && powerState.getGameInventories().get(0).getMyCities().get(j).containsNeighbor(trueIndexes(localCities))) {
+                            cityButtons[i].setBackgroundColor(prettyBlue);
+                            localCities[i] = true;
                         }
-                    }//end for loop
-
+                        //if they have previously selected something, we must check to see if they are neighbors with cities they've tried to buy this round
+                        else {
+                            for (int l = 0; l < trueIndexes(localCities).size(); l++) {
+                                if (powerState.getAvailCities().get(i).isNeighbor(trueIndexes(localCities).get(l))) {
+                                    cityButtons[i].setBackgroundColor(prettyBlue);
+                                    localCities[i] = true;
+                                }
+                            }//end for loop l
+                        }
+                    }//end for loop j
                 }
-            }//end for loop
+            }//end for loop i
        }
-    }//citybuttonlistener
+    }//cityButtonListener
 
     //implements the coal buttons
     public class CoalButtonListener implements View.OnClickListener {
@@ -971,5 +971,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         }
         return indexArray;
     }
+
 }
 
