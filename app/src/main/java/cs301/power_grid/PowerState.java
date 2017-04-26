@@ -48,6 +48,28 @@ public class PowerState extends GameState implements Serializable {
         currentBid = original.getCurrentBid();
         selectedPlant = original.getSelectedPlant();
 
+        //lets save all the player data
+        for(m = 0; m < original.gameInventories.size(); m++) {
+            gameInventories.add(m, new Inventory());
+            gameInventories.get(m).setCoal(original.gameInventories.get(m).getCoal());
+            gameInventories.get(m).setMoney(original.gameInventories.get(m).getMoney());
+            gameInventories.get(m).setUranium(original.gameInventories.get(m).getUranium());
+            gameInventories.get(m).setOil(original.gameInventories.get(m).getOil());
+            gameInventories.get(m).setTrash(original.gameInventories.get(m).getTrash());
+        }
+
+        //Setup inventory->plants
+        for(m = 0; m < original.gameInventories.size(); m++) {
+            for (n = 0; n < original.gameInventories.get(m).getMyPlants().size(); n++) {
+                Powerplant origPlant = new Powerplant();
+                origPlant.setCost(original.gameInventories.get(m).getMyPlants().get(n).getCost());
+                origPlant.setPtP(original.gameInventories.get(m).getMyPlants().get(n).getPtP());
+                origPlant.setHp(original.gameInventories.get(m).getMyPlants().get(n).getHp());
+                origPlant.setKind(original.gameInventories.get(m).getMyPlants().get(n).getKind());
+                gameInventories.get(m).addMyPlants(origPlant);
+            }
+        }
+
         for(i = 0; i < 20; i++){
             boughtCities[i] = original.getBoughtCities()[i];
         }
@@ -93,30 +115,8 @@ public class PowerState extends GameState implements Serializable {
             salePlants.get(k).setKind(original.salePlants.get(k).getKind());
         }
 
-        //lets save all the player data
-        for(m = 0; m < original.gameInventories.size(); m++) {
-            gameInventories.add(original.gameInventories.get(m));
-            gameInventories.get(m).setCoal(original.gameInventories.get(m).getCoal());
-            gameInventories.get(m).setMoney(original.gameInventories.get(m).getMoney());
-            gameInventories.get(m).setUranium(original.gameInventories.get(m).getUranium());
-            gameInventories.get(m).setOil(original.gameInventories.get(m).getOil());
-            gameInventories.get(m).setTrash(original.gameInventories.get(m).getTrash());
 
 
-        }
-        //Setup inventory->plants
-        for(m = 0; m < original.gameInventories.size(); m++) {
-            for (n = 0; n < original.gameInventories.get(m).getMyPlants().size(); n++) {
-                Powerplant origPlant = new Powerplant();
-                origPlant.setCost(original.gameInventories.get(m).getMyPlants().get(0).getCost());
-                origPlant.setPtP(original.gameInventories.get(m).getMyPlants().get(0).getPtP());
-                origPlant.setHp(original.gameInventories.get(m).getMyPlants().get(0).getHp());
-                origPlant.setKind(original.gameInventories.get(m).getMyPlants().get(0).getKind());
-                if(n == 0) {
-                    gameInventories.get(m).addMyPlants(origPlant);
-                }
-            }
-        }
     }//copyConstructor
 
     //getters

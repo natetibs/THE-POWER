@@ -17,7 +17,7 @@ public class PowerGridLocalGame extends LocalGame{
     private PowerState powerState = new PowerState();
     private int price, phase, turn;
     private boolean has10Cities;
-    private boolean[] moveMade = {false,false,false};
+    private boolean[] moveMade = {false,false};
     private int i = 0;
     private int j = -1;
 
@@ -242,8 +242,15 @@ public class PowerGridLocalGame extends LocalGame{
             else{moveMade[i] = false;}
         }//end for loop
 
-        if(moveMade[0] || moveMade[1]){return true;}
-        else{return false;}
+        if(moveMade[0]) {
+            return true;
+        }
+        else if(moveMade[1]){
+            return true;
+        }
+        else{
+            return false;
+        }
 
     }//makeMove
 }
