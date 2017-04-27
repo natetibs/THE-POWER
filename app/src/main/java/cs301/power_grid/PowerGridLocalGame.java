@@ -94,7 +94,7 @@ public class PowerGridLocalGame extends LocalGame{
     @Override
     protected boolean makeMove(GameAction action) {
         //playerId, 0 = human player, 1 = computer/network player
-
+        //
         turn = powerState.getTurn();
         phase = powerState.getGamePhase();
 
