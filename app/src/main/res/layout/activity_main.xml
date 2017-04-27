@@ -1179,28 +1179,28 @@
                             android:layout_height="match_parent">
 
                             <ImageButton
-                                android:layout_width="39dp"
-                                android:layout_height="match_parent"
                                 android:id="@+id/cb1"
-                                android:src="@color/coalColor"
-                                android:backgroundTint="@color/coalColor"
-                                android:layout_weight="0.05" />
-
-                            <ImageButton
                                 android:layout_width="39dp"
                                 android:layout_height="match_parent"
-                                android:id="@+id/cb2"
-                                android:src="@color/coalColor"
+                                android:layout_weight="0.05"
                                 android:backgroundTint="@color/coalColor"
-                                android:layout_weight="0.04" />
+                                android:src="@android:drawable/list_selector_background"/>
 
                             <ImageButton
+                                android:id="@+id/cb2"
+                                android:layout_width="39dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.04"
+                                android:backgroundTint="@color/coalColor"
+                                android:src="@android:drawable/list_selector_background"/>
+
+                            <ImageButton
+                                android:id="@+id/cb3"
                                 android:layout_width="39dp"
                                 android:layout_height="53dp"
-                                android:id="@+id/cb3"
-                                android:src="@color/coalColor"
+                                android:layout_weight="0.03"
                                 android:backgroundTint="@color/coalColor"
-                                android:layout_weight="0.03" />
+                                android:src="@android:drawable/list_selector_background"/>
 
                         </LinearLayout>
 
