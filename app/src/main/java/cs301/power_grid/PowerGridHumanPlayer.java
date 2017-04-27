@@ -373,7 +373,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     }
                     resetResourceButtons();
                 }
-                /**
+                /**asdf
                  External Citation
                  Date:    21 April 2017
                  Problem:  making editText editable under a certain condition
