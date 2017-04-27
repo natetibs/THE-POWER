@@ -694,15 +694,6 @@
                     android:layout_marginEnd="14dp" />
 
                 <Button
-                    android:text="HOU"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/button8"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="70dp"
-                    android:layout_below="@+id/button9"
-                    android:layout_alignStart="@+id/button9" />
-
-                <Button
                     android:text="LA"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -732,15 +723,6 @@
                     android:layout_alignBottom="@+id/button7"
                     android:layout_toEndOf="@+id/button5"
                     android:layout_marginStart="18dp" />
-
-                <Button
-                    android:text="NEW ORL"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/button11"
-                    android:layout_alignBottom="@+id/button8"
-                    android:layout_toEndOf="@+id/button5"
-                    android:layout_marginBottom="30dp" />
 
                 <Button
                     android:text="ATL"
@@ -860,7 +842,7 @@
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="68dp">
+                            android:layout_height="match_parent">
 
                             <LinearLayout
                                 android:orientation="horizontal"
@@ -945,12 +927,12 @@
 
                         <LinearLayout
                             android:orientation="vertical"
-                            android:layout_width="95dp"
+                            android:layout_width="match_parent"
                             android:layout_height="79dp">
 
                             <LinearLayout
                                 android:orientation="horizontal"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
                                 <LinearLayout
@@ -986,7 +968,7 @@
 
                                 <LinearLayout
                                     android:orientation="vertical"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
 
                                     <TextView
@@ -1031,12 +1013,12 @@
 
                         <LinearLayout
                             android:orientation="vertical"
-                            android:layout_width="98dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
                             <LinearLayout
                                 android:orientation="horizontal"
-                                android:layout_width="97dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
                                 <LinearLayout
@@ -1073,7 +1055,7 @@
                                 <LinearLayout
                                     android:orientation="vertical"
                                     android:layout_height="wrap_content"
-                                    android:layout_width="wrap_content">
+                                    android:layout_width="match_parent">
 
                                     <TextView
                                         android:text="-"
@@ -1132,13 +1114,29 @@
                     android:layout_alignEnd="@+id/button12" />
 
                 <Button
+                    android:text="HOU"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button8"
+                    android:layout_marginTop="103dp"
+                    android:layout_width="70dp"
+                    android:layout_below="@+id/button3"
+                    android:layout_alignStart="@+id/button9" />
+
+                <Button
+                    android:text="NEW ORL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button11"
+                    android:layout_above="@+id/button15"
+                    android:layout_alignEnd="@+id/button12" />
+
+                <Button
                     android:text="Dallas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/button9"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/button19"
-                    android:layout_alignStart="@+id/button5" />
+                    android:layout_above="@+id/button11"
+                    android:layout_toStartOf="@+id/button6" />
 
             </RelativeLayout>
 
@@ -1182,7 +1180,6 @@
                                 android:layout_width="39dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb1"
-                                android:src="@color/coalColor"
                                 android:backgroundTint="@color/coalColor"
                                 android:layout_weight="0.05" />
 
@@ -1190,7 +1187,7 @@
                                 android:layout_width="39dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb2"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor"
                                 android:layout_weight="0.04" />
 
@@ -1198,7 +1195,7 @@
                                 android:layout_width="39dp"
                                 android:layout_height="53dp"
                                 android:id="@+id/cb3"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor"
                                 android:layout_weight="0.03" />
 
@@ -1214,21 +1211,19 @@
                                 android:layout_width="40dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/ob1"
-                                android:background="@drawable/iconoil1"
-                                android:src="@drawable/abc_btn_check_to_on_mtrl_015" />
+                                android:background="@drawable/iconoil1" />
 
                             <ImageButton
                                 android:id="@+id/ob2"
                                 android:layout_width="42dp"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/iconoil1"
-                                android:src="@drawable/abc_btn_check_to_on_mtrl_015" />
+                                android:background="@drawable/iconoil1" />
 
                             <ImageButton
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/ub1"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/iconnuclear2" />
                         </LinearLayout>
 
@@ -1244,7 +1239,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.38"
                                 android:background="@drawable/icontrash2"
-                                android:src="@android:drawable/list_selector_background" />
+                                 />
 
                             <ImageButton
                                 android:id="@+id/tb2"
@@ -1252,7 +1247,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.32"
                                 android:background="@drawable/icontrash2"
-                                android:src="@android:drawable/list_selector_background" />
+                                 />
 
                             <ImageButton
                                 android:id="@+id/tb3"
@@ -1260,7 +1255,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.23"
                                 android:background="@drawable/icontrash2"
-                                android:src="@android:drawable/list_selector_background" />
+                                 />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -1298,21 +1293,21 @@
                                 android:layout_width="51dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb4"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor" />
 
                             <ImageButton
                                 android:layout_width="51dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb5"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor" />
 
                             <ImageButton
                                 android:layout_width="49dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb6"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor" />
                         </LinearLayout>
 
@@ -1326,7 +1321,7 @@
                                 android:layout_width="42dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/ob3"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/iconoil2"
                                 android:layout_weight="0.34" />
 
@@ -1342,7 +1337,7 @@
                                 android:layout_width="56dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/ub2"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/iconnuclear2" />
                         </LinearLayout>
 
@@ -1355,7 +1350,7 @@
                                 android:layout_width="44dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/tb4"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash2"
                                 android:layout_weight="0.23" />
 
@@ -1363,7 +1358,7 @@
                                 android:layout_width="42dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/tb5"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash2"
                                 android:layout_weight="0.45" />
 
@@ -1371,7 +1366,7 @@
                                 android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/tb6"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash2"
                                 android:layout_weight="0.25" />
                         </LinearLayout>
@@ -1406,7 +1401,7 @@
                                 android:layout_width="46dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb7"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor" />
 
 
@@ -1414,14 +1409,14 @@
                                 android:layout_width="45dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb8"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor" />
 
                             <ImageButton
                                 android:layout_width="49dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb9"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor" />
                         </LinearLayout>
 
@@ -1435,7 +1430,7 @@
                                 android:layout_width="44dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/ob5"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/iconoil3"
                                 android:layout_weight="0.15" />
 
@@ -1451,7 +1446,7 @@
                                 android:layout_width="37dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/ub3"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/iconnuclear3"
                                 android:layout_weight="0.62" />
                         </LinearLayout>
@@ -1464,29 +1459,25 @@
                                 android:layout_width="45dp"
                                 android:layout_height="51dp"
                                 android:id="@+id/tb7"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash3" />
 
                             <ImageButton
                                 android:layout_width="49dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/tb8"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash3" />
 
                             <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:id="@+id/tb9"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash3" />
                         </LinearLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"></LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -1519,21 +1510,21 @@
                                 android:layout_width="45dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb10"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor"  />
 
                             <ImageButton
                                 android:layout_width="45dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb11"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor"  />
 
                             <ImageButton
                                 android:layout_width="45dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb12"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor"  />
                         </LinearLayout>
 
@@ -1547,7 +1538,6 @@
                                 android:layout_width="45dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/ob7"
-                                android:src="@drawable/abc_btn_check_to_on_mtrl_015"
                                 android:background="@drawable/iconoil4"
                                 android:layout_weight="0.36" />
 
@@ -1555,7 +1545,6 @@
                                 android:layout_width="42dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/ob8"
-                                android:src="@drawable/abc_btn_check_to_on_mtrl_015"
                                 android:background="@drawable/iconoil4"
                                 android:layout_weight="0.72" />
 
@@ -1577,14 +1566,14 @@
                                 android:layout_width="45dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/tb10"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash4" />
 
                             <ImageButton
                                 android:layout_width="42dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/tb11"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash4"
                                 android:layout_weight="0.39" />
 
@@ -1592,7 +1581,7 @@
                                 android:layout_width="52dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/tb12"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash4" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1630,21 +1619,21 @@
                                 android:layout_width="44dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb13"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor" />
 
                             <ImageButton
                                 android:layout_width="44dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb14"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor" />
 
                             <ImageButton
                                 android:layout_width="44dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/cb15"
-                                android:src="@color/coalColor"
+                                
                                 android:backgroundTint="@color/coalColor" />
                         </LinearLayout>
 
@@ -1666,7 +1655,7 @@
                                 android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/ob10"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/iconoil5"
                                 android:layout_weight="0.19" />
 
@@ -1674,7 +1663,7 @@
                                 android:layout_width="51dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/ub5"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/iconnuclear5" />
                         </LinearLayout>
 
@@ -1688,14 +1677,14 @@
                                 android:layout_width="45dp"
                                 android:layout_height="match_parent"
                                 android:id="@+id/tb13"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash5" />
 
                             <ImageButton
                                 android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/tb14"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash5"
                                 android:layout_weight="0.15"/>
 
@@ -1703,7 +1692,7 @@
                                 android:layout_width="42dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/tb15"
-                                android:src="@android:drawable/list_selector_background"
+                                
                                 android:background="@drawable/icontrash5"
                                 android:layout_weight="0.29" />
                         </LinearLayout>

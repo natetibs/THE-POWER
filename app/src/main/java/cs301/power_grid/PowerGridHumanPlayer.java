@@ -765,6 +765,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
                 String cityName = (String) cityButtons[i].getText();
 
+
                 if (v.getId() != cityButtons[i].getId()) {continue;} //if they didn't click on it, don't worry about it
                 if(powerState.getBoughtCities()[i]) {return;} //if they did click on it, but it's already been purchased, don't worry about it
 
@@ -840,10 +841,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                             if (localStore.coal[i]) {
                                 coalButtons[i].setBackgroundColor(Color.TRANSPARENT);
                                 localStore.coal[i] = false;
-                            } else {
-
-                                coalButtons[i].setBackgroundColor(Color.BLACK);
-                                localStore.coal[i] = true;
                             }
                         }
                     }
@@ -877,10 +874,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                             if (localStore.oil[i]) {
                                 oilButtons[i].setBackgroundColor(Color.TRANSPARENT);
                                 localStore.oil[i] = false;
-                            } else {
-
-                                oilButtons[i].setBackgroundColor(Color.BLACK);
-                                localStore.oil[i] = true;
                             }
                         }
                     }
@@ -919,10 +912,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                             if (localStore.trash[i]) {
                                 trashButtons[i].setBackgroundColor(Color.TRANSPARENT);
                                 localStore.trash[i] = false;
-                            } else {
-
-                                trashButtons[i].setBackgroundColor(Color.BLACK);
-                                localStore.trash[i] = true;
                             }
                         }
                     }
@@ -952,10 +941,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                             if (localStore.uranium[i]) {
                                 uraniumButtons[i].setBackgroundColor(Color.TRANSPARENT);
                                 localStore.uranium[i] = false;
-                            } else {
-
-                                uraniumButtons[i].setBackgroundColor(Color.BLACK);
-                                localStore.uranium[i] = true;
                             }
                         }
                     }
@@ -981,5 +966,23 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         return indexArray;
     }
 
+//    public boolean canAfford(int city){
+//        int myMoney = powerState.getGameInventories().get(0).getMoney();
+//        ArrayList neighborhood = powerState.getAvailCities().get(city).getNeighborhood();
+//        ArrayList myCities = powerState.getGameInventories().get(0).getMyCities();
+//
+//        if (myCities.size() == 0 && myMoney >= 10){
+//            return true;
+//        }
+//
+//        int price = powerState.getAvailCities().get(city).getCosts().get(neighborIndex);
+//        if (myMoney >= price){
+//
+//        }
+//        else{return false;}
+//        return false;
+//
+//
+//    }
 }
 

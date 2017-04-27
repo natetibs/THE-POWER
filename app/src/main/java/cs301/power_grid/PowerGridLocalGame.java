@@ -196,9 +196,13 @@ public class PowerGridLocalGame extends LocalGame{
                     //give second player their power plant
 
                     //price is whatever the current bid is
+
                     price = powerState.getCurrentBid();
+                    if (price == 0) {
+                        price = powerState.getAvailPowerplant().get(powerState.getSelectedPlant()).getCost();
+                    }
                     //take the highest bid and take that amount of money from the user
-                    powerState.getGameInventories().get(i).setMoney(powerState.getGameInventories().get(i).getMoney() - price);
+                    powerState.getGameInventories().get(j).setMoney(powerState.getGameInventories().get(j).getMoney() - price);
                     powerState.getGameInventories().get(j).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
                     powerState.removePlant(powerState.getSelectedPlant());
                     powerState.setGamePhase(2);
