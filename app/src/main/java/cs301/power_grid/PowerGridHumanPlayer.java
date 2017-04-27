@@ -47,6 +47,8 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
     private int selectNum = -1;
     private int bidValue = -1;
+
+
     private ResourceStore localStore = new ResourceStore();
 
     ArrayList<BuyCityAction> cityActionList = new ArrayList<BuyCityAction>();
@@ -178,7 +180,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         previousBid = (TextView) myActivity.findViewById(R.id.previousBidTV);
         bidEditText = (EditText) myActivity.findViewById(R.id.bidEditText);
 
-        //bidValue = Integer.parseInt(bidVal.getText().toString());
+
 
         //sale power plants
         powerPlant1Cost = (TextView) myActivity.findViewById(R.id.pp1cValue);
@@ -333,6 +335,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
      */
     @Override
     public void receiveInfo(GameInfo info) {
+        int opponentNum = -1;
+        if (playerNum == 0){opponentNum = 1;}
+        else if (playerNum == 1){opponentNum = 0;}
         //check if guiIsReady - if setAsGui has been called
         if (guiIsReady){
             //check if info is a gameState
@@ -346,8 +351,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 boolean hadItems = false;
 
                 setResources((powerState.getGameInventories().get(resourcePos)));
-
                 setPowerPlants((powerState.getGameInventories().get(powerPlantPos)));
+
+                checkResourceButtons();
 
                 //display the power plants up for auction each update
 
@@ -361,11 +367,12 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     * "OK" or "Pass" updates phase.*/
                     //GUI updates handled by button listener
                     //color cities other player has bought
-                    int opponentNumCities = powerState.getGameInventories().get(1).getMyCities().size();
+
+                    int opponentNumCities = powerState.getGameInventories().get(opponentNum).getMyCities().size();
                     if (opponentNumCities > 0) {
                         for (int i = 0; i < opponentNumCities; i++) {
                             //find the city index that the opponent bought
-                            int cityIndex = powerState.getGameInventories().get(1).getMyCities().get(i).getIndex();
+                            int cityIndex = powerState.getGameInventories().get(opponentNum).getMyCities().get(i).getIndex();
                             //color the buttons that the opponent owns
                             cityButtons[cityIndex].setBackgroundColor(opponentRed);
                             //use opponentRed Color
@@ -392,13 +399,17 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     else {
                         previousBid.setText("" + bid);
                     }
+                    bidEditText.setText("");
                     bidEditText.setFocusableInTouchMode(true);
-
                 }
                 else if (phase == 2 ) {
                     /*Previous passer chooses a power plant.
                     * "OK" or "Pass" updates phase.*/
                     //GUI updates handled by button listeners
+                    //update bid bar
+                    previousBid.setText("-");
+                    bidEditText.setText("");
+
                 }
                 else if (phase == 3) {
                     /*Second player chooses resources.
@@ -671,6 +682,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 }
             }
             else if (phase == 1) {
+                bidValue = Integer.parseInt(bidEditText.getText().toString());
                 //only send the action if they made an appropriate bid
                 if(bidValue > powerState.getCurrentBid()) {
                     BidAction ba = new BidAction(PowerGridHumanPlayer.this, bidValue);
@@ -1092,5 +1104,8 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
 
    }
+    public void checkResourceButtons(){
+
+    }
 }
 

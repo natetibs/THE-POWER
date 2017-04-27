@@ -226,7 +226,7 @@ public class PowerGridLocalGame extends LocalGame{
                     powerState.changeTurn();
                 }
                 else if (phase == 5){
-                    //first player is done buying cities
+                    //player is done buying cities
                     //change phase and turn
                     powerState.setGamePhase(6);
                     powerState.changeTurn();
