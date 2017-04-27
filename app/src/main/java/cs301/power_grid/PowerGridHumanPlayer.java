@@ -527,21 +527,21 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             numberTextView1.setText("" + upp.getMyPlants().get(0).getPtP());
             housesTextView1.setText("" + upp.getMyPlants().get(0).getHp());
         }
-        //&& upp.getMyPlants().get(1).getCost() != upp.getMyPlants().get(0).getCost()
+
         if (upp.getMyPlants().size() > 1 ) {
             costTextView2.setText("" + upp.getMyPlants().get(1).getCost());
             typeTextView2.setText("" + upp.getMyPlants().get(1).getKind());
             numberTextView2.setText("" + upp.getMyPlants().get(1).getPtP());
             housesTextView2.setText("" + upp.getMyPlants().get(1).getHp());
         }
-        // && upp.getMyPlants().get(2).getCost() != upp.getMyPlants().get(0).getCost() && upp.getMyPlants().get(2).getCost() != upp.getMyPlants().get(1).getCost()
+
         if (upp.getMyPlants().size() > 2) {
             costTextView3.setText("" + upp.getMyPlants().get(2).getCost());
             typeTextView3.setText("" + upp.getMyPlants().get(2).getKind());
             numberTextView3.setText("" + upp.getMyPlants().get(2).getPtP());
             housesTextView3.setText("" + upp.getMyPlants().get(2).getHp());
         }
-        // && upp.getMyPlants().get(3).getCost() != upp.getMyPlants().get(0).getCost() && upp.getMyPlants().get(3).getCost() != upp.getMyPlants().get(1).getCost() && upp.getMyPlants().get(3).getCost() != upp.getMyPlants().get(2).getCost()
+
         if (upp.getMyPlants().size() > 3) {
             costTextView4.setText("" + upp.getMyPlants().get(3).getCost());
             typeTextView4.setText("" + upp.getMyPlants().get(3).getKind());

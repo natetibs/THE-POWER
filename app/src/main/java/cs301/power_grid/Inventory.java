@@ -45,14 +45,24 @@ public class Inventory implements Serializable{
     public void setTrash(int restock) {trash = restock;}
 
     public boolean addMyPlants(Powerplant plantation) {
+        boolean notAdded = true;
         if(myPlants.size() >= 4) {
-          // myPlants.remove(lowestRatio());
-            myPlants.remove(0);
-            myPlants.add(plantation);
-            return false; //false, a power plant was sacrificed
+          myPlants.remove(lowestCost());
+          myPlants.add(plantation);
+          return false; //false, a power plant was sacrificed
         }
 
-        myPlants.add(plantation);
+        for(int i = 0; i < myPlants.size(); i++) {
+            if (plantation.getRatio() > myPlants.get(i).getRatio()) {
+                myPlants.add(i, plantation);
+                notAdded = false;
+                break;
+            }
+        }
+        if(notAdded){
+            myPlants.add(plantation);
+        }
+
         return true; //success
     }
 
@@ -81,12 +91,25 @@ public class Inventory implements Serializable{
         return cityIndexes;
     }
 
-    public int lowestRatio() {
-        double minRatio = 100000;
+    public int lowestCost() {
+        double minCost = 100000;
         int index = 0;
 
         for (int i = 0; i < myPlants.size(); i++) {
-            if (myPlants.get(i).getRatio() < minRatio) {
+            if (myPlants.get(i).getCost() < minCost) {
+                minCost = myPlants.get(i).getCost();
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    public int highestRatio() {
+        double minRatio = -1;
+        int index = 0;
+
+        for (int i = 0; i < myPlants.size(); i++) {
+            if (myPlants.get(i).getRatio() > minRatio) {
                 minRatio = myPlants.get(i).getRatio();
                 index = i;
             }
