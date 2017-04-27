@@ -31,4 +31,8 @@ public class ResourceStore implements Serializable {
         }
     }
 
+    public ResourceStore resetAvailableResources() {
+        return new ResourceStore();
+    }
+
 }

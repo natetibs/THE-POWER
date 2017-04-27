@@ -18,6 +18,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static android.R.drawable.list_selector_background;
+import static cs301.power_grid.R.color.coalColor;
+import static cs301.power_grid.R.drawable.abc_btn_check_to_on_mtrl_015;
+import static cs301.power_grid.R.drawable.iconnuclear2;
+import static cs301.power_grid.R.drawable.iconoil1;
+import static cs301.power_grid.R.drawable.icontrash2;
+
 /**
  * @author Luchini Guilian, Tibbetts Nathan, Douville Luke, Hoang Paul
  */
@@ -25,12 +32,16 @@ import java.util.ArrayList;
 public class PowerGridHumanPlayer extends GameHumanPlayer {
     //instance variables:
     private TextView phaseTextView;
-    int i = 0;
+//    int i = 0;
+    private View view;
 
     //android activity we are running
     private GameMainActivity myActivity;
     //game state
     private PowerState powerState = new PowerState();
+
+    /*Inventory?*/
+//    private Inventory inv = powerState.getGameInventories().get(0);//new Inventory();
 
     private int selectNum = -1;
     private int bidValue = -1;
@@ -216,7 +227,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         numberTextView4 = (TextView) myActivity.findViewById(R.id.upp4nValue);
         housesTextView4 = (TextView) myActivity.findViewById(R.id.upp4hValue);
 
-        //initialize resource buttons and listers
+        //initialize resource buttons and listeners
         coalButtons[0] = (ImageButton) myActivity.findViewById(R.id.cb1);
         coalButtons[1] = (ImageButton) myActivity.findViewById(R.id.cb2);
         coalButtons[2] = (ImageButton) myActivity.findViewById(R.id.cb3);
@@ -406,6 +417,8 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                         game.sendAction(cityActionList.remove(0));
                     }
                     //look and see which resources or cities user bought, change views accordingly
+                    /*Reset the resource buttons.*/
+                    resetResourceButtons();
                 }
 
                 else {
@@ -420,6 +433,34 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         selectButton1.setBackgroundColor(0xFF33B5E5);
         selectButton2.setBackgroundColor(0xFF0099CC);
         selectButton3.setBackgroundColor(0xFF00DDFF);
+    }
+
+    private void resetResourceButtons()
+    {
+        for(int i = 0; i < 15; i++)
+        {
+            coalButtons[i].setImageResource(coalColor);
+            float x = coalButtons[i].getScaleX();
+            coalButtons[i].setScaleX((float)1.6);
+            coalButtons[i].setScaleY((float)1.6);
+        }
+        for(int j = 0; j < 10; j++)
+        {
+//            oilButtons[j].setImageResource(abc_btn_check_to_on_mtrl_015);
+            oilButtons[j].setImageResource(iconoil1);
+            oilButtons[j].setScaleX((float)0.9);
+            oilButtons[j].setScaleY((float)0.9);
+        }
+        for(int k = 0; k < 5; k++)
+        {
+//            uraniumButtons[k].setImageResource(list_selector_background);
+            uraniumButtons[k].setImageResource(iconnuclear2);
+        }
+        for(int l = 0; l < 15; l++)
+        {
+//            trashButtons[l].setImageResource(list_selector_background);
+            trashButtons[l].setImageResource(icontrash2);
+        }
     }
 
     /**
@@ -815,7 +856,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
         @Override
         public void onClick(View view) {
-            if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {
+            if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {// || powerState.getGamePhase() == 5 || powerState.getGamePhase() == 6) {
                 int viewId = view.getId();
                 int[] idNum = new int[15];
                 idNum[0] = R.id.cb1;

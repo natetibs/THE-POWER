@@ -8,14 +8,14 @@ import static org.junit.Assert.*;
  * Created by guilianluchini on 3/23/17.
  */
 public class PowerStateTest {
-    @Test
-    public void getPlayerId() throws Exception {
-        PowerState powerState = new PowerState();
-
-        assertTrue(powerState.getPlayerId() == 0);
-
-
-    }
+//    @Test
+//    public void getPlayerId() throws Exception {
+//        PowerState powerState = new PowerState();
+//
+//        assertTrue(powerState.getPlayerId() == 0);
+//
+//
+//    }
 
     @Test
     public void getGamePhase() throws Exception {
@@ -24,13 +24,13 @@ public class PowerStateTest {
         assertTrue(powerState.getGamePhase() == 0);
     }
 
-    @Test
-    public void setPlayerId() throws Exception {
-        PowerState powerState = new PowerState();
-        powerState.setPlayerId(20);
-
-        assertTrue(powerState.getPlayerId() == 20);
-    }
+//    @Test
+//    public void setPlayerId() throws Exception {
+//        PowerState powerState = new PowerState();
+//        powerState.setPlayerId(20);
+//
+//        assertTrue(powerState.getPlayerId() == 20);
+//    }
 
     @Test
     public void initiateCityScape() throws Exception {

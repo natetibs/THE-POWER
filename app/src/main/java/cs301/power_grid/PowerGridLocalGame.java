@@ -15,6 +15,7 @@ import game.infoMsg.GameState;
 public class PowerGridLocalGame extends LocalGame{
     //instance variables
     private PowerState powerState = new PowerState();
+    private ResourceStore rStore;// = new ResourceStore();
     private int price, phase, turn;
     private boolean has10Cities;
     private boolean[] moveMade = {false,false};
@@ -230,6 +231,8 @@ public class PowerGridLocalGame extends LocalGame{
                     powerState.setGamePhase(6);
                     powerState.changeTurn();
                 }
+                /*Refresh resources & paying users
+                PassAction*/
                 else if(phase == 6) {
                     //Second player is done buying cities
                     //pay users based on how many plants they can power
@@ -246,6 +249,8 @@ public class PowerGridLocalGame extends LocalGame{
                     powerState.changeTurn();
                     powerState.setGamePhase(0);
                     powerState.setSelectedPlant(-1);
+//                    rStore.resetAvailableResources(powerState.getAvailableResources());
+                    powerState.setAvailableResources(new ResourceStore());
                 }
 
                 moveMade[i] = true;
