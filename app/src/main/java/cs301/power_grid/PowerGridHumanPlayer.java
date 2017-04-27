@@ -735,9 +735,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         @Override
         public void onClick(View v) {
             int cost = powerState.getAvailPowerplant().get(0).getCost();
-            int myMoney = powerState.getGameInventories().get(0).getMoney();
+            int myMoney = powerState.getGameInventories().get(playerNum).getMoney();
             if(powerState.getTurn() != playerNum) return;
-            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && cost >= myMoney ) {
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && myMoney >= cost ) {
                 selectNum = 0;
                 selectButton0.setBackgroundColor(Color.YELLOW);
                 selectButton1.setBackgroundColor(0xFF33B5E5);
@@ -751,9 +751,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         @Override
         public void onClick(View v) {
             int cost = powerState.getAvailPowerplant().get(1).getCost();
-            int myMoney = powerState.getGameInventories().get(0).getMoney();
+            int myMoney = powerState.getGameInventories().get(playerNum).getMoney();
             if(powerState.getTurn() != playerNum) return;
-            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && cost >= myMoney) {
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && myMoney >= cost ) {
                 selectNum = 1;
                 selectButton1.setBackgroundColor(Color.YELLOW);
                 selectButton0.setBackgroundColor(prettyBlue);
@@ -767,9 +767,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         @Override
         public void onClick(View v) {
             int cost = powerState.getAvailPowerplant().get(2).getCost();
-            int myMoney = powerState.getGameInventories().get(0).getMoney();
+            int myMoney = powerState.getGameInventories().get(playerNum).getMoney();
             if(powerState.getTurn() != playerNum) return;
-            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && cost >= myMoney) {
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && myMoney >= cost ) {
                 selectNum = 2;
                 selectButton2.setBackgroundColor(Color.YELLOW);
                 selectButton0.setBackgroundColor(prettyBlue);
@@ -783,9 +783,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         @Override
         public void onClick(View v) {
             int cost = powerState.getAvailPowerplant().get(3).getCost();
-            int myMoney = powerState.getGameInventories().get(0).getMoney();
+            int myMoney = powerState.getGameInventories().get(playerNum).getMoney();
             if(powerState.getTurn() != playerNum) return;
-            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && cost >= myMoney) {
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && myMoney >= cost ) {
                 selectNum = 3;
                 selectButton3.setBackgroundColor(Color.YELLOW);
                 selectButton2.setBackgroundColor(0xFF0099CC);
@@ -812,7 +812,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 //if they don't own any cities, they can select anything
                 //if they own cities, they can only buy neighboring cities
                 //checks to see if the one they clicked is a legitimate neighbor
-                if(powerState.getGameInventories().get(0).getMyCities().size() == 0) {
+                if(powerState.getGameInventories().get(playerNum).getMyCities().size() == 0) {
                     //if they haven't previously selected anything, all options are open
                     if (isArrayFalse(localCities)) {
                         cityButtons[i].setBackgroundColor(prettyBlue);
@@ -832,8 +832,8 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 }
                 else{
                     //if they haven't previously selected anything during this round, they can only buy cities that are neighboring their previously bought cities
-                    for(int j = 0; j<powerState.getGameInventories().get(0).getMyCities().size(); j++) {
-                        if (isArrayFalse(localCities) && powerState.getGameInventories().get(0).getMyCities().get(j).containsNeighbor(trueIndexes(localCities))) {
+                    for(int j = 0; j<powerState.getGameInventories().get(playerNum).getMyCities().size(); j++) {
+                        if (isArrayFalse(localCities) && powerState.getGameInventories().get(playerNum).getMyCities().get(j).containsNeighbor(trueIndexes(localCities))) {
                             if(canBuy(i)) {
                                 cityButtons[i].setBackgroundColor(prettyBlue);
                                 localCities[i] = true;

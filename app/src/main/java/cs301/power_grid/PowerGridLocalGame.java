@@ -94,7 +94,7 @@ public class PowerGridLocalGame extends LocalGame{
     @Override
     protected boolean makeMove(GameAction action) {
         //playerId, 0 = human player, 1 = computer/network player
-        //
+
         turn = powerState.getTurn();
         phase = powerState.getGamePhase();
 
@@ -361,9 +361,6 @@ public class PowerGridLocalGame extends LocalGame{
         else{
             key = numCities;
         }
-
-
-
 
         int returnArray[] = new int[5];
         returnArray[0] = 12 + 12*key;
