@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class PowerGridHumanPlayer extends GameHumanPlayer {
     //instance variables:
     private TextView phaseTextView;
+    int i = 0;
 
     //android activity we are running
     private GameMainActivity myActivity;
@@ -625,7 +626,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 }
             }
             else if (phase == 2) {
-
                 SelectPowerPlantAction sppa = new SelectPowerPlantAction(PowerGridHumanPlayer.this, selectNum);
                 game.sendAction(sppa);
             }

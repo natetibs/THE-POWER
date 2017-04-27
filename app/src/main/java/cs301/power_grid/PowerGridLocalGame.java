@@ -92,9 +92,11 @@ public class PowerGridLocalGame extends LocalGame{
 
             //BuyCityAction
             else if (action instanceof BuyCityAction && turn == i && !moveMade[j]) {
+                price = ((BuyCityAction) action).getCityIndex();
                 boolean didithappen = powerState.getGameInventories().get(i).addMyCity(((BuyCityAction) action).getCity());
                 if(!didithappen){} //vibrate or flash screen
                 powerState.setBoughtCity(((BuyCityAction) action).getCityIndex());
+                powerState.getGameInventories().get(i).setMoney(powerState.getGameInventories().get(i).getMoney() - price);
                 moveMade[i] = true;
             }
 
@@ -162,7 +164,6 @@ public class PowerGridLocalGame extends LocalGame{
              * tacked onto arraylist of actions when game phases end, Pass action changes phase of game
              **/
             else if(action instanceof PassAction && turn == i && !moveMade[j]) {
-
                 if (phase == 0) {
                     //First player has chosen to pass on buying a powerplant, change turn
                     //"OK" or "Pass" updates phase.
@@ -173,6 +174,11 @@ public class PowerGridLocalGame extends LocalGame{
                     //Bidding on power plant(s). if a user passes on a bid, change phase, dont change turn
                     //first player still has a chance to buy a power plant, dont change turn go back to phase 1
                     //give second player their power plant
+
+                    //price is whatever the current bid is
+                    price = powerState.getCurrentBid();
+                    //take the highest bid and take that amount of money from the user
+                    powerState.getGameInventories().get(i).setMoney(powerState.getGameInventories().get(i).getMoney() - price);
                     powerState.getGameInventories().get(j).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
                     powerState.removePlant(powerState.getSelectedPlant());
                     powerState.setGamePhase(2);
@@ -231,6 +237,11 @@ public class PowerGridLocalGame extends LocalGame{
                     powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
                 }
                 else{
+                    //price equals the original cost of the power plant
+                    price = powerState.getAvailPowerplant().get(powerState.getSelectedPlant()).getCost();
+                    //subtract the cost of the powerplant from user
+                    powerState.getGameInventories().get(i).setMoney(powerState.getGameInventories().get(i).getMoney() - price);
+
                     powerState.setGamePhase(3);
                     powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
                     powerState.getGameInventories().get(i).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
