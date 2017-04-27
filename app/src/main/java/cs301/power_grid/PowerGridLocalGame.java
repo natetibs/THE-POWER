@@ -113,11 +113,11 @@ public class PowerGridLocalGame extends LocalGame{
 
             //BuyCityAction
             else if (action instanceof BuyCityAction && turn == i && !moveMade[j]) {
-                price = ((BuyCityAction) action).getCityIndex();
                 boolean didithappen = powerState.getGameInventories().get(i).addMyCity(((BuyCityAction) action).getCity());
                 if(!didithappen){} //vibrate or flash screen
+                //takes 10 from user every time city is bought
+                powerState.getGameInventories().get(i).setMoney(powerState.getGameInventories().get(i).getMoney() - 10);
                 powerState.setBoughtCity(((BuyCityAction) action).getCityIndex());
-                powerState.getGameInventories().get(i).setMoney(powerState.getGameInventories().get(i).getMoney() - price);
                 moveMade[i] = true;
             }
 
