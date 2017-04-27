@@ -43,6 +43,8 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     /*Inventory?*/
 //    private Inventory inv = powerState.getGameInventories().get(0);//new Inventory();
 
+    private int tempMoney = 0;
+
     private int selectNum = -1;
     private int bidValue = -1;
     private ResourceStore localStore = new ResourceStore();
@@ -338,6 +340,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 powerState = (PowerState) info;
                 //update GUI - //update user resources and power plants  every phase
                 //look at which user the human player has displayed on their spinners
+                tempMoney = powerState.getGameInventories().get(playerNum).getMoney();
                 int resourcePos = resourcesSpinner.getSelectedItemPosition();
                 int powerPlantPos = powerPlantsSpinner.getSelectedItemPosition();
 
@@ -367,6 +370,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                             //use opponentRed Color
                         }
                     }
+                    resetResourceButtons();
                 }
                 /**
                  External Citation
@@ -418,7 +422,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     }
                     //look and see which resources or cities user bought, change views accordingly
                     /*Reset the resource buttons.*/
-                    resetResourceButtons();
+
                 }
 
                 else {
@@ -439,27 +443,22 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     {
         for(int i = 0; i < 15; i++)
         {
-            coalButtons[i].setImageResource(coalColor);
-            float x = coalButtons[i].getScaleX();
-            coalButtons[i].setScaleX((float)1.6);
-            coalButtons[i].setScaleY((float)1.6);
+            coalButtons[i].setVisibility(View.VISIBLE);
+
         }
-        for(int j = 0; j < 10; j++)
-        {
-//            oilButtons[j].setImageResource(abc_btn_check_to_on_mtrl_015);
-            oilButtons[j].setImageResource(iconoil1);
-            oilButtons[j].setScaleX((float)0.9);
-            oilButtons[j].setScaleY((float)0.9);
+        for(int j = 0; j < 10; j++) {
+
+            oilButtons[j].setVisibility(View.VISIBLE);
         }
         for(int k = 0; k < 5; k++)
         {
-//            uraniumButtons[k].setImageResource(list_selector_background);
-            uraniumButtons[k].setImageResource(iconnuclear2);
+
+            uraniumButtons[k].setVisibility(View.VISIBLE);
         }
         for(int l = 0; l < 15; l++)
         {
-//            trashButtons[l].setImageResource(list_selector_background);
-            trashButtons[l].setImageResource(icontrash2);
+
+            trashButtons[l].setVisibility(View.VISIBLE);
         }
     }
 
@@ -823,8 +822,10 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     else {
                         for (int k = 0; k<trueIndexes(localCities).size(); k++) {
                             if (powerState.getAvailCities().get(i).isNeighbor(trueIndexes(localCities).get(k))) {
-                                cityButtons[i].setBackgroundColor(prettyBlue);
-                                localCities[i] = true;
+                                if(canBuy(i)) {
+                                    cityButtons[i].setBackgroundColor(prettyBlue);
+                                    localCities[i] = true;
+                                }
                             }
                         }//end for loop k
                     }
@@ -833,15 +834,19 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     //if they haven't previously selected anything during this round, they can only buy cities that are neighboring their previously bought cities
                     for(int j = 0; j<powerState.getGameInventories().get(0).getMyCities().size(); j++) {
                         if (isArrayFalse(localCities) && powerState.getGameInventories().get(0).getMyCities().get(j).containsNeighbor(trueIndexes(localCities))) {
-                            cityButtons[i].setBackgroundColor(prettyBlue);
-                            localCities[i] = true;
+                            if(canBuy(i)) {
+                                cityButtons[i].setBackgroundColor(prettyBlue);
+                                localCities[i] = true;
+                            }
                         }
                         //if they have previously selected something, we must check to see if they are neighbors with cities they've tried to buy this round
                         else {
                             for (int l = 0; l < trueIndexes(localCities).size(); l++) {
                                 if (powerState.getAvailCities().get(i).isNeighbor(trueIndexes(localCities).get(l))) {
-                                    cityButtons[i].setBackgroundColor(prettyBlue);
-                                    localCities[i] = true;
+                                    if(canBuy(i)) {
+                                        cityButtons[i].setBackgroundColor(prettyBlue);
+                                        localCities[i] = true;
+                                    }
                                 }
                             }//end for loop l
                         }
@@ -879,8 +884,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 for (int i = 0; i < 15; i++) {
                     if (viewId == idNum[i]) {
                         if (powerState.getAvailableResources().coal[i]) {
-                            if (localStore.coal[i]) {
-                                coalButtons[i].setBackgroundColor(Color.TRANSPARENT);
+                            if (localStore.coal[i] && (tempMoney >= i/3 + 1)) {
+                                tempMoney -= i/3 +1;
+                                coalButtons[i].setVisibility(View.INVISIBLE);
                                 localStore.coal[i] = false;
                             }
                         }
@@ -912,10 +918,12 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 for (int i = 0; i < 10; i++) {
                     if (viewId == idNum[i]) {
                         if (powerState.getAvailableResources().oil[i]) {
-                            if (localStore.oil[i]) {
-                                oilButtons[i].setBackgroundColor(Color.TRANSPARENT);
+                            if (localStore.oil[i]  && (tempMoney >= i/2 + 1)) {
+                                tempMoney -= i/2 +1;
+                                oilButtons[i].setVisibility(View.INVISIBLE);
                                 localStore.oil[i] = false;
                             }
+
                         }
                     }
                 }
@@ -950,8 +958,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 for (int i = 0; i < 15; i++) {
                     if (viewId == idNum[i]) {
                         if (powerState.getAvailableResources().trash[i]) {
-                            if (localStore.trash[i]) {
-                                trashButtons[i].setBackgroundColor(Color.TRANSPARENT);
+                            if (localStore.trash[i] && (tempMoney >= i/3 + 1)) {
+                                tempMoney -= i/3 +1;
+                                trashButtons[i].setVisibility(View.INVISIBLE);
                                 localStore.trash[i] = false;
                             }
                         }
@@ -979,8 +988,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 for (int i = 0; i < 5; i++) {
                     if (viewId == idNum[i]) {
                         if (powerState.getAvailableResources().uranium[i]) {
-                            if (localStore.uranium[i]) {
-                                uraniumButtons[i].setBackgroundColor(Color.TRANSPARENT);
+                            if (localStore.uranium[i] && (tempMoney >= i + 1)) {
+                                tempMoney -= i +1;
+                                uraniumButtons[i].setVisibility(View.INVISIBLE);
                                 localStore.uranium[i] = false;
                             }
                         }
@@ -1007,23 +1017,37 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         return indexArray;
     }
 
-//    public boolean canAfford(int city){
-//        int myMoney = powerState.getGameInventories().get(0).getMoney();
-//        ArrayList neighborhood = powerState.getAvailCities().get(city).getNeighborhood();
-//        ArrayList myCities = powerState.getGameInventories().get(0).getMyCities();
-//
-//        if (myCities.size() == 0 && myMoney >= 10){
-//            return true;
-//        }
-//
-//        int price = powerState.getAvailCities().get(city).getCosts().get(neighborIndex);
-//        if (myMoney >= price){
-//
-//        }
-//        else{return false;}
-//        return false;
-//
-//
-//    }
+   public boolean canBuy(int city){
+
+       int tempCost = 999999;
+       ArrayList neighborhood = powerState.getAvailCities().get(city).getNeighborhood();
+       ArrayList<City> myCities = powerState.getGameInventories().get(playerNum).getMyCities();
+       ArrayList<Integer> index = new ArrayList<Integer>();
+
+        if (myCities.size() == 0 && tempMoney >= 10){
+           return true;
+        }
+
+        for(int i = 0; i< powerState.getAvailCities().get(city).returnNeighbors(myCities).size(); i++){
+            index.add(powerState.getAvailCities().get(city).returnNeighbors(myCities).get(i).returnNeighborByIndex(city));
+
+        }
+
+       for(int i = 0; i < index.size(); i++){
+           if(powerState.getAvailCities().get(city).getCosts().get(index.get(i)) < tempCost){
+               tempCost = powerState.getAvailCities().get(city).getCosts().get(index.get(i));
+           }
+       }
+
+       if(tempCost <= tempMoney){
+           tempMoney -= tempCost;
+           return true;
+       }
+       else{
+           return false;
+       }
+
+
+   }
 }
 

@@ -65,6 +65,25 @@ public class City implements Serializable{
         return false;
     }
 
+    public ArrayList<City> returnNeighbors(ArrayList<City> neighbors)
+    {
+        ArrayList<City> utopia = new ArrayList<City>();
+        for(int i = 0; i < neighbors.size(); i++){
+            if(isNeighbor(neighbors.get(i).getIndex())){
+                utopia.add(neighbors.get(i));
+            }
+
+         }
+        return utopia;
+    }
+
+    public int returnNeighborByIndex(int index){
+        for(int i = 0; i < neighborhood.size(); i++){
+            if(index == neighborhood.get(i)) return i;
+        }
+        return -1;
+    }
+
     public int getIndex() {
         return index;
     }

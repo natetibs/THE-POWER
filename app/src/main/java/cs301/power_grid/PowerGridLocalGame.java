@@ -137,7 +137,7 @@ public class PowerGridLocalGame extends LocalGame{
                     }
                 }
                 else if (type.equals("oil")) {
-                    price = (((BuyResourceAction) action).getIndex() / 3 + 1);
+                    price = (((BuyResourceAction) action).getIndex() / 2 + 1);
                     if (powerState.getAvailableResources().oil[((BuyResourceAction) action).getIndex()] && powerState.getGameInventories().get(i).getMoney() >= price) {
                         //make that resource unavailable for further purchase
                         powerState.getAvailableResources().oil[((BuyResourceAction) action).getIndex()] = false;
@@ -159,7 +159,7 @@ public class PowerGridLocalGame extends LocalGame{
                     }
                 }
                 else if (type.equals("uranium")){
-                    price = (((BuyResourceAction) action).getIndex()/3+1);
+                    price = (((BuyResourceAction) action).getIndex()+1);
                     if (powerState.getAvailableResources().uranium[((BuyResourceAction) action).getIndex()] && powerState.getGameInventories().get(i).getMoney() >= price) {
                         //make that resource unavailable for further purchase
                         powerState.getAvailableResources().uranium[((BuyResourceAction) action).getIndex()] = false;
