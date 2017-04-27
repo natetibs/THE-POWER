@@ -46,8 +46,8 @@ public class PowerGridLocalGame extends LocalGame{
         int myOwnedCities = powerState.getGameInventories().get(0).getMyCities().size();
         int opponentOwnedCities = powerState.getGameInventories().get(1).getMyCities().size();
         String whoWon = "Player one";
-        int p1score = getPaid(1);
-        int p0score = getPaid(0);
+        int p1score = getPaid(1)[0];
+        int p0score = getPaid(0)[0];
         boolean p1 = false;
 
 
@@ -230,8 +230,14 @@ public class PowerGridLocalGame extends LocalGame{
                     //Second player is done buying cities
                     //pay users based on how many plants they can power
                     //for now, give both players 10 dollars make other resources unavailable
-                    getPaid(0);
-                    getPaid(1);
+                    for(int k = 0; k < 2; k++) {
+                        powerState.getGameInventories().get(k).addMoney(getPaid(k)[0]);
+                        powerState.getGameInventories().get(k).setCoal(getPaid(k)[1]);
+                        powerState.getGameInventories().get(k).setOil(getPaid(k)[2]);
+                        powerState.getGameInventories().get(k).setUranium(getPaid(k)[3]);
+                        powerState.getGameInventories().get(k).setTrash(getPaid(k)[4]);
+                    }
+
                     //change turn return to first phase
                     powerState.changeTurn();
                     powerState.setGamePhase(0);
@@ -286,13 +292,10 @@ public class PowerGridLocalGame extends LocalGame{
 
     }//makeMove
 
-    public int getPaid(int i){
-        if(powerState.getGameInventories().get(i).getMyPlants().size() == 0){
-            powerState.getGameInventories().get(i).addMoney(12); //if they have no plants, they still make 12 bucks
-            return 12;
-        }
+    public int[] getPaid(int i){
 
-        int key;
+
+        int key = 0;
         int powered = 0;
         int numCities = powerState.getGameInventories().get(i).getMyCities().size();
         int tempCoal = powerState.getGameInventories().get(i).getCoal();
@@ -350,13 +353,17 @@ public class PowerGridLocalGame extends LocalGame{
             key = numCities;
         }
 
-        powerState.getGameInventories().get(i).addMoney(12 + 12*key);
-        powerState.getGameInventories().get(i).setCoal(tempCoal);
-        powerState.getGameInventories().get(i).setOil(tempOil);
-        powerState.getGameInventories().get(i).setUranium(tempUranium);
-        powerState.getGameInventories().get(i).setTrash(tempTrash);
 
-        return 12 + 12*key;
+
+
+        int returnArray[] = new int[5];
+        returnArray[0] = 12 + 12*key;
+        returnArray[1] = tempCoal;
+        returnArray[2] = tempOil;
+        returnArray[3] = tempUranium;
+        returnArray[4] = tempTrash;
+
+        return returnArray;
 
     }
 }
