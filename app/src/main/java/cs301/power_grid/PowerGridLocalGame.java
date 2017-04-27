@@ -46,6 +46,10 @@ public class PowerGridLocalGame extends LocalGame{
         int myOwnedCities = powerState.getGameInventories().get(0).getMyCities().size();
         int opponentOwnedCities = powerState.getGameInventories().get(1).getMyCities().size();
         String whoWon = "Player one";
+        int p1score = getPaid(1);
+        int p0score = getPaid(0);
+        boolean p1 = false;
+
 
         if(myOwnedCities >= 10) {
             has10Cities = true;
@@ -53,11 +57,20 @@ public class PowerGridLocalGame extends LocalGame{
         }
         else if(opponentOwnedCities >= 10) {
             has10Cities = true;
+            p1 = true;
         }
 
-        if(getPaid(0) < getPaid(1)){
+        if(p1score == p0score){
+            if(p1) {
+                whoWon = "Player two";
+            }
+        }
+
+        if(p1score > p0score){
             whoWon = "Player two";
         }
+
+
 
         if(has10Cities && powerState.getGamePhase() == 6) {
             return whoWon + " has won the game!";
