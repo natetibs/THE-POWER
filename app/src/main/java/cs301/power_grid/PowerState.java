@@ -16,7 +16,7 @@ import game.infoMsg.GameState;
 public class PowerState extends GameState implements Serializable {
     // to satisfy Serializable interface
     private static final long serialVersionUID = 736494716938474L;
-//
+
     private int phase;
     private int turn;
     private int currentBid;
@@ -99,11 +99,7 @@ public class PowerState extends GameState implements Serializable {
             for(j = 0; j < original.cities.get(i).getCosts().size(); j++) {
                 cities.get(i).addCost(original.cities.get(i).getCosts().get(j));
             }
-
-
         }
-
-
 
         //get the powerplants up and running
         for(k = 0; k< original.salePlants.size(); k++) {
@@ -114,8 +110,6 @@ public class PowerState extends GameState implements Serializable {
             salePlants.get(k).setHp(original.salePlants.get(k).getHp());
             salePlants.get(k).setKind(original.salePlants.get(k).getKind());
         }
-
-
 
     }//copyConstructor
 
@@ -132,9 +126,7 @@ public class PowerState extends GameState implements Serializable {
     public int getCurrentBid() {return currentBid;}
 
 
-
     //setters
-
     public void setBoughtCities(boolean[] purchased) {boughtCities = purchased;}
     public void setSelectedPlant(int index){selectedPlant = index;}
     public void setBoughtCity(int index){boughtCities[index] = true;}
@@ -182,51 +174,51 @@ public class PowerState extends GameState implements Serializable {
         //add the appropriate neighbors for each city and the appropriate costs
 
         //Seattle's neighbors
-        cities.get(0).addNeighbor(1);
+        cities.get(0).addNeighbor(1);//san francisco
         cities.get(0).addCost(22);
-        cities.get(0).addNeighbor(3);
+        cities.get(0).addNeighbor(3);//boise
         cities.get(0).addCost(8);
-        cities.get(0).addNeighbor(4);
+        cities.get(0).addNeighbor(4);//missoula
         cities.get(0).addCost(12);
 
         //San Francisco's neighbors
-        cities.get(1).addNeighbor(0);
+        cities.get(1).addNeighbor(0);//seattle
         cities.get(1).addCost(22);
-        cities.get(1).addNeighbor(2);
+        cities.get(1).addNeighbor(2);//los angeles
         cities.get(1).addCost(11);
-        cities.get(1).addNeighbor(3);
+        cities.get(1).addNeighbor(3);//boise
         cities.get(1).addCost(15);
-        cities.get(1).addNeighbor(5);
+        cities.get(1).addNeighbor(5);//phoenix
         cities.get(1).addCost(17);
 
         //Los Angeles's neighbors
-        cities.get(2).addNeighbor(1);
+        cities.get(2).addNeighbor(1);//san francisco
         cities.get(2).addCost(11);
-        cities.get(2).addNeighbor(3);
+        cities.get(2).addNeighbor(3);//boise
         cities.get(2).addCost(19);
-        cities.get(2).addNeighbor(5);
+        cities.get(2).addNeighbor(5);//phoenix
         cities.get(2).addCost(10);
 
         //Boise's neighbors
-        cities.get(3).addNeighbor(0);
+        cities.get(3).addNeighbor(0);//seattle
         cities.get(3).addCost(8);
-        cities.get(3).addNeighbor(1);
+        cities.get(3).addNeighbor(1);//san francisco
         cities.get(3).addCost(15);
-        cities.get(3).addNeighbor(2);
+        cities.get(3).addNeighbor(2);//los angeles
         cities.get(3).addCost(19);
-        cities.get(3).addNeighbor(4);
+        cities.get(3).addNeighbor(4);//missoula
         cities.get(3).addCost(6);
-        cities.get(3).addNeighbor(5);
+        cities.get(3).addNeighbor(5);//phoenix
         cities.get(3).addCost(20);
-        cities.get(3).addNeighbor(6);
+        cities.get(3).addNeighbor(6);//denver
         cities.get(3).addCost(16);
 
         //Missoula's neighbors
-        cities.get(4).addNeighbor(0);
+        cities.get(4).addNeighbor(0);//seattle
         cities.get(4).addCost(12);
-        cities.get(4).addNeighbor(3);
+        cities.get(4).addNeighbor(3);//boise
         cities.get(4).addCost(6);
-        cities.get(4).addNeighbor(7);
+        cities.get(4).addNeighbor(7);//omaha
         cities.get(4).addCost(17);
 
         //Phoenix's neighbors
@@ -252,15 +244,15 @@ public class PowerState extends GameState implements Serializable {
         cities.get(6).addCost(11);
 
         //Omaha's neighbors
-        cities.get(7).addNeighbor(4);
+        cities.get(7).addNeighbor(4);//missoula
         cities.get(7).addCost(17);
-        cities.get(7).addNeighbor(6);
+        cities.get(7).addNeighbor(6);//denver
         cities.get(7).addCost(2);
-        cities.get(7).addNeighbor(8);
+        cities.get(7).addNeighbor(8);//okc
         cities.get(7).addCost(13);
-        cities.get(7).addNeighbor(13);
+        cities.get(7).addNeighbor(13);//st louis
         cities.get(7).addCost(7);
-        cities.get(7).addNeighbor(14);
+        cities.get(7).addNeighbor(14);//chicago
         cities.get(7).addCost(8);
 
         //Oklahoma City's neighbors

@@ -694,8 +694,10 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class select0ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            int cost = powerState.getAvailPowerplant().get(0).getCost();
+            int myMoney = powerState.getGameInventories().get(0).getMoney();
             if(powerState.getTurn() != playerNum) return;
-            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && cost >= myMoney ) {
                 selectNum = 0;
                 selectButton0.setBackgroundColor(Color.YELLOW);
                 selectButton1.setBackgroundColor(0xFF33B5E5);
@@ -708,8 +710,10 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class select1ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            int cost = powerState.getAvailPowerplant().get(1).getCost();
+            int myMoney = powerState.getGameInventories().get(0).getMoney();
             if(powerState.getTurn() != playerNum) return;
-            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && cost >= myMoney) {
                 selectNum = 1;
                 selectButton1.setBackgroundColor(Color.YELLOW);
                 selectButton0.setBackgroundColor(prettyBlue);
@@ -722,8 +726,10 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class select2ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            int cost = powerState.getAvailPowerplant().get(2).getCost();
+            int myMoney = powerState.getGameInventories().get(0).getMoney();
             if(powerState.getTurn() != playerNum) return;
-            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && cost >= myMoney) {
                 selectNum = 2;
                 selectButton2.setBackgroundColor(Color.YELLOW);
                 selectButton0.setBackgroundColor(prettyBlue);
@@ -736,8 +742,10 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class select3ButListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            int cost = powerState.getAvailPowerplant().get(3).getCost();
+            int myMoney = powerState.getGameInventories().get(0).getMoney();
             if(powerState.getTurn() != playerNum) return;
-            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2) {
+            if (powerState.getGamePhase() == 0 || powerState.getGamePhase() == 2 && cost >= myMoney) {
                 selectNum = 3;
                 selectButton3.setBackgroundColor(Color.YELLOW);
                 selectButton2.setBackgroundColor(0xFF0099CC);
@@ -905,7 +913,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 idNum[13] = R.id.tb14;
                 idNum[14] = R.id.tb15;
 
-
                 for (int i = 0; i < 15; i++) {
                     if (viewId == idNum[i]) {
                         if (powerState.getAvailableResources().trash[i]) {
@@ -920,7 +927,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                         }
                     }
                 }
-
             }
         }
     }
