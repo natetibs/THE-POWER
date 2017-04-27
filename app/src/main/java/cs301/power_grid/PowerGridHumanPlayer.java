@@ -343,6 +343,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 tempMoney = powerState.getGameInventories().get(playerNum).getMoney();
                 int resourcePos = resourcesSpinner.getSelectedItemPosition();
                 int powerPlantPos = powerPlantsSpinner.getSelectedItemPosition();
+                boolean hadItems = false;
 
                 setResources((powerState.getGameInventories().get(resourcePos)));
 
@@ -362,7 +363,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     //color cities other player has bought
                     int opponentNumCities = powerState.getGameInventories().get(1).getMyCities().size();
                     if (opponentNumCities > 0) {
-                        for (int i = 0; i <= opponentNumCities; i++) {
+                        for (int i = 0; i < opponentNumCities; i++) {
                             //find the city index that the opponent bought
                             int cityIndex = powerState.getGameInventories().get(1).getMyCities().get(i).getIndex();
                             //color the buttons that the opponent owns
@@ -399,19 +400,30 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     * "OK" or "Pass" updates phase.*/
                     //GUI updates handled by button listeners
                 }
-                else if (phase == 3 || phase == 4) {
+                else if (phase == 3) {
                     /*Second player chooses resources.
                     * "OK" or "Pass" updates phase.*/
                     //check if all of the users resources have been purchased, if not send that action
-                    if(actionList.size() > 0) {
+                    if (actionList.size() > 0) {
                         //send action according to what resource user bought, remove it from the list
                         game.sendAction(actionList.remove(0));
-                    }
-                    else if (actionList.size() == 0){
+                        hadItems = true;
+                    } else if (hadItems) {
                         //if the list is empty, change the phase with a pass action
-                        game.sendAction(new PassAction(this));
+                        game.sendAction(new PassAction(PowerGridHumanPlayer.this));
                     }
                     resetSelectButtons();
+                }
+                else if(phase == 4){
+                        if(actionList.size() > 0) {
+                            //send action according to what resource user bought, remove it from the list
+                            game.sendAction(actionList.remove(0));
+                            hadItems = true;
+                        }
+                        else if (hadItems){
+                            //if the list is empty, change the phase with a pass action
+                            game.sendAction(new PassAction(PowerGridHumanPlayer.this));
+                        }
                 }
                 else if (phase == 5 || phase == 6) {
                     /*Second player chooses cities.
@@ -669,7 +681,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 SelectPowerPlantAction sppa = new SelectPowerPlantAction(PowerGridHumanPlayer.this, selectNum);
                 game.sendAction(sppa);
             }
-            else if (phase == 3 || phase == 4) {
+            else if (phase == 3){
 
                 for (int i = 0; i < 15; i++) {
                     //if it's not available in the local store, it must have been bought!
@@ -701,6 +713,37 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     game.sendAction(new PassAction(PowerGridHumanPlayer.this));
                 }
 
+            }
+            else if(phase == 4){
+                for (int i = 0; i < 15; i++) {
+                    //if it's not available in the local store, it must have been bought!
+                    if (!localStore.coal[i]) {
+                        localStore.coal[i] = true;
+                        actionList.add(new BuyResourceAction(PowerGridHumanPlayer.this, i, "coal"));
+                    }
+
+                    if (!localStore.trash[i]) {
+                        localStore.coal[i] = true;
+                        actionList.add(new BuyResourceAction(PowerGridHumanPlayer.this, i, "trash"));
+                    }
+
+                    if (i < 5 && !localStore.uranium[i]) {
+                        localStore.uranium[i] = true;
+                        actionList.add(new BuyResourceAction(PowerGridHumanPlayer.this, i, "uranium"));
+                    }
+
+                    if (i < 10 && !localStore.oil[i]) {
+                        localStore.oil[i] = true;
+                        actionList.add(new BuyResourceAction(PowerGridHumanPlayer.this, i, "oil"));
+                    }
+                }
+
+                if(actionList.size() > 0) {
+                    game.sendAction(actionList.remove(0));
+                }
+                else {
+                    game.sendAction(new PassAction(PowerGridHumanPlayer.this));
+                }
             }
             else if (phase == 5 || phase == 6) {
 
