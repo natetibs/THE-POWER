@@ -53,7 +53,7 @@ public class Inventory implements Serializable{
         }
 
         for(int i = 0; i < myPlants.size(); i++) {
-            if (plantation.getRatio() > myPlants.get(i).getRatio()) {
+            if (plantation.getCost() > myPlants.get(i).getCost()) {
                 myPlants.add(i, plantation);
                 notAdded = false;
                 break;
@@ -104,16 +104,5 @@ public class Inventory implements Serializable{
         return index;
     }
 
-    public int highestRatio() {
-        double minRatio = -1;
-        int index = 0;
 
-        for (int i = 0; i < myPlants.size(); i++) {
-            if (myPlants.get(i).getRatio() > minRatio) {
-                minRatio = myPlants.get(i).getRatio();
-                index = i;
-            }
-        }
-        return index;
-    }
 }
