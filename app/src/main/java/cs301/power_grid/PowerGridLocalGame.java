@@ -43,17 +43,24 @@ public class PowerGridLocalGame extends LocalGame{
     @Override
     //checks to see if the game is over
     protected String checkIfGameOver() {
-        int myOwnedCities = powerState.getGameInventories().get(1).getMyCities().size();
+        int myOwnedCities = powerState.getGameInventories().get(0).getMyCities().size();
         int opponentOwnedCities = powerState.getGameInventories().get(1).getMyCities().size();
+        String whoWon = "Player one";
 
         if(myOwnedCities >= 10) {
             has10Cities = true;
+
         }
         else if(opponentOwnedCities >= 10) {
             has10Cities = true;
         }
-        if(has10Cities && (powerState.getGamePhase() == 6)) {
-            return "the game is over?";
+
+        if(getPaid(0) < getPaid(1)){
+            whoWon = "Player two";
+        }
+
+        if(has10Cities && powerState.getGamePhase() == 6) {
+            return whoWon + " has won the game!";
         }
         else{return null;}
     }
@@ -266,10 +273,10 @@ public class PowerGridLocalGame extends LocalGame{
 
     }//makeMove
 
-    public void getPaid(int i){
+    public int getPaid(int i){
         if(powerState.getGameInventories().get(i).getMyPlants().size() == 0){
             powerState.getGameInventories().get(i).addMoney(12); //if they have no plants, they still make 12 bucks
-            return;
+            return 12;
         }
 
         int key;
@@ -281,15 +288,6 @@ public class PowerGridLocalGame extends LocalGame{
         int tempUranium = powerState.getGameInventories().get(i).getUranium();
 
 
-        String kind[] = new String[4];
-
-
-        for(int j = 0; j < powerState.getGameInventories().get(i).getMyPlants().size(); j++) {
-            kind[j] = powerState.getGameInventories().get(i).getMyPlants().get(j).getKind();
-        }
-
-
-        //if(kind[])
 
         for(int j = 0; j < powerState.getGameInventories().get(i).getMyPlants().size(); j++){
             if(j==1 && powerState.getGameInventories().get(i).getMyPlants().get(1) == powerState.getGameInventories().get(i).getMyPlants().get(0) ){
@@ -344,6 +342,8 @@ public class PowerGridLocalGame extends LocalGame{
         powerState.getGameInventories().get(i).setOil(tempOil);
         powerState.getGameInventories().get(i).setUranium(tempUranium);
         powerState.getGameInventories().get(i).setTrash(tempTrash);
+
+        return 12 + 12*key;
 
     }
 }
