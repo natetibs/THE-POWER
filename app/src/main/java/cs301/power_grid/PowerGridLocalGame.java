@@ -184,7 +184,7 @@ public class PowerGridLocalGame extends LocalGame{
              * A user may pass when they decide not to buy a powerplant, resources, cities
              * tacked onto arraylist of actions when game phases end, Pass action changes phase of game
              **/
-            else if(action instanceof PassAction && (turn == i || !moveMade[j])) {
+            else if(action instanceof PassAction && turn == i && !moveMade[j]) {
                 if (phase == 0) {
                     //First player has chosen to pass on buying a powerplant, change turn
                     //"OK" or "Pass" updates phase.

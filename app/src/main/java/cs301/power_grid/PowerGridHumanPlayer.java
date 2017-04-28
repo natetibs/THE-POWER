@@ -47,6 +47,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
     private int selectNum = -1;
     private int bidValue = -1;
+    private boolean hadItems = false;
 
 
     private ResourceStore localStore = new ResourceStore();
@@ -348,12 +349,12 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 tempMoney = powerState.getGameInventories().get(playerNum).getMoney();
                 int resourcePos = resourcesSpinner.getSelectedItemPosition();
                 int powerPlantPos = powerPlantsSpinner.getSelectedItemPosition();
-                boolean hadItems = false;
+
 
                 setResources((powerState.getGameInventories().get(resourcePos)));
                 setPowerPlants((powerState.getGameInventories().get(powerPlantPos)));
 
-                checkResourceButtons();
+
 
                 //display the power plants up for auction each update
 
@@ -435,6 +436,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                             //if the list is empty, change the phase with a pass action
                             game.sendAction(new PassAction(PowerGridHumanPlayer.this));
                         }
+                    //checkResourceButtons();
                 }
                 else if (phase == 5 || phase == 6) {
                     /*Second player chooses cities.
@@ -723,6 +725,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 }
                 else {
                     game.sendAction(new PassAction(PowerGridHumanPlayer.this));
+                    hadItems = false;
                 }
 
             }
@@ -755,6 +758,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 }
                 else {
                     game.sendAction(new PassAction(PowerGridHumanPlayer.this));
+                    hadItems = false;
                 }
             }
             else if (phase == 5 || phase == 6) {
@@ -916,6 +920,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
         @Override
         public void onClick(View view) {
+            if(powerState.getTurn() != playerNum) return;
             if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {// || powerState.getGamePhase() == 5 || powerState.getGamePhase() == 6) {
                 int viewId = view.getId();
                 int[] idNum = new int[15];
@@ -956,6 +961,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
         @Override
         public void onClick(View view) {
+            if(powerState.getTurn() != playerNum) return;
             if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {
                 int viewId = view.getId();
                 int[] idNum = new int[15];
@@ -991,6 +997,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
         @Override
         public void onClick(View view) {
+            if(powerState.getTurn() != playerNum) return;
             if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {
                 int viewId = view.getId();
                 int[] idNum = new int[15];
@@ -1030,6 +1037,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
         @Override
         public void onClick(View view) {
+            if(powerState.getTurn() != playerNum) return;
             if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {
                 int viewId = view.getId();
                 int[] idNum = new int[15];
@@ -1128,7 +1136,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             if (i < 5 && localStore.uranium[i]){
                 uraniumButtons[i].setVisibility(View.VISIBLE);
             }
-            else if (i < 10 && !localStore.uranium[i]){
+            else if (i < 5 && !localStore.uranium[i]){
                 uraniumButtons[i].setVisibility(View.INVISIBLE);
             }
         }
