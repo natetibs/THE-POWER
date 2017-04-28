@@ -1105,7 +1105,33 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
    }
     public void checkResourceButtons(){
+        for(int i = 0; i < 15; i++) {
+            if (localStore.coal[i])
+                coalButtons[i].setVisibility(View.VISIBLE);
+            else{
+                coalButtons[i].setVisibility(View.INVISIBLE);
+            }
 
+            if (localStore.trash[i])
+                trashButtons[i].setVisibility(View.VISIBLE);
+            else{
+                trashButtons[i].setVisibility(View.INVISIBLE);
+            }
+
+            if (i < 10 && localStore.oil[i]){
+                oilButtons[i].setVisibility(View.VISIBLE);
+            }
+            else if (i < 10 && !localStore.oil[i]){
+                oilButtons[i].setVisibility(View.INVISIBLE);
+            }
+
+            if (i < 5 && localStore.uranium[i]){
+                uraniumButtons[i].setVisibility(View.VISIBLE);
+            }
+            else if (i < 10 && !localStore.uranium[i]){
+                uraniumButtons[i].setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }
 
