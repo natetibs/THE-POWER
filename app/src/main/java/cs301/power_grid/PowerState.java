@@ -22,7 +22,7 @@ public class PowerState extends GameState implements Serializable {
     private int currentBid;
     private int selectedPlant = -1;
     private ArrayList<City> cities = new ArrayList<City>();
-    private boolean[] boughtCities = new boolean[20];
+    private boolean[] boughtCities = new boolean[20];//false = available, true = unavailable
     private ArrayList<Powerplant> salePlants = new ArrayList<Powerplant>();
     private ArrayList<Inventory> gameInventories = new ArrayList<Inventory>(); //making an array list because we want to leave the option open for more than 2 players for later code
     private ResourceStore availableResources = new ResourceStore();

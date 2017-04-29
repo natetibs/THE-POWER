@@ -11,6 +11,8 @@ public class ResourceStore implements Serializable {
     // to satisfy Serializable interface
     private static final long serialVersionUID = 31848692918354L;
 
+    //resources availability,
+    //true = available, false = unavailable
     public boolean[] coal = new boolean[15];
     public boolean[] oil = new boolean[10];
     public boolean[] trash = new boolean[15];
