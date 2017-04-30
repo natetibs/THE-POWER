@@ -113,9 +113,8 @@ public class PowerGridLocalGame extends LocalGame{
 
             //BuyCityAction
             else if (action instanceof BuyCityAction && turn == i && !moveMade[j]) {
-                boolean didithappen = powerState.getGameInventories().get(i).addMyCity(((BuyCityAction) action).getCity());
-                if(!didithappen){} //vibrate or flash screen
-                //takes 10 from user every time city is bought
+                powerState.getGameInventories().get(i).addMyCity(((BuyCityAction) action).getCity());
+
                 powerState.getGameInventories().get(i).setMoney(powerState.getGameInventories().get(i).getMoney() - 10);
                 powerState.setBoughtCity(((BuyCityAction) action).getCityIndex());
                 moveMade[i] = true;
@@ -270,16 +269,19 @@ public class PowerGridLocalGame extends LocalGame{
                     powerState.setGamePhase(1);
                     powerState.changeTurn();
                     powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
+                    powerState.setCurrentBid(powerState.getAvailPowerplant().get(((SelectPowerPlantAction) action).getNum()).getCost());
                 }
                 else{
                     //price equals the original cost of the power plant
+                    powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
                     price = powerState.getAvailPowerplant().get(powerState.getSelectedPlant()).getCost();
                     //subtract the cost of the powerplant from user
                     powerState.getGameInventories().get(i).setMoney(powerState.getGameInventories().get(i).getMoney() - price);
 
                     powerState.setGamePhase(3);
-                    powerState.setSelectedPlant(((SelectPowerPlantAction) action).getNum());
+
                     powerState.getGameInventories().get(i).addMyPlants(powerState.getAvailPowerplant().get(powerState.getSelectedPlant()));
+                    powerState.removePlant(powerState.getSelectedPlant());
                     //take money from player i
                     powerState.changeTurn();
                 }
@@ -352,6 +354,10 @@ public class PowerGridLocalGame extends LocalGame{
                     if(powered >= numCities) break; //if we have already powered max cities, stop powering them!
                 }
             }
+            if(powerState.getGameInventories().get(i).getMyPlants().get(j).getKind().equals("Wind")) {
+                powered += powerState.getGameInventories().get(i).getMyPlants().get(j).getHp();
+            }
+
         }
 
         if(powered <= numCities){

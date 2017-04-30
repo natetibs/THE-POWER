@@ -13,6 +13,7 @@ import game.infoMsg.GameInfo;
 
 public class PowerGridSmartComputerPlayer extends GameComputerPlayer{
     PowerState powerState = new PowerState();
+    private int lastIndex = 0;
     private int selectNum = -1;
     Inventory inv;
     private int money;
@@ -157,10 +158,11 @@ public class PowerGridSmartComputerPlayer extends GameComputerPlayer{
 
                 int tempMoney = inv.getMoney();
                 if(bananas) {
-                    for (int i = 0; i < 20; i++) {
+                    for (int i = lastIndex; i < 20; i++) {
                         if (tempMoney > 10) {
                             cityActionList.add(new BuyCityAction(PowerGridSmartComputerPlayer.this, powerState.getAvailCities().get(i), i));
                             tempMoney -= 10;
+                            lastIndex = i;
                         }
                     }
                     bananas = false;
@@ -181,10 +183,11 @@ public class PowerGridSmartComputerPlayer extends GameComputerPlayer{
 
                 int tempMoney = inv.getMoney();
                 if(bananas) {
-                    for (int i = 0; i < 20; i++) {
+                    for (int i = lastIndex; i < 20; i++) {
                         if (tempMoney > 10) {
                             cityActionList.add(new BuyCityAction(PowerGridSmartComputerPlayer.this, powerState.getAvailCities().get(i), i));
                             tempMoney -= 10;
+                            lastIndex = i;
                         }
                     }
                     bananas = false;

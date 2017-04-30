@@ -56,6 +56,20 @@ public class PowerState extends GameState implements Serializable {
             gameInventories.get(m).setUranium(original.gameInventories.get(m).getUranium());
             gameInventories.get(m).setOil(original.gameInventories.get(m).getOil());
             gameInventories.get(m).setTrash(original.gameInventories.get(m).getTrash());
+
+            for(i = 0; i < original.gameInventories.get(m).getMyCities().size(); i++) {
+                //copies the city over and goes to the trouble of saving each city name
+                City tempCity = new City();
+                gameInventories.get(m).getMyCities().add(tempCity);
+                gameInventories.get(m).getMyCities().get(i).setName(original.gameInventories.get(m).getMyCities().get(i).getName());
+                gameInventories.get(m).getMyCities().get(i).setIndex(original.gameInventories.get(m).getMyCities().get(i).getIndex());
+                for(j = 0; j < original.gameInventories.get(m).getMyCities().get(i).getNeighborhood().size(); j++) {
+                    gameInventories.get(m).getMyCities().get(i).addNeighbor(original.gameInventories.get(m).getMyCities().get(i).getNeighborhood().get(j));
+                }
+                for(j = 0; j < original.gameInventories.get(m).getMyCities().get(i).getCosts().size(); j++) {
+                    gameInventories.get(m).getMyCities().get(i).addCost(original.gameInventories.get(m).getMyCities().get(i).getCosts().get(j));
+                }
+            }
         }
 
         //Setup inventory->plants

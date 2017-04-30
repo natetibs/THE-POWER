@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class PowerGridHumanPlayer extends GameHumanPlayer {
     //instance variables:
-
+    private boolean notAdded = true;
     private int opponentNum = -1;
     private int tempMoney = 0;
     private int selectNum = -1;
@@ -347,15 +347,15 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
 
                 //check which cities opponent has bought and display them for user
                 int opponentNumCities = powerState.getGameInventories().get(opponentNum).getMyCities().size();
-                if (opponentNumCities > 0) {
-                    for (int i = 0; i < opponentNumCities; i++) {
+                for (int i = 0; i < opponentNumCities; i++) {
                         //find the city index that the opponent bought
                         int cityIndex = powerState.getGameInventories().get(opponentNum).getMyCities().get(i).getIndex();
                         //color the buttons that the opponent owns
                         cityButtons[cityIndex].setBackgroundColor(opponentRed);
                         //use opponentRed Color
-                    }
                 }
+
+
 
 
                 //update GUI by phase
@@ -426,7 +426,9 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                         hadItems = true;
                     } else if (hadItems) {
                         //if the list is empty, change the phase with a pass action
+                        hadItems = false;
                         game.sendAction(new PassAction(PowerGridHumanPlayer.this));
+
                     }
                     resetSelectButtons();
                 }
@@ -437,11 +439,32 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                  */
                 else if (phase == 4) {
                     //check if all of the user's resources have been purchased (if multiple bought), if not send that action
+                    for(int i = 0; i < 15; i++) {
+                        if (!powerState.getAvailableResources().coal[i]) {
+                            coalButtons[i].setVisibility(View.INVISIBLE);
+                        }
+                        if (!powerState.getAvailableResources().trash[i]) {
+                            trashButtons[i].setVisibility(View.INVISIBLE);
+                        }
+                        if(i < 5){
+                            if (!powerState.getAvailableResources().uranium[i]) {
+                                uraniumButtons[i].setVisibility(View.INVISIBLE);
+                            }
+                        }
+                        if(i < 10){
+                            if (!powerState.getAvailableResources().oil[i]) {
+                                oilButtons[i].setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }
+
+
                     if (actionList.size() > 0) {
                         //send action according to what resource user bought, remove it from the list
                         game.sendAction(actionList.remove(0));
                         hadItems = true;
                     } else if (hadItems) {
+                        hadItems = false;
                         //if the list is empty, change the phase with a pass action
                         game.sendAction(new PassAction(PowerGridHumanPlayer.this));
                     }
@@ -452,7 +475,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                  * Selecting a number of cities and "OK" or "Pass" updates phase.
                  */
                 else if (phase == 5 || phase == 6) {
-                    localCities = powerState.getBoughtCities();
+
                     //check if all of users cities have been purchased (if multiple bought), if not send that action
                     if (cityActionList.size() > 0) {
                         game.sendAction(cityActionList.remove(0));
@@ -811,11 +834,14 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
              */
             else if (phase == 5 || phase == 6) {
                 //look through array to see if user has selected any cities (if it is true, it has been selected)
-                for (int i = 0; i < 20; i++) {
-                    if (localCities[i]) {
-                        localCities[i] = false;
-                        cityActionList.add(new BuyCityAction(PowerGridHumanPlayer.this, powerState.getAvailCities().get(i), i));
+                if(notAdded) {
+                    for (int i = 0; i < 20; i++) {
+                        if (localCities[i]) {
+                            localCities[i] = false;
+                            cityActionList.add(new BuyCityAction(PowerGridHumanPlayer.this, powerState.getAvailCities().get(i), i));
+                        }
                     }
+                    notAdded = false;
                 }
                 //if user has selected any cities, send those actions
                 if (cityActionList.size() > 0) {
@@ -823,6 +849,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 }
                 //if user hasnt selected any cities, or all actions have been sent, treat as pass action
                 else {
+                    notAdded = true;
                     game.sendAction(new PassAction(PowerGridHumanPlayer.this));
                 }
 
@@ -943,12 +970,16 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private class CityButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+
             ArrayList<Integer> trueIndexes = new ArrayList<Integer>();
             if (powerState.getGamePhase() != 5 && powerState.getGamePhase() != 6)
                 return; //we don't want to mess with cities unless it's the right phase
             if (powerState.getTurn() != playerNum) return; //it's not your turn!
             //cycles through city buttons to find the city they selected
             for (int i = 0; i < 20; i++) {
+                if(tempMoney < 10) return;
+
+
 
                 String cityName = (String) cityButtons[i].getText();
 
@@ -967,6 +998,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     if (isArrayFalse(localCities)) {
                         cityButtons[i].setBackgroundColor(prettyBlue);
                         localCities[i] = true;
+                        tempMoney -= 10;
                     }
                     //if they have previously selected something, we must check to see if they are neighbors with cities they've tried to buy this round
                     else {
@@ -975,6 +1007,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                                 if (canBuy(i)) {
                                     cityButtons[i].setBackgroundColor(prettyBlue);
                                     localCities[i] = true;
+                                    tempMoney -= 10;
                                 }
                             }
                         }//end for loop k
@@ -986,6 +1019,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                             if (canBuy(i)) {
                                 cityButtons[i].setBackgroundColor(prettyBlue);
                                 localCities[i] = true;
+                                tempMoney -= 10;
                             }
                         } else {//if they have previously selected something, we must check to see if they are neighbors with cities they've tried to buy this round
                             for (int l = 0; l < trueIndexes(localCities).size(); l++) {
@@ -993,6 +1027,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                                     if (canBuy(i)) {
                                         cityButtons[i].setBackgroundColor(prettyBlue);
                                         localCities[i] = true;
+                                        tempMoney -= 10;
                                     }
                                 }
                             }//end for loop l
