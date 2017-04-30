@@ -691,7 +691,7 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             //do nothing
         }
     }
-
+//
     /**
      * okayButListener
      * <p>
