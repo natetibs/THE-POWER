@@ -723,15 +723,21 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
              * if they haven't entered a bid, pass
              */
             else if (phase == 1) {
-                bidValue = Integer.parseInt(bidEditText.getText().toString());
-                //if the user hasn't entered anything, treat as a pass action
-                if (bidValue == -1) {
+                String bid = bidEditText.getText().toString();
+                if (bid.equals("")) {
                     game.sendAction(new PassAction(PowerGridHumanPlayer.this));
                 }
-                //only send the action if they made an appropriate bid
-                else if (bidValue > powerState.getCurrentBid()) {
-                    BidAction ba = new BidAction(PowerGridHumanPlayer.this, bidValue);
-                    game.sendAction(ba);
+                else {
+                    bidValue = Integer.parseInt(bidEditText.getText().toString());
+                    //if the user hasn't entered anything, treat as a pass action
+                    if (bidValue == -1) {
+                        game.sendAction(new PassAction(PowerGridHumanPlayer.this));
+                    }
+                    //only send the action if they made an appropriate bid
+                    else if (bidValue > powerState.getCurrentBid()) {
+                        BidAction ba = new BidAction(PowerGridHumanPlayer.this, bidValue);
+                        game.sendAction(ba);
+                    }
                 }
             }
             /**           Phase 2
