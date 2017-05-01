@@ -1,9 +1,14 @@
 package cs301.power_grid;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
+ * ResourceStore
+ *
+ * made up of coal, oil, trash and uranium
+ * how to tell which resources are available for purchase each round
+ * resets after phase 6
+ *
  * @author Luchini Guilian, Tibbetts Nathan, Douville Luke, Hoang Paul
  */
 
@@ -18,8 +23,6 @@ public class ResourceStore implements Serializable {
     public boolean[] trash = new boolean[15];
     public boolean[] uranium = new boolean[5];
 
-
-
     public ResourceStore(){
         for(int i = 0; i < 15; i++){
             coal[i] = true;
@@ -32,9 +35,4 @@ public class ResourceStore implements Serializable {
             }
         }
     }
-
-    public ResourceStore resetAvailableResources() {
-        return new ResourceStore();
-    }
-
 }

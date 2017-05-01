@@ -1,14 +1,11 @@
 package cs301.power_grid;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
-//
+
 import game.GameHumanPlayer;
 import game.GameMainActivity;
-import game.GamePlayer;
 import game.infoMsg.GameInfo;
-
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +13,18 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
 /**
+ * PowerGridHumanPlayer
+ *
+ * Handles all GUI elements
+ * User makes moves depending on the phase of the game
+ * Press OK or PASS to end turn
+ *
+ * known Bugs:
+ * sometimes user may have to press OK twice in order to end their turn
+ *
  * @author Luchini Guilian, Tibbetts Nathan, Douville Luke, Hoang Paul
  */
 
@@ -39,7 +44,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     ArrayList<BuyResourceAction> actionList = new ArrayList<BuyResourceAction>();
 
     //GUI features
-    private RelativeLayout activity;
     private Spinner resourcesSpinner;
     private Spinner powerPlantsSpinner;
 
@@ -93,7 +97,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     private TextView previousBid;
     private TextView phaseTextView;
 
-    private int basicGray = Color.rgb(214, 215, 215);
     private int prettyBlue = Color.rgb(0, 221, 255);
     private int opponentRed = Color.rgb(255, 68, 68);
 
@@ -355,9 +358,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                         //use opponentRed Color
                 }
 
-
-
-
                 //update GUI by phase
                 int phase = powerState.getGamePhase();
                 //don't let user use editText unless phase is 1
@@ -371,7 +371,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 if (phase == 0) {
                     //reset selectNum
                     selectNum = -1;
-
                     resetResourceButtons();
                 }
                 /**         Phase 1
@@ -580,8 +579,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
         }
         showPlants();
         phaseTextView.setText("" + powerState.getGamePhase());
-
-
     }
 
     /**
@@ -685,7 +682,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                     break;
             }
         }
-
         @Override
         public void onNothingSelected(AdapterView<?> parentView) {
             //do nothing
@@ -979,10 +975,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             for (int i = 0; i < 20; i++) {
                 if(tempMoney < 10) return;
 
-
-
-                String cityName = (String) cityButtons[i].getText();
-
                 if (v.getId() != cityButtons[i].getId()) {
                     continue;
                 } //if they didn't click on it, don't worry about it
@@ -1067,7 +1059,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
                 idNum[12] = R.id.cb13;
                 idNum[13] = R.id.cb14;
                 idNum[14] = R.id.cb15;
-
 
                 for (int i = 0; i < 15; i++) {
                     if (viewId == idNum[i]) {
@@ -1184,7 +1175,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
             if (powerState.getGamePhase() == 3 || powerState.getGamePhase() == 4) {
                 int viewId = view.getId();
                 int[] idNum = new int[15];
-
                 idNum[0] = R.id.ub1;
                 idNum[1] = R.id.ub2;
                 idNum[2] = R.id.ub3;
@@ -1227,7 +1217,6 @@ public class PowerGridHumanPlayer extends GameHumanPlayer {
     //helper method to see if a user can afford a city they are trying to buy
     public boolean canBuy(int city) {
         int tempCost = 999999;
-        ArrayList neighborhood = powerState.getAvailCities().get(city).getNeighborhood();
         ArrayList<City> myCities = powerState.getGameInventories().get(playerNum).getMyCities();
         ArrayList<Integer> index = new ArrayList<Integer>();
 

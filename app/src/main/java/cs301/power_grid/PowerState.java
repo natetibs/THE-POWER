@@ -2,11 +2,18 @@ package cs301.power_grid;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import game.GamePlayer;
 import game.infoMsg.GameState;
 
-/** @author Luchini Guilian, Tibbetts Nathan, Douville Luke, Hoang Paul
+/**
+ * PowerState
+ *
+ * Game state for Power Grid
+ * stores editable information involving the game of Power Grid
+ * including what phase the game is in, whose turn it is, the current bid,
+ * cities available for purchase, cities bought, power plants currently for sale,
+ * both game inventories, and available resources
+ *
+ * @author Luchini Guilian, Tibbetts Nathan, Douville Luke, Hoang Paul
  * Created by Computerz on 2/24/2017.
  *
  * NOTE: Game logic is contained in the PowerGridLocalGame Class under the makeMove method
@@ -17,6 +24,7 @@ public class PowerState extends GameState implements Serializable {
     // to satisfy Serializable interface
     private static final long serialVersionUID = 736494716938474L;
 
+    //instance variables
     private int phase;
     private int turn;
     private int currentBid;
@@ -42,13 +50,15 @@ public class PowerState extends GameState implements Serializable {
     public PowerState(PowerState original) {
 
         int i, j, k, m, n;
-
+        //copy instance variables
         phase = original.getGamePhase();
         turn = original.getTurn();
         currentBid = original.getCurrentBid();
         selectedPlant = original.getSelectedPlant();
 
         //lets save all the player data
+
+        //copy inventories
         for(m = 0; m < original.gameInventories.size(); m++) {
             gameInventories.add(m, new Inventory());
             gameInventories.get(m).setCoal(original.gameInventories.get(m).getCoal());
@@ -57,6 +67,7 @@ public class PowerState extends GameState implements Serializable {
             gameInventories.get(m).setOil(original.gameInventories.get(m).getOil());
             gameInventories.get(m).setTrash(original.gameInventories.get(m).getTrash());
 
+            //copy cities
             for(i = 0; i < original.gameInventories.get(m).getMyCities().size(); i++) {
                 //copies the city over and goes to the trouble of saving each city name
                 City tempCity = new City();
@@ -99,7 +110,6 @@ public class PowerState extends GameState implements Serializable {
             }
         }
 
-
         //get the cities up and running
         for(i = 0; i < original.cities.size(); i++) {
             //copies the city over and goes to the trouble of saving each city name
@@ -139,15 +149,10 @@ public class PowerState extends GameState implements Serializable {
     public void removePlant(int index){ salePlants.remove(index);}
     public int getCurrentBid() {return currentBid;}
 
-
     //setters
-    public void setBoughtCities(boolean[] purchased) {boughtCities = purchased;}
     public void setSelectedPlant(int index){selectedPlant = index;}
     public void setBoughtCity(int index){boughtCities[index] = true;}
     public void setGamePhase(int refresh) {phase = refresh;}
-    public void setAvailCities(ArrayList<City> newCit) {cities = newCit;}
-    public void setSalePlants(ArrayList<Powerplant> newPlant) {salePlants = newPlant;}
-    public void setGameInventories(ArrayList<Inventory> newInventory) {gameInventories = newInventory;}
     public void setAvailableResources(ResourceStore newResources) {availableResources = newResources;}
     public void setCurrentBid(int newCurrentBid) {currentBid = newCurrentBid;}
     public void changeTurn(){
@@ -481,20 +486,4 @@ public class PowerState extends GameState implements Serializable {
             salePlants.set(i,shuffledPlants[i]);
         }
     }//scramble plants
-
-    public City findCityByName(String cityName){
-        for(int i = 0; i < cities.size(); i++){
-            if(cities.get(i).getName().equals(cityName)) return cities.get(i);
-        }
-        City blankCity = new City();
-        return blankCity;
-    }
-
-    public Powerplant findPlantByCost(int plantCost){
-        for(int i = 0; i< salePlants.size(); i++){
-            if(salePlants.get(i).getCost() == plantCost) return salePlants.get(i);
-        }
-        Powerplant blankPlant = new Powerplant();
-        return blankPlant;
-    }
 }

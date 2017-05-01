@@ -9,6 +9,13 @@ import game.config.GameConfig;
 import game.config.GamePlayerType;
 
 /**
+ * MainActivity
+ *
+ * handles game configurations for setup screen
+ * creates local game
+ */
+
+/**
  * External Citation
  * Date:     31 March 2017
  * Problem:  setting up game configurations in MainActivity

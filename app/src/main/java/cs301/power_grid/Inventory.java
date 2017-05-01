@@ -3,14 +3,21 @@ package cs301.power_grid;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**@author Luchini Guilian, Tibbetts Nathan, Douville Luke, Hoang Paul
- * Created by Computerz on 2/24/2017.
+/**
+ * Inventory
+ *
+ * all of a player's possessions in the game
+ * includes money, coal, oil, uranium, trash, powerPlants, & cities
+ *
+ * @author Luchini Guilian, Tibbetts Nathan, Douville Luke, Hoang Paul
+ * Created by Computerz (lol nathan's computer) on 2/24/2017.
  */
 
 public class Inventory implements Serializable{
     // to satisfy Serializable interface
     private static final long serialVersionUID = 448179182969164L;
 
+    //instance variables
     private int money;
     private int coal;
     private int oil;
@@ -19,7 +26,7 @@ public class Inventory implements Serializable{
     private ArrayList<Powerplant> myPlants = new ArrayList<Powerplant>();
     private ArrayList<City> myCities = new ArrayList<City>();
 
-
+    //constructor
     public Inventory() {
         //initial game setup
         money = 50;
@@ -28,7 +35,7 @@ public class Inventory implements Serializable{
         uranium = 0;
         trash = 0;
     }
-
+    //getters and setters
     public int getMoney() {return money;}
     public int getCoal() {return coal;}
     public int getOil() {return oil;}
@@ -44,6 +51,7 @@ public class Inventory implements Serializable{
     public void setUranium(int restock) {uranium = restock;}
     public void setTrash(int restock) {trash = restock;}
 
+    //adds a power plant to a users inventory
     public boolean addMyPlants(Powerplant plantation) {
         boolean notAdded = true;
         if(myPlants.size() >= 4) {
@@ -66,8 +74,9 @@ public class Inventory implements Serializable{
         return true; //success
     }
 
+    //adds a city to a users inventory
     public boolean addMyCity(City mcCity) {
-        int i, j, k;
+        int k;
 
         if(myCities.size() == 0) {
             myCities.add(mcCity);
@@ -83,14 +92,8 @@ public class Inventory implements Serializable{
         myCities.add(mcCity);
         return true; //mission fails because the city you wish to add is not in the neighborhood
     }
-    public ArrayList<Integer> getIndexArray(ArrayList<City> cityArrayList){
-        ArrayList<Integer> cityIndexes = new ArrayList<Integer>();
-        for(int i = 0; i< cityArrayList.size(); i++){
-            cityIndexes.add(cityArrayList.get(i).getIndex());
-        }
-        return cityIndexes;
-    }
 
+    //finds lowest costing power plant in an inventory
     public int lowestCost() {
         double minCost = 100000;
         int index = 0;
@@ -103,6 +106,4 @@ public class Inventory implements Serializable{
         }
         return index;
     }
-
-
 }

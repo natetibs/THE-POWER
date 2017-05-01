@@ -4,6 +4,10 @@ import game.GamePlayer;
 import game.actionMsg.GameAction;
 
 /**
+ * BuyResourceAction
+ *
+ * stores type and index of resource bought in phase 3 or 4
+ *
  * Created by Computerz on 4/18/2017.
  */
 

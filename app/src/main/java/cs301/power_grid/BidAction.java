@@ -2,7 +2,12 @@ package cs301.power_grid;
 
 import game.GamePlayer;
 import game.actionMsg.GameAction;
+
 /**
+ * BidAction
+ *
+ * stores the amount that a player bids in phase 1
+ *
  * @author Luchini Guilian, Tibbetts Nathan, Douville Luke, Hoang Paul
  */
 
